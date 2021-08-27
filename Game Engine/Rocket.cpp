@@ -5,6 +5,7 @@ namespace Engine
 {
 	Rocket::Rocket()
 	{
+		_shootingDelay = 1.5f;
 	}
 	Rocket::~Rocket()
 	{

@@ -39,29 +39,45 @@ namespace Engine
 	{
 		switch (gameEvent)
 		{
-		case GameEvent::enemyReachedTarget:
+		case enemyReachedTarget:
 			_numberOfEnemies--;
 			_enemiesReachedTarget++;
 
 			_player->ReduceLives();
 			_playerLives.setString(std::to_string(_player->GetLives()));
 			break;
-		case GameEvent::enemySpawned:
+		case enemySpawned:
 			_numberOfEnemies++;
 			break;
 
-		case GameEvent::enemyDestroyed:
+		case enemyDestroyed:
 			_numberOfEnemies--;
 			break;
-		case GameEvent::playerShoot:		//switch fall through		
-		case weaponSwitch:			
-		case bulletsCollected:			
+		case playerShoot:
+			_activeAmmoText.setString(std::to_string(_player->GetActiveAmmo()));
+			break;
+		case weaponSwitch:
+			_activeAmmoText.setString(std::to_string(_player->GetActiveAmmo()));
+			break;
+		case bulletsCollected:
+			_activeAmmoText.setString(std::to_string(_player->GetActiveAmmo()));
+
+			SetTextAttributes(_itemText, this->_data->assets.GetFont("gameFont"),
+				std::to_string(gamePart._value), sf::Color::Black, 120, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5);
+			_itemCollected = true;
+			break;
 		case rocketsCollected:
 			_activeAmmoText.setString(std::to_string(_player->GetActiveAmmo()));
+			SetTextAttributes(_itemText, this->_data->assets.GetFont("gameFont"),
+				std::to_string(gamePart._value), sf::Color::Black, 120, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5);
+			_itemCollected = true;
 			break;
 
 		case healthCollected:
 			_playerLives.setString(std::to_string(_player->GetLives()));
+			SetTextAttributes(_itemText, this->_data->assets.GetFont("gameFont"),
+				std::to_string(gamePart._value), sf::Color::Black, 120, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5);
+			_itemCollected = true;
 		default:
 
 			break;
@@ -90,6 +106,11 @@ namespace Engine
 		this->_data->window.draw(_enemiesReachedTargetText);
 		this->_data->window.draw(_activeAmmoText);
 		this->_data->window.draw(_playerLives);
+
+		if (_itemCollected)
+		{
+			this->_data->window.draw(_itemText);
+		}
 	}
 }
 

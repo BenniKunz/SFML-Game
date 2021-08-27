@@ -16,5 +16,6 @@ namespace Engine
 			int& ammo) = 0;
 			
 		virtual ~IWeapon() {};
+		float _shootingDelay = 1.0f;
 	};
 }

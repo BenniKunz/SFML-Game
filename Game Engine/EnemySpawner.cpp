@@ -33,6 +33,7 @@ void Engine::EnemySpawner::Update(float dt, std::vector<std::shared_ptr<IGamePar
 
 void Engine::EnemySpawner::Draw(float dt)
 {
+
 }
 
 sf::FloatRect Engine::EnemySpawner::GetGlobalBounds()

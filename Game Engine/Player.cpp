@@ -39,8 +39,9 @@ void Engine::Player::EventHandler(sf::Event event)
 {
 	if (event.type == sf::Event::KeyPressed)
 	{
-		if (event.key.code == sf::Keyboard::M)
+		if (event.key.code == sf::Keyboard::M && _clock.getElapsedTime().asSeconds() > _weapon->_shootingDelay)
 		{
+			_clock.restart();
 			this->_weapon->Shoot(_data, _gameParts, GetWeaponPosition(), GetWeaponDirection(), this, GetActiveAmmo());
 			Notify(playerShoot, *this);
 		}
@@ -248,19 +249,25 @@ sf::Vector2f Engine::Player::GetWeaponPosition()
 	int posX = this->_playerBody.getPosition().x;
 	int posY = this->_playerBody.getPosition().y;
 
+	float weaponOffset = 0.0f;
+	if (_weaponType == gun)
+	{
+		weaponOffset = 10.0f;
+	}
+
 	switch (_walkDirection)
 	{
 	case left:
-		return sf::Vector2f(posX, posY + this->_playerBody.getGlobalBounds().height / 2);
+		return sf::Vector2f(posX , posY + this->_playerBody.getGlobalBounds().height / 2 + weaponOffset);
 		break;
 	case right:
-		return sf::Vector2f(posX + this->_playerBody.getGlobalBounds().width / 2, posY + this->_playerBody.getGlobalBounds().height / 2);
+		return sf::Vector2f(posX + this->_playerBody.getGlobalBounds().width , posY + this->_playerBody.getGlobalBounds().height / 2 - weaponOffset);
 		break;
 	case up:
-		return sf::Vector2f(posX + this->_playerBody.getGlobalBounds().width / 2, posY);
+		return sf::Vector2f(posX - weaponOffset + this->_playerBody.getGlobalBounds().width / 2 , posY);
 		break;
 	case down:
-		return sf::Vector2f(posX + this->_playerBody.getGlobalBounds().width / 2, posY + this->_playerBody.getGlobalBounds().height / 2);
+		return sf::Vector2f(posX + weaponOffset + this->_playerBody.getGlobalBounds().width / 2, posY + this->_playerBody.getGlobalBounds().height);
 		break;
 	default:
 		break;

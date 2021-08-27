@@ -30,6 +30,10 @@ namespace Engine
 		sf::Text _enemiesReachedTargetText;
 		sf::Text _activeAmmoText;
 		sf::Text _playerLives;
+		sf::Text _itemText;
+		sf::Clock _clock;
+
+		bool _itemCollected { false };
 
 		void SetTextAttributes(sf::Text& text, sf::Font &font, std::string output, sf::Color color, int characterSize, int x, int y);
 

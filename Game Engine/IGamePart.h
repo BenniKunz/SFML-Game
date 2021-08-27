@@ -18,8 +18,10 @@ namespace Engine
 
 		virtual sf::FloatRect GetGlobalBounds() = 0;
 
-		bool _removed{ false };
-
 		virtual void DealDamage(WeaponType type) = 0;
+		
+		bool _removed{ false };
+		int _value{ 0 };
+
 	};
 }

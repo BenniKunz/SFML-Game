@@ -63,6 +63,7 @@ namespace Engine
 		sf::Sprite _playerBody;
 		WalkDirection _walkDirection;
 		WeaponType _weaponType;
+		sf::Clock _clock;
 
 		int _lives = 1;
 		int _bullets = 70;
