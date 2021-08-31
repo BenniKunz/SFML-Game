@@ -5,9 +5,9 @@ Engine::RetryButton::~RetryButton()
 {
 }
 
-void Engine::RetryButton::InputHandler(sf::Event event)
+void Engine::RetryButton::InputHandler()
 {
-	Button::InputHandler(event);
+	Button::InputHandler();
 	Button::IsHovered(this->_texture);
 
 	if (Button::IsClicked(this->_texture, _previousClicked, _currentClicked))

@@ -8,7 +8,7 @@ namespace Engine
 	{
 	public:
 	
-		virtual void InputHandler(sf::Event event) = 0;
+		virtual void InputHandler() = 0;
 
 		virtual void EventHandler(sf::Event event) = 0;
 
@@ -22,6 +22,7 @@ namespace Engine
 		
 		bool _removed{ false };
 		int _value{ 0 };
+		std::string _name{ "default" };
 
 	};
 }

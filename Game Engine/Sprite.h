@@ -21,7 +21,7 @@ namespace Engine
 		std::vector<std::shared_ptr<IGamePart>>& _gameParts;
 
 		// Inherited via IGamePart
-		virtual void InputHandler(sf::Event event) override;
+		virtual void InputHandler() override;
 
 		virtual void Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts) override;
 

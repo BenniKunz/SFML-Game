@@ -10,6 +10,8 @@ namespace Engine
 	SettingState::SettingState(GameDataReference data)
 		:_data{data}
 	{
+		_data->view.reset(sf::FloatRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT));
+		_data->window.setView(_data->view);
 	}
 	SettingState::~SettingState()
 	{
@@ -42,7 +44,7 @@ namespace Engine
 
 		for (auto& gamePart : _menuParts)
 		{
-			gamePart->InputHandler(event);
+			gamePart->InputHandler();
 		}
 
 	}

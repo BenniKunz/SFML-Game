@@ -11,9 +11,9 @@ namespace Engine
 	{
 	}
 
-	void PlayButton::InputHandler(sf::Event event)
+	void PlayButton::InputHandler()
 	{
-		Button::InputHandler(event);
+		Button::InputHandler();
 
 		Button::IsHovered(this->_texture);
 

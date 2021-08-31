@@ -5,7 +5,7 @@ Engine::BulletParticle::~BulletParticle()
 	std::cout << "BulletParticle Destructor" << std::endl;
 }
 
-void Engine::BulletParticle::InputHandler(sf::Event event)
+void Engine::BulletParticle::InputHandler()
 {
 }
 

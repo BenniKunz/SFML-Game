@@ -8,9 +8,9 @@ namespace Engine
 	{
 	}
 
-	void ResumeButton::InputHandler(sf::Event event)
+	void ResumeButton::InputHandler()
 	{
-		Button::InputHandler(event);
+		Button::InputHandler();
 		Button::IsHovered(this->_texture);
 
 		if (Button::IsClicked(this->_texture, _previousClicked, _currentClicked))

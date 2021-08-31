@@ -29,22 +29,32 @@ namespace Engine
 		sf::Text _numberOfEnemiesText;
 		sf::Text _enemiesReachedTargetText;
 		sf::Text _activeAmmoText;
-		sf::Text _playerLives;
 		sf::Text _itemText;
 		sf::Clock _clock;
+		sf::Time _elapsed;
+		sf::Sprite _weaponTexture;
+		sf::Sprite _ammoIcon;
+		sf::Sprite _hudTable;
+		sf::Sprite _hp;
+		bool _clockStarted{ false };
 
 		bool _itemCollected { false };
 
 		void SetTextAttributes(sf::Text& text, sf::Font &font, std::string output, sf::Color color, int characterSize, int x, int y);
+		void ChangeWeaponTexture();
 
 		// Inherited via IGamePart
-		virtual void InputHandler(sf::Event event) override;
+		virtual void InputHandler() override;
 
 		virtual void Update(float dt) override;
 
 		virtual void Draw(float dt) override;
 
+		void DrawItemCollectedFeedback();
+		void DrawHP();
+
 	};
+	
 }
 
 

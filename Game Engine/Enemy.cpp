@@ -3,17 +3,19 @@
 #include <cmath>
 #include "Parameters.h"
 
-void Engine::Enemy::InputHandler(sf::Event event)
+void Engine::Enemy::InputHandler()
 {
 }
 
 void Engine::Enemy::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts)
 {
-	_nextPosition = _texture.getPosition() + (_targetPosition - _startPosition) * _speed * dt;
+	_nextPosition = _animationManager._animation._texture.getPosition() + (_targetPosition - _startPosition) * _speed * dt;
 
-	_texture.setPosition(_nextPosition);
+	SetEnemyTexture();
 
-	if (abs(_texture.getPosition().x - _targetPosition.x) <= 0.01f && abs(_texture.getPosition().y - _targetPosition.y) <= 0.01f)
+	SetEnemyPosition();
+
+	if (abs(_animationManager._animation._texture.getPosition().x - _targetPosition.x) <= 0.01f && abs(_animationManager._animation._texture.getPosition().y - _targetPosition.y) <= 0.01f)
 	{
 		//_texture.setPosition(_targetPosition);
 
@@ -25,18 +27,51 @@ void Engine::Enemy::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _g
 
 		}
 	}
-	if (_texture.getPosition().x >= SCREEN_WIDTH && !_hasReachedTarget)
+	if (_animationManager._animation._texture.getPosition().x >= (MAP_WIDTH - 1) * TILE_WIDTH && !_hasReachedTarget)
 	{
 		_hasReachedTarget = true;
 		this->_removed = true;
 		Notify(GameEvent::enemyReachedTarget, *this);
 	}
+	this->_animationManager.Update(dt);
+
+}
+
+void Engine::Enemy::SetEnemyPosition()
+{
+	_animationManager._animation._texture.setPosition(_nextPosition);
+	_enemyBody.setPosition(_nextPosition.x + PLAYER_TEXTURE_OFFSET, _nextPosition.y + PLAYER_TEXTURE_OFFSET);
+}
+
+void Engine::Enemy::SetEnemyTexture()
+{
+	if (_targetPosition.x > _startPosition.x)
+	{
+		this->_enemyBody.setTexture(this->_data->assets.GetTexture("enemyBodyRight"));
+		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("enemyWalkRight"));
+	}
+	else if (_targetPosition.x < _startPosition.x)
+	{
+		this->_enemyBody.setTexture(this->_data->assets.GetTexture("enemyBodyLeft"));
+		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("enemyWalkLeft"));
+	}
+	else if (_targetPosition.y < _startPosition.y)
+	{
+		this->_enemyBody.setTexture(this->_data->assets.GetTexture("enemyBodyUp"));
+		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("enemyWalkUp"));
+	}
+	else if (_targetPosition.y > _startPosition.y)
+	{
+		this->_enemyBody.setTexture(this->_data->assets.GetTexture("enemyBodyDown"));
+		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("enemyWalkDown"));
+	}
 }
 
 void Engine::Enemy::Draw(float dt)
 {
-	this->_data->window.draw(this->_texture);
-
+	this->_animationManager.Draw(dt);
+	this->_data->window.draw(this->_enemyBody);
+	
 }
 
 void Engine::Enemy::DealDamage(WeaponType type)

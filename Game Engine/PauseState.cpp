@@ -12,7 +12,7 @@ namespace Engine
 	PauseState::PauseState(GameDataReference data)
 		:_data{ data }
 	{
-
+		
 	}
 
 	PauseState::~PauseState()
@@ -48,13 +48,15 @@ namespace Engine
 
 		for (auto& menuPart : _menuParts)
 		{
-			menuPart->InputHandler(event);
+			menuPart->InputHandler();
 		}
 	}
 
 	void PauseState::Update(float dt)
 	{
-		
+		_data->view.reset(sf::FloatRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT));
+		_data->window.setView(_data->view);
+
 		for (auto& menuPart : _menuParts)
 		{
 			menuPart->Update(dt);

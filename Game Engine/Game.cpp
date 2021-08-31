@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "SplashState.h"
+#include "Parameters.h"
 
 namespace Engine
 {
@@ -8,6 +9,9 @@ namespace Engine
 		_data->window.create(sf::VideoMode(width, height), title, sf::Style::Close | sf::Style::Titlebar);
 		
 		this->_data->stateMachine.AddState(StateReference(std::make_unique<SplashState>(this->_data)), false);
+
+		_data->view.reset(sf::FloatRect(0.f, 0.f, SCREEN_WIDTH , SCREEN_HEIGHT));
+		_data->window.setView(_data->view);
 
 		this->Run();
 	}

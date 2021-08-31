@@ -41,6 +41,7 @@ void Engine::GameState::Init()
 	this->_path = bfs->CalculatePath();
 	
 	_player = std::make_shared<Player>(sf::Vector2f{ 300, 800 }, "playerWalkUp", _data, _gameParts);
+	
 	std::shared_ptr<ItemSpawner> itemSpawner = std::make_shared<ItemSpawner>(_player, _data, _gameParts);
 	std::shared_ptr<Hud> _hud = std::make_shared<Hud>(_data, _player);
 	_hudPtr = _hud.get();
@@ -59,7 +60,17 @@ void Engine::LoadAssets(GameDataReference _data)
 {
 	_data->assets.LoadTexture("backButton", PAUSE_BACK_BUTTON);
 	_data->assets.LoadTexture("pauseButton", GAME_MENU_PAUSE_BUTTON);
-	_data->assets.LoadTexture("enemyTexture", ENEMY_TEXTURE);
+
+	_data->assets.LoadTexture("enemyBodyUp", ENEMY_BODY_UP);
+	_data->assets.LoadTexture("enemyBodyDown", ENEMY_BODY_DOWN);
+	_data->assets.LoadTexture("enemyBodyRight", ENEMY_BODY_RIGHT);
+	_data->assets.LoadTexture("enemyBodyLeft", ENEMY_BODY_LEFT);
+
+	_data->assets.LoadTexture("enemyWalkUp", ENEMY_WALK_UP);
+	_data->assets.LoadTexture("enemyWalkRight", ENEMY_WALK_RIGHT);
+	_data->assets.LoadTexture("enemyWalkLeft", ENEMY_WALK_LEFT);
+	_data->assets.LoadTexture("enemyWalkDown", ENEMY_WALK_DOWN);
+
 	_data->assets.LoadTexture("playerWalkUp", PLAYER_WALK_UP);
 	_data->assets.LoadTexture("playerWalkRight", PLAYER_WALK_RIGHT);
 	_data->assets.LoadTexture("playerWalkLeft", PLAYER_WALK_LEFT);
@@ -83,6 +94,13 @@ void Engine::LoadAssets(GameDataReference _data)
 	_data->assets.LoadTexture("ammoTexture", AMMO_TEXTURE);
 	_data->assets.LoadTexture("hpTexture", HP_TEXTURE);
 	_data->assets.LoadTexture("speedTexture", SPEED_TEXTURE);
+
+	_data->assets.LoadTexture("gunTexture", GUN_TEXTURE);
+	_data->assets.LoadTexture("rocketLauncherTexture", ROCKETLAUNCHER_TEXTURE);
+
+	_data->assets.LoadTexture("hudTable", HUD_TABLE);
+	_data->assets.LoadTexture("ammoIcon", AMMO_ICON);
+	_data->assets.LoadTexture("hpIcon", HP_ICON);
 }
 
 void Engine::GameState::InputHandler()
@@ -113,17 +131,19 @@ void Engine::GameState::InputHandler()
 	}
 	for (auto& gamePart : gamePartsArr)
 	{
-		gamePart->InputHandler(event);
+		gamePart->InputHandler();
 	}
 
 	for (auto& menuPart : _menuParts)
 	{
-		menuPart->InputHandler(event);
+		menuPart->InputHandler();
 	}
 }
 
 void Engine::GameState::Update(float dt)
 {
+	this->_data->view.setCenter(_player->GetPlayerPosition());
+	_data->window.setView(_data->view);
 
 	std::vector<std::shared_ptr<IGamePart>> gamePartsArr(_gameParts.size());
 	std::copy(_gameParts.begin(), _gameParts.end(), gamePartsArr.begin());

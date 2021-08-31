@@ -10,10 +10,11 @@ namespace Engine
 	{
 	public:
 
-		Item(std::shared_ptr<Player> player, ItemType type, sf::Vector2f position, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, int value)
+		Item(std::shared_ptr<Player> player, ItemType type, sf::Vector2f position, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, int value,std::string name)
 			: Sprite(position, textureName, data, gameParts), _player {player}, _type {type}
 		{
 			_value = value;
+			_name = name;
 		}
 
 		virtual ~Item();
@@ -22,7 +23,7 @@ namespace Engine
 		ItemType _type;
 
 		// Inherited via IGamePart
-		virtual void InputHandler(sf::Event event) override;
+		virtual void InputHandler() override;
 		virtual void EventHandler(sf::Event event) override;
 		virtual void Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts) override;
 		virtual void Draw(float dt) override;

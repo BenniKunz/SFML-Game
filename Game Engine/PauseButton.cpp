@@ -7,9 +7,9 @@ Engine::PauseButton::~PauseButton()
 {
 }
 
-void Engine::PauseButton::InputHandler(sf::Event event)
+void Engine::PauseButton::InputHandler()
 {
-	Button::InputHandler(event);
+	Button::InputHandler();
 	Button::IsHovered(this->_texture);
 
 	if (Button::IsClicked(this->_texture, _previousClicked, _currentClicked))
@@ -20,8 +20,7 @@ void Engine::PauseButton::InputHandler(sf::Event event)
 
 void Engine::PauseButton::Update(float dt)
 {
-	
-
+	_texture.setPosition(this->_data->view.getCenter().x + 500, this->_data->view.getCenter().y -500);
 }
 
 void Engine::PauseButton::Draw(float dt)

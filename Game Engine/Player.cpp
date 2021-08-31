@@ -12,6 +12,8 @@ void Engine::Player::DealDamage(WeaponType type)
 
 void Engine::Player::CollectItem(ItemType type, int value, IGamePart* gamePart)
 {
+	if (type == health && _lives >= 4) { return; }
+
 	switch (type)
 	{
 	case gunAmmo:
@@ -62,59 +64,68 @@ void Engine::Player::EventHandler(sf::Event event)
 	}
 }
 
-void Engine::Player::InputHandler(sf::Event event)
+void Engine::Player::InputHandler()
 {
+	float x{ 0.0 };
+	float y{ 0.0 };
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
+		if (this->_playerBody.getPosition().x <= 0) { return; }
 		if (_walkDirection != left)
 		{
 			_walkDirection = left;
 			this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkLeft"));
 			this->_playerBody.setTexture(this->GetTexture());
 		}
-
-		this->_animationManager._animation._texture.move(-1.0f, 0.f);
-		this->_playerBody.move(-1.0f, 0.f);
+		x = -1.0f;
+		y = 0.0f;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
+		if (this->_playerBody.getPosition().x >= (MAP_WIDTH - 1) * TILE_WIDTH) { return; }
 		if (_walkDirection != right)
 		{
 			_walkDirection = right;
 			this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkRight"));
 			this->_playerBody.setTexture(this->GetTexture());
 		}
-
-		this->_animationManager._animation._texture.move(1.0f, 0.f);
-		this->_playerBody.move(1.0f, 0.f);
+		x = 1.0f;
+		y = 0.0f;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
+		if (this->_playerBody.getPosition().y <= 0) { return; }
 		if (_walkDirection != up)
 		{
 			_walkDirection = up;
 			this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkUp"));
 			this->_playerBody.setTexture(this->GetTexture());
 		}
-		this->_animationManager._animation._texture.move(0.f, -1.f);
-		this->_playerBody.move(0.f, -1.f);
+		x = 0.0f;
+		y = -1.0f;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
+		if (this->_playerBody.getPosition().y >= (MAP_HEIGHT - 1) * TILE_HEIGHT) { return; }
 		if (_walkDirection != down)
 		{
 			_walkDirection = down;
 			this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkDown"));
 			this->_playerBody.setTexture(this->GetTexture());
 		}
-		this->_animationManager._animation._texture.move(0.f, 1.f);
-		this->_playerBody.move(0.f, 1.f);
+		x = 0.0f;
+		y = 1.0f;
 	}
+	x = x * _speed;
+	y = y * _speed;
+	this->_animationManager._animation._texture.move(x, y);
+	this->_playerBody.move(x, y);
 }
 
 void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts)
 {
+
 	this->_animationManager.Update(dt);
 
 	for (auto& gamePart : _gameParts)
@@ -145,6 +156,7 @@ int& Engine::Player::GetActiveAmmo()
 		break;
 	}
 }
+
 
 sf::Texture& Engine::Player::GetTexture()
 {

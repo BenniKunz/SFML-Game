@@ -38,7 +38,7 @@ namespace Engine
 		return false;
 	}
 
-	void Button::InputHandler(sf::Event event)
+	void Button::InputHandler()
 	{
 		_previousClicked = _currentClicked;
 

@@ -12,11 +12,15 @@ namespace Engine
 	{
 	public:
 		Enemy(std::vector<std::shared_ptr<Node>>& path, sf::Vector2f position, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts)
-			:_path{ path }, _speed{ 2.0f }, _hasReachedTarget{ false }, Sprite(position, textureName, data, gameParts)
+			:_path{ path }, _speed{ 2.0f }, _hasReachedTarget{ false }, Sprite(position, textureName, data, gameParts),
+			_animation(_textureName, 1, 7, _data, _position), _animationManager(_animation, _data)
 		{
 			_pathIterator = _path.begin() + 1;	
 			_targetPosition = sf::Vector2f((*(_pathIterator))->GetPosition().x, (*(_pathIterator))->GetPosition().y);
 			_startPosition = sf::Vector2f((*(_pathIterator - 1))->GetPosition().x, (*(_pathIterator - 1))->GetPosition().y);
+
+			this->_enemyBody.setTexture(this->_data->assets.GetTexture("enemyBodyDown"));
+			this->_enemyBody.setPosition(_position.x + PLAYER_TEXTURE_OFFSET, _position.y + PLAYER_TEXTURE_OFFSET);
 		};
 
 		virtual ~Enemy();
@@ -28,6 +32,10 @@ namespace Engine
 
 	private:
 		
+		Animation _animation;
+		AnimationManager _animationManager;
+
+		sf::Sprite _enemyBody;
 		std::vector<IObserver*> _observerList;
 		std::vector<std::shared_ptr<Node>>::iterator _pathIterator;
 		std::vector<std::shared_ptr<Node>>& _path;
@@ -38,16 +46,18 @@ namespace Engine
 		float _speed;
 		bool _hasReachedTarget;
 
-		virtual void InputHandler(sf::Event event) override;
+		virtual void InputHandler() override;
 		virtual void Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts) override;
 		virtual void Draw(float dt) override;
 		virtual void EventHandler(sf::Event event) override;
 
-		virtual sf::FloatRect GetGlobalBounds() override { return this->_texture.getGlobalBounds(); };
+		void SetEnemyPosition();
+		void SetEnemyTexture();
+
+		virtual sf::FloatRect GetGlobalBounds() override { return this->_enemyBody.getGlobalBounds(); };
 		
 		void DealDamage(WeaponType type);
 
-		
 	};
 }
 

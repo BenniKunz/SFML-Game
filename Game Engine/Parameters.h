@@ -36,7 +36,15 @@ constexpr auto TILE_HEIGHT = 64;
 constexpr auto RETRY_BUTTON = "Resources/Buttons/button_retry.png";
 
 //Enemy
-constexpr auto ENEMY_TEXTURE = "Resources/enemy_texture.png";
+constexpr auto ENEMY_BODY_UP = "Resources/Enemy/enemy_body_up.png";
+constexpr auto ENEMY_BODY_DOWN = "Resources/Enemy/enemy_body_down.png";
+constexpr auto ENEMY_BODY_RIGHT = "Resources/Enemy/enemy_body_right.png";
+constexpr auto ENEMY_BODY_LEFT = "Resources/Enemy/enemy_body_left.png";
+
+constexpr auto ENEMY_WALK_UP = "Resources/Enemy/enemy_walk_up.png";
+constexpr auto ENEMY_WALK_RIGHT = "Resources/Enemy/enemy_walk_right.png";
+constexpr auto ENEMY_WALK_LEFT = "Resources/Enemy/enemy_walk_left.png";
+constexpr auto ENEMY_WALK_DOWN = "Resources/Enemy/enemy_walk_down.png";
 
 //Player
 constexpr auto PLAYER_WALK_UP = "Resources/player_walk_up.png";
@@ -58,8 +66,17 @@ constexpr auto PLAYER_ROCKET_DOWN = "Resources/player_rocket_down.png";
 //Bullet
 constexpr auto BULLET_TEXTURE = "Resources/bullet_texture.png";
 
+
 //Rocket
 constexpr auto ROCKET_TEXTURE = "Resources/rocket_texture.png";
+
+
+//HUD
+constexpr auto ROCKETLAUNCHER_TEXTURE = "Resources/Weapons/rocketLauncher_texture.png";
+constexpr auto GUN_TEXTURE = "Resources/Weapons/gun_texture.png";
+constexpr auto HUD_TABLE = "Resources/Hud/hud_table.png";
+constexpr auto AMMO_ICON = "Resources/Hud/ammo_icon.png";
+constexpr auto HP_ICON = "Resources/Hud/hp_icon.png";
 
 //Pause
 constexpr auto PAUSE_BACKGROUND_FILEPATH = "Resources/pause_background.png";

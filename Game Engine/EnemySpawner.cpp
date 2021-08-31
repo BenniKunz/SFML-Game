@@ -9,7 +9,7 @@ Engine::EnemySpawner::~EnemySpawner()
 {
 }
 
-void Engine::EnemySpawner::InputHandler(sf::Event event)
+void Engine::EnemySpawner::InputHandler()
 {
 }
 
@@ -21,7 +21,7 @@ void Engine::EnemySpawner::Update(float dt, std::vector<std::shared_ptr<IGamePar
 {
 	if (_clock.getElapsedTime().asSeconds() >= 3.0f)
 	{
-		std::shared_ptr<Enemy> enemy = std::make_shared<Enemy>(_path, sf::Vector2f{ 0, 0 }, "enemyTexture", _data, _gameParts);
+		std::shared_ptr<Enemy> enemy = std::make_shared<Enemy>(_path, sf::Vector2f{ 0, 0 }, "enemyWalkDown", _data, _gameParts);
 		_gameParts.push_back(enemy);
 
 		enemy->RegisterObserver(_hud);

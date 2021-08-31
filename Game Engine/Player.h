@@ -35,6 +35,8 @@ namespace Engine
 		void DealDamage(WeaponType type);
 		void CollectItem(ItemType type, int value, IGamePart* gamePart);
 		int& GetActiveAmmo();
+		WeaponType GetActiveWeapon() { return _weaponType; };
+		sf::Vector2f GetPlayerPosition() { return _playerBody.getPosition(); }
 		int& GetLives();
 		void ReduceLives();
 
@@ -52,7 +54,7 @@ namespace Engine
 
 		// Inherited via Sprite
 		virtual void EventHandler(sf::Event event) override;
-		virtual void InputHandler(sf::Event event) override;
+		virtual void InputHandler() override;
 		virtual void Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts) override;
 		virtual void Draw(float dt) override;
 		
@@ -65,9 +67,10 @@ namespace Engine
 		WeaponType _weaponType;
 		sf::Clock _clock;
 
-		int _lives = 1;
+		int _lives = 4;
 		int _bullets = 70;
 		int _rockets = 20;
+		float _speed = 3.0;
 
 		sf::Texture& GetTexture();
 		sf::Vector2f GetWeaponDirection();

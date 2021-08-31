@@ -16,7 +16,7 @@ namespace Engine
 		~PlayButton();
 
 		// Inherited via IGamePart
-		virtual void InputHandler(sf::Event event) override;
+		virtual void InputHandler() override;
 		virtual void Update(float dt) override;
 		virtual void Draw(float dt) override;
 		

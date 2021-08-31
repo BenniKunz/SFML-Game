@@ -10,7 +10,7 @@ Engine::ItemSpawner::~ItemSpawner()
 {
 }
 
-void Engine::ItemSpawner::InputHandler(sf::Event event)
+void Engine::ItemSpawner::InputHandler()
 {
 }
 
@@ -22,8 +22,8 @@ void Engine::ItemSpawner::Update(float dt, std::vector<std::shared_ptr<IGamePart
 {
 	if (this->_clock.getElapsedTime().asSeconds() > 10.0f)
 	{
-		_gameParts.push_back(std::make_shared<Item>(_player, gunAmmo, sf::Vector2f{ 500, 500 }, "ammoTexture", _data, _gameParts, 200));
-		_gameParts.push_back(std::make_shared<Item>(_player, health, sf::Vector2f{ 700, 500 }, "hpTexture", _data, _gameParts, 1));
+		_gameParts.push_back(std::make_shared<Item>(_player, gunAmmo, sf::Vector2f{ 500, 500 }, "ammoTexture", _data, _gameParts, 200, "bullets"));
+		_gameParts.push_back(std::make_shared<Item>(_player, health, sf::Vector2f{ 700, 500 }, "hpTexture", _data, _gameParts, 1, "live"));
 
 		_clock.restart();
 	}

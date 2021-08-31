@@ -12,6 +12,7 @@ namespace Engine
 	{
 		StateMachine stateMachine;
 		sf::RenderWindow window;
+		sf::View view;
 		AssetManager assets;
 		InputManager input;
 	};

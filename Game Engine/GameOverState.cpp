@@ -6,7 +6,7 @@
 Engine::GameOverState::GameOverState(GameDataReference data)
 	:_data{data}
 {
-
+	
 }
 
 Engine::GameOverState::~GameOverState()
@@ -42,12 +42,15 @@ void Engine::GameOverState::InputHandler()
 
 	for (auto& menuPart : _menuParts)
 	{
-		menuPart->InputHandler(event);
+		menuPart->InputHandler();
 	}
 }
 
 void Engine::GameOverState::Update(float dt)
 {
+	_data->view.reset(sf::FloatRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT));
+	_data->window.setView(_data->view);
+
 	for (auto menuPart : _menuParts)
 	{
 		menuPart->Update(dt);

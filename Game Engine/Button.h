@@ -26,7 +26,7 @@ namespace Engine
 		bool IsHovered(sf::Sprite& texture);
 
 		// Inherited via IGamePart
-		virtual void InputHandler(sf::Event event) override;
+		virtual void InputHandler() override;
 
 		virtual void Update(float dt) override;
 

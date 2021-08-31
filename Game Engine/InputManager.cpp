@@ -9,7 +9,10 @@ namespace Engine
         {
             sf::IntRect rect(object.getPosition().x, object.getPosition().y, object.getGlobalBounds().width, object.getGlobalBounds().height);
 
-            if (rect.contains(sf::Mouse::getPosition(window)))
+            sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
+            sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);
+
+            if (rect.contains(worldPos.x,worldPos.y))
             {
                 return true;
             }
@@ -22,7 +25,10 @@ namespace Engine
     {
         sf::IntRect rect(object.getPosition().x, object.getPosition().y, object.getGlobalBounds().width, object.getGlobalBounds().height);
 
-        if (rect.contains(sf::Mouse::getPosition(window)))
+        sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
+        sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);
+
+        if (rect.contains(worldPos.x, worldPos.y))
         {
             return true;
         }

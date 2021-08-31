@@ -12,13 +12,24 @@ namespace Engine
 		_player->RegisterObserver(this);
 
 		SetTextAttributes(_numberOfEnemiesText, this->_data->assets.GetFont("gameFont"),
-			std::to_string(_numberOfEnemies), sf::Color::Black, 80, SCREEN_WIDTH - 200, SCREEN_HEIGHT - 200);
+			std::to_string(_numberOfEnemies), sf::Color::Black, 80, SCREEN_WIDTH - 200, SCREEN_HEIGHT - 600);
 		SetTextAttributes(_enemiesReachedTargetText, this->_data->assets.GetFont("gameFont"),
-			std::to_string(_enemiesReachedTarget), sf::Color::Red, 80, SCREEN_WIDTH - 400, SCREEN_HEIGHT - 200);
+			std::to_string(_enemiesReachedTarget), sf::Color::Red, 80, SCREEN_WIDTH - 400, SCREEN_HEIGHT - 600);
 		SetTextAttributes(_activeAmmoText, this->_data->assets.GetFont("gameFont"),
-			std::to_string(_player->GetActiveAmmo()), sf::Color::Blue, 80, SCREEN_WIDTH - 600, SCREEN_HEIGHT - 200);
-		SetTextAttributes(_playerLives, this->_data->assets.GetFont("gameFont"),
-			std::to_string(_player->GetLives()), sf::Color::Green, 80, SCREEN_WIDTH - 50, 50);
+			std::to_string(_player->GetActiveAmmo()), sf::Color::White, 30, this->_data->view.getCenter().x + SCREEN_WIDTH / 3, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3);
+		
+
+		_weaponTexture.setTexture(this->_data->assets.GetTexture("gunTexture"));
+		_weaponTexture.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3);
+
+		_hudTable.setTexture(this->_data->assets.GetTexture("hudTable"));
+		_hudTable.setScale(2.0f, 2.0f);
+		_hudTable.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3);
+
+		_ammoIcon.setTexture(this->_data->assets.GetTexture("ammoIcon"));
+		_ammoIcon.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3);
+
+		_hp.setTexture(this->_data->assets.GetTexture("hpIcon"));
 	}
 
 	Hud::~Hud()
@@ -35,8 +46,25 @@ namespace Engine
 		text.setPosition(x, y);
 	}
 
+	void Hud::ChangeWeaponTexture()
+	{
+		WeaponType type = _player->GetActiveWeapon();
+		switch (type)
+		{
+		case Engine::gun:
+			_weaponTexture.setTexture(this->_data->assets.GetTexture("gunTexture"));
+			break;
+		case Engine::rocket:
+			_weaponTexture.setTexture(this->_data->assets.GetTexture("rocketLauncherTexture"));
+			break;
+		default:
+			break;
+		}
+	}
+
 	void Hud::OnNotify(GameEvent gameEvent, IGamePart& gamePart)
 	{
+		std::string text = " " + gamePart._name;
 		switch (gameEvent)
 		{
 		case enemyReachedTarget:
@@ -44,7 +72,6 @@ namespace Engine
 			_enemiesReachedTarget++;
 
 			_player->ReduceLives();
-			_playerLives.setString(std::to_string(_player->GetLives()));
 			break;
 		case enemySpawned:
 			_numberOfEnemies++;
@@ -58,31 +85,31 @@ namespace Engine
 			break;
 		case weaponSwitch:
 			_activeAmmoText.setString(std::to_string(_player->GetActiveAmmo()));
+			ChangeWeaponTexture();
 			break;
 		case bulletsCollected:
 			_activeAmmoText.setString(std::to_string(_player->GetActiveAmmo()));
 
 			SetTextAttributes(_itemText, this->_data->assets.GetFont("gameFont"),
-				std::to_string(gamePart._value), sf::Color::Black, 120, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5);
+				std::to_string(gamePart._value) + text + " picked up", sf::Color::Black, 60, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5);
 			_itemCollected = true;
 			break;
 		case rocketsCollected:
 			_activeAmmoText.setString(std::to_string(_player->GetActiveAmmo()));
 			SetTextAttributes(_itemText, this->_data->assets.GetFont("gameFont"),
-				std::to_string(gamePart._value), sf::Color::Black, 120, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5);
+			std::to_string(gamePart._value) + text + " picked up", sf::Color::Black, 60, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5);
+			
 			_itemCollected = true;
 			break;
 
 		case healthCollected:
-			_playerLives.setString(std::to_string(_player->GetLives()));
 			SetTextAttributes(_itemText, this->_data->assets.GetFont("gameFont"),
-				std::to_string(gamePart._value), sf::Color::Black, 120, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5);
+				std::to_string(gamePart._value) + text + " picked up", sf::Color::Black, 60, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5);
 			_itemCollected = true;
 		default:
 
 			break;
 		}
-
 	}
 
 	void Hud::Display()
@@ -90,26 +117,64 @@ namespace Engine
 
 	}
 
-	void Engine::Hud::InputHandler(sf::Event event)
+	void Engine::Hud::InputHandler()
 	{
 	}
 
 	void Engine::Hud::Update(float dt)
 	{
+		_activeAmmoText.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3 + 37, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3);
+		_weaponTexture.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3 + 65, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3 - 5);
+		_ammoIcon.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3 + 18, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3 + 5);
+
+		_hudTable.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3);
 		_numberOfEnemiesText.setString(std::to_string(_numberOfEnemies));
 		_enemiesReachedTargetText.setString(std::to_string(_enemiesReachedTarget));
 	}
 
 	void Engine::Hud::Draw(float dt)
 	{
+		this->_data->window.draw(_hudTable);
 		this->_data->window.draw(_numberOfEnemiesText);
 		this->_data->window.draw(_enemiesReachedTargetText);
 		this->_data->window.draw(_activeAmmoText);
-		this->_data->window.draw(_playerLives);
+		this->_data->window.draw(_weaponTexture);
+		this->_data->window.draw(_ammoIcon);
 
+		DrawHP();
+		DrawItemCollectedFeedback();
+	}
+	void Engine::Hud::DrawItemCollectedFeedback()
+	{
 		if (_itemCollected)
 		{
-			this->_data->window.draw(_itemText);
+			if (_clockStarted == false)
+			{
+				_clock.restart();
+				_clockStarted = true;
+			}
+			_elapsed = _clock.getElapsedTime();
+
+			if (_elapsed.asSeconds() <= 2.0f)
+			{
+				this->_data->window.draw(_itemText);
+			}
+			else
+			{
+				_clockStarted = false;
+				_itemCollected = false;
+				_elapsed.Zero;
+			}
+
+		}
+	}
+	void Hud::DrawHP()
+	{
+		for (size_t i = 0; i < _player->GetLives(); i++)
+		{
+			_hp.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3 + 180 + 20 * i, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3 + 50);
+
+			this->_data->window.draw(_hp);
 		}
 	}
 }
