@@ -3,7 +3,7 @@
 #include <cmath>
 #include "Parameters.h"
 
-void Engine::Enemy::InputHandler()
+void Engine::Enemy::InputHandler(float dt)
 {
 }
 

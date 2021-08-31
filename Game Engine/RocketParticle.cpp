@@ -5,7 +5,7 @@ Engine::RocketParticle::~RocketParticle()
 	std::cout << "RocketParticle Destructor" << std::endl;
 }
 
-void Engine::RocketParticle::InputHandler()
+void Engine::RocketParticle::InputHandler(float dt)
 {
 }
 

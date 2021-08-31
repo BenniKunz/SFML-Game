@@ -41,9 +41,9 @@ namespace Engine
 
 			while (accumulator >= dt)
 			{
-				this->_data->stateMachine.GetActiveState()->InputHandler();
+				this->_data->stateMachine.GetActiveState()->InputHandler(dt);
 				this->_data->stateMachine.GetActiveState()->Update(dt);
-
+				
 				accumulator -= dt;
 			}
 

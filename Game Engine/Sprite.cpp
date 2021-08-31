@@ -8,7 +8,7 @@ Engine::Sprite::Sprite(sf::Vector2f position, std::string textureName, GameDataR
 
 }
 
-void Engine::Sprite::InputHandler()
+void Engine::Sprite::InputHandler(float dt)
 {
 }
 

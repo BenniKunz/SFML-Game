@@ -9,7 +9,7 @@ Engine::EnemySpawner::~EnemySpawner()
 {
 }
 
-void Engine::EnemySpawner::InputHandler()
+void Engine::EnemySpawner::InputHandler(float dt)
 {
 }
 

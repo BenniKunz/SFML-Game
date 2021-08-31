@@ -15,7 +15,7 @@ namespace Engine
 
 		// Inherited via State
 		virtual void Init() override;
-		virtual void InputHandler() override;
+		virtual void InputHandler(float dt) override;
 		virtual void Update(float dt) override;
 		virtual void Draw(float dt) override;
 

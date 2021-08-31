@@ -91,13 +91,13 @@ namespace Engine
 			_activeAmmoText.setString(std::to_string(_player->GetActiveAmmo()));
 
 			SetTextAttributes(_itemText, this->_data->assets.GetFont("gameFont"),
-				std::to_string(gamePart._value) + text + " picked up", sf::Color::Black, 60, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5);
+				std::to_string(gamePart._value) + text + " picked up", sf::Color::Black, 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5);
 			_itemCollected = true;
 			break;
 		case rocketsCollected:
 			_activeAmmoText.setString(std::to_string(_player->GetActiveAmmo()));
 			SetTextAttributes(_itemText, this->_data->assets.GetFont("gameFont"),
-			std::to_string(gamePart._value) + text + " picked up", sf::Color::Black, 60, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5);
+			std::to_string(gamePart._value) + text + " picked up", sf::Color::Black, 60, this->_data->view.getCenter().x, this->_data->view.getCenter().y - 100.0);
 			
 			_itemCollected = true;
 			break;
@@ -157,6 +157,7 @@ namespace Engine
 
 			if (_elapsed.asSeconds() <= 2.0f)
 			{
+				_itemText.setPosition(this->_data->view.getCenter().x, this->_data->view.getCenter().y - 100.0);
 				this->_data->window.draw(_itemText);
 			}
 			else
@@ -170,7 +171,7 @@ namespace Engine
 	}
 	void Hud::DrawHP()
 	{
-		for (size_t i = 0; i < _player->GetLives(); i++)
+		for (int i = 0; i < _player->GetLives(); i++)
 		{
 			_hp.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3 + 180 + 20 * i, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3 + 50);
 

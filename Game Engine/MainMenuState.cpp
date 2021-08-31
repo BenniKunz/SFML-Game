@@ -38,7 +38,7 @@ void Engine::MainMenuState::Init()
 	
 }
 
-void Engine::MainMenuState::InputHandler()
+void Engine::MainMenuState::InputHandler(float dt)
 {
 	sf::Event event;
 

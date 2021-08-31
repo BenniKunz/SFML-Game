@@ -28,7 +28,7 @@ void Engine::GameOverState::Init()
 
 }
 
-void Engine::GameOverState::InputHandler()
+void Engine::GameOverState::InputHandler(float dt)
 {
 	sf::Event event;
 

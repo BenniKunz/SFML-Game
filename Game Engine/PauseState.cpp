@@ -34,7 +34,7 @@ namespace Engine
 		_menuParts.push_back(backButton);
 	}
 
-	void PauseState::InputHandler()
+	void PauseState::InputHandler(float dt)
 	{
 		sf::Event event;
 

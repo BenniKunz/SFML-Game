@@ -54,8 +54,9 @@ namespace Engine
 
 		// Inherited via Sprite
 		virtual void EventHandler(sf::Event event) override;
-		virtual void InputHandler() override;
+		virtual void InputHandler(float dt) override;
 		virtual void Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts) override;
+		void SetPlayerTextures();
 		virtual void Draw(float dt) override;
 		
 
@@ -66,11 +67,13 @@ namespace Engine
 		WalkDirection _walkDirection;
 		WeaponType _weaponType;
 		sf::Clock _clock;
+		sf::Vector2f _moveXY;
 
-		int _lives = 4;
+		bool _isIdle{ true };
+		int _lives = 400;
 		int _bullets = 70;
 		int _rockets = 20;
-		float _speed = 3.0;
+		float _speed = 120.0;
 
 		sf::Texture& GetTexture();
 		sf::Vector2f GetWeaponDirection();
@@ -78,10 +81,6 @@ namespace Engine
 
 		// Inherited via ControllerStrategy
 		virtual void Display() override;
-
-
-		
-
 	};
 }
 

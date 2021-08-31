@@ -17,7 +17,7 @@ namespace Engine
 
 
 		// Inherited via IGamePart
-		virtual void InputHandler() override;
+		virtual void InputHandler(float dt) override;
 
 		virtual void EventHandler(sf::Event event) override;
 

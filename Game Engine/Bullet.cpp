@@ -7,7 +7,7 @@ namespace Engine
 {
 	Bullet::Bullet()
 	{
-		_shootingDelay = 0.5f;
+		_shootingDelay = 0.8f;
 	}
 	Bullet::~Bullet()
 	{

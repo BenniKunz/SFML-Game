@@ -26,14 +26,14 @@ void Engine::Player::CollectItem(ItemType type, int value, IGamePart* gamePart)
 		break;
 
 	case health:
-		_lives++;
-		Notify(healthCollected, *gamePart);
-		break;
+_lives++;
+Notify(healthCollected, *gamePart);
+break;
 
 	default:
 		break;
 	}
-	
+
 
 }
 
@@ -64,70 +64,92 @@ void Engine::Player::EventHandler(sf::Event event)
 	}
 }
 
-void Engine::Player::InputHandler()
+void Engine::Player::InputHandler(float dt)
 {
 	float x{ 0.0 };
 	float y{ 0.0 };
+	sf::Vector2f tempPos = _playerBody.getPosition();
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		if (this->_playerBody.getPosition().x <= 0) { return; }
+		_isIdle = false;
 		if (_walkDirection != left)
 		{
 			_walkDirection = left;
-			this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkLeft"));
-			this->_playerBody.setTexture(this->GetTexture());
 		}
 		x = -1.0f;
 		y = 0.0f;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		if (this->_playerBody.getPosition().x >= (MAP_WIDTH - 1) * TILE_WIDTH) { return; }
+		_isIdle = false;
 		if (_walkDirection != right)
 		{
 			_walkDirection = right;
-			this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkRight"));
-			this->_playerBody.setTexture(this->GetTexture());
 		}
 		x = 1.0f;
 		y = 0.0f;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		if (this->_playerBody.getPosition().y <= 0) { return; }
+		_isIdle = false;
 		if (_walkDirection != up)
 		{
 			_walkDirection = up;
-			this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkUp"));
-			this->_playerBody.setTexture(this->GetTexture());
 		}
 		x = 0.0f;
 		y = -1.0f;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		if (this->_playerBody.getPosition().y >= (MAP_HEIGHT - 1) * TILE_HEIGHT) { return; }
+		_isIdle = false;
 		if (_walkDirection != down)
 		{
 			_walkDirection = down;
-			this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkDown"));
-			this->_playerBody.setTexture(this->GetTexture());
 		}
 		x = 0.0f;
 		y = 1.0f;
 	}
-	x = x * _speed;
-	y = y * _speed;
-	this->_animationManager._animation._texture.move(x, y);
-	this->_playerBody.move(x, y);
+	else
+	{
+		_isIdle = true;
+	}
+
+	_moveXY = sf::Vector2f(x, y);
+	tempPos += _moveXY;
+	if (tempPos.x <= 0 && tempPos.y <= 0 
+		|| tempPos.x <= 0 && tempPos.y >= (MAP_HEIGHT - 1) * TILE_HEIGHT 
+		|| tempPos.y <= 0 && tempPos.x >= (MAP_WIDTH - 1) * TILE_WIDTH 
+		|| tempPos.x >= (MAP_WIDTH - 1) * TILE_WIDTH && tempPos.y >= (MAP_HEIGHT - 1) * TILE_HEIGHT)
+	{
+		_moveXY = sf::Vector2f(0, 0);
+	}
+	else if (tempPos.x <= 0 || tempPos.x >= (MAP_WIDTH - 1) * TILE_WIDTH)
+	{
+		_moveXY = sf::Vector2f(0, y);
+	}
+	else if(tempPos.y <= 0 || tempPos.y >= (MAP_HEIGHT - 1) * TILE_HEIGHT)
+	{
+		_moveXY = sf::Vector2f(x, 0);
+	}
+	
 }
 
 void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts)
 {
+	_position += _moveXY * _speed * dt;
+	//_moveXY *= _speed;
 
-	this->_animationManager.Update(dt);
-
+	SetPlayerTextures();
+	if (!_isIdle)
+	{
+		this->_animationManager._animation._texture.setPosition(_position);
+		this->_playerBody.setPosition(_position + sf::Vector2f(PLAYER_TEXTURE_OFFSET, PLAYER_TEXTURE_OFFSET));
+		/*this->_animationManager._animation._texture.move(_moveXY);
+		this->_playerBody.move(_moveXY);*/
+		this->_animationManager.Update(dt);
+	}
+	
 	for (auto& gamePart : _gameParts)
 	{
 		if (gamePart.get() == this) { continue; }
@@ -143,6 +165,32 @@ void Engine::Player::Draw(float dt)
 	this->_animationManager.Draw(dt);
 	this->_data->window.draw(_playerBody);
 }
+
+void Engine::Player::SetPlayerTextures()
+{
+	if (_walkDirection == left)
+	{
+		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkLeft"));
+		this->_playerBody.setTexture(this->GetTexture());
+	}
+	else if (_walkDirection == right)
+	{
+		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkRight"));
+		this->_playerBody.setTexture(this->GetTexture());
+	}
+	else if (_walkDirection == up)
+	{
+		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkUp"));
+		this->_playerBody.setTexture(this->GetTexture());
+	}
+	else if (_walkDirection == down)
+	{
+		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkDown"));
+		this->_playerBody.setTexture(this->GetTexture());
+	}
+}
+
+
 
 int& Engine::Player::GetActiveAmmo()
 {

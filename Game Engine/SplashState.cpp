@@ -29,7 +29,7 @@ namespace Engine
 	
 	}
 
-	void SplashState::InputHandler()
+	void SplashState::InputHandler(float dt)
 	{
 		sf::Event event;
 

@@ -40,7 +40,7 @@ void Engine::GameState::Init()
 	std::shared_ptr<BreadthFirstSearch> bfs = std::make_shared<BreadthFirstSearch>(graph, "bfs");
 	this->_path = bfs->CalculatePath();
 	
-	_player = std::make_shared<Player>(sf::Vector2f{ 300, 800 }, "playerWalkUp", _data, _gameParts);
+	_player = std::make_shared<Player>(sf::Vector2f{ SCREEN_WIDTH /2, SCREEN_HEIGHT /2 }, "playerWalkUp", _data, _gameParts);
 	
 	std::shared_ptr<ItemSpawner> itemSpawner = std::make_shared<ItemSpawner>(_player, _data, _gameParts);
 	std::shared_ptr<Hud> _hud = std::make_shared<Hud>(_data, _player);
@@ -103,8 +103,9 @@ void Engine::LoadAssets(GameDataReference _data)
 	_data->assets.LoadTexture("hpIcon", HP_ICON);
 }
 
-void Engine::GameState::InputHandler()
+void Engine::GameState::InputHandler(float dt)
 {
+
 	if (_player->GetLives() <= 0) 
 	{ 
 		this->_data->stateMachine.AddState(StateReference(std::make_unique<GameOverState>(this->_data)), true);
@@ -131,7 +132,7 @@ void Engine::GameState::InputHandler()
 	}
 	for (auto& gamePart : gamePartsArr)
 	{
-		gamePart->InputHandler();
+		gamePart->InputHandler(dt);
 	}
 
 	for (auto& menuPart : _menuParts)
@@ -142,8 +143,12 @@ void Engine::GameState::InputHandler()
 
 void Engine::GameState::Update(float dt)
 {
-	this->_data->view.setCenter(_player->GetPlayerPosition());
-	_data->window.setView(_data->view);
+	/*if (_player->GetPlayerPosition().x >= SCREEN_WIDTH / 2 && _player->GetPlayerPosition().x + SCREEN_WIDTH / 2 <= MAP_WIDTH*TILE_WIDTH)
+	{*/
+		this->_data->view.setCenter(_player->GetPlayerPosition());
+		_data->window.setView(_data->view);
+	/*}*/
+	
 
 	std::vector<std::shared_ptr<IGamePart>> gamePartsArr(_gameParts.size());
 	std::copy(_gameParts.begin(), _gameParts.end(), gamePartsArr.begin());

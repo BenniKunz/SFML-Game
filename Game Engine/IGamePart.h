@@ -8,7 +8,7 @@ namespace Engine
 	{
 	public:
 	
-		virtual void InputHandler() = 0;
+		virtual void InputHandler(float dt) = 0;
 
 		virtual void EventHandler(sf::Event event) = 0;
 

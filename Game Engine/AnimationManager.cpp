@@ -9,7 +9,7 @@ namespace Engine
 	AnimationManager::AnimationManager(Animation &animation, GameDataReference data)
 		:_animation{ animation }, _data {data}, _textureWidth{ (int)_animation._texture.getGlobalBounds().width }, _textureHeight{ (int)_animation._texture.getGlobalBounds().height }
 	{
-
+		Update(1.0f / 60.0f);
 	}
 
 	void AnimationManager::Update(float dt)

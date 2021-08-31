@@ -5,7 +5,7 @@ Engine::Item::~Item()
     std::cout << "Item Destructor" << std::endl;
 }
 
-void Engine::Item::InputHandler()
+void Engine::Item::InputHandler(float dt)
 {
 }
 

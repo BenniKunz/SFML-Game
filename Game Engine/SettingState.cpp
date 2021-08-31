@@ -30,7 +30,7 @@ namespace Engine
 		_menuParts.push_back(resumeButton);
 	}
 
-	void SettingState::InputHandler()
+	void SettingState::InputHandler(float dt)
 	{
 		sf::Event event;
 
@@ -42,9 +42,9 @@ namespace Engine
 			}
 		}
 
-		for (auto& gamePart : _menuParts)
+		for (auto& menuPart : _menuParts)
 		{
-			gamePart->InputHandler();
+			menuPart->InputHandler();
 		}
 
 	}

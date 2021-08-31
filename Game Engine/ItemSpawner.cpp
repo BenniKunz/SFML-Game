@@ -10,7 +10,7 @@ Engine::ItemSpawner::~ItemSpawner()
 {
 }
 
-void Engine::ItemSpawner::InputHandler()
+void Engine::ItemSpawner::InputHandler(float dt)
 {
 }
 

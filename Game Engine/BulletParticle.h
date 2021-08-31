@@ -21,7 +21,7 @@ namespace Engine
 		virtual ~BulletParticle();
 
 		// Inherited via IGamePart
-		virtual void InputHandler() override;
+		virtual void InputHandler(float dt) override;
 
 		virtual void Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts) override;
 
@@ -33,7 +33,7 @@ namespace Engine
 
 	private:
 		sf::Vector2f _direction;
-		float _speed = 120.0f;
+		float _speed = 200.0f;
 		IGamePart* _player;
 		sf::Clock _clock;
 		float _bulletLifeTime = 2.0f;
