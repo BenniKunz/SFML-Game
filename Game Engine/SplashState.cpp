@@ -18,7 +18,7 @@ namespace Engine
 
 	void SplashState::Init()
 	{
-		this->_data->assets.LoadTexture("menuBackground", MAIN_MENU_BACKGROUND_FILEPATH);
+		this->_data->assets.LoadTexture("menuBackground", MENU_BACKGROUND);
 		this->_data->assets.LoadTexture("splashLogo", SPLASH_STATE_LOGO);
 
 		_backgroundTexture.setTexture(this->_data->assets.GetTexture("menuBackground"));

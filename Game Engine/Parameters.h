@@ -1,5 +1,7 @@
 #pragma once
 
+constexpr double PI = 3.14159265358979323846;
+
 //screen
 constexpr auto SCREEN_WIDTH = 1920;
 constexpr auto SCREEN_HEIGHT = 1088;
@@ -10,7 +12,7 @@ constexpr auto SPLASH_SCENE_BACKGROUND_FILEPATH = "Resources/test.png";
 constexpr auto SPLASH_STATE_LOGO = "Resources/logo.png";
 
 //Main Menu
-constexpr auto MAIN_MENU_BACKGROUND_FILEPATH = "Resources/menu_background.png";
+constexpr auto MENU_BACKGROUND = "Resources/menu_background.png";
 constexpr auto MAIN_MENU_PLAY_BUTTON = "Resources/Buttons/button_play.png";
 constexpr auto MAIN_MENU_SETTINGS_BUTTON = "Resources/Buttons/button_settings.png";
 
@@ -18,7 +20,6 @@ constexpr auto MAIN_MENU_SETTINGS_BUTTON = "Resources/Buttons/button_settings.pn
 constexpr auto MAIN_MENU_MUSIC = "Resources/main_menu_music.wav";
 
 //Settings
-constexpr auto SETTING_MENU_BACKGROUND_FILEPATH = "Resources/setting_background.png";
 constexpr auto SETTING_RESUME_BUTTON = "Resources/Buttons/button_resume.png";
 
 
@@ -40,6 +41,9 @@ constexpr auto ENEMY_BODY_UP = "Resources/Enemy/enemy_body_up.png";
 constexpr auto ENEMY_BODY_DOWN = "Resources/Enemy/enemy_body_down.png";
 constexpr auto ENEMY_BODY_RIGHT = "Resources/Enemy/enemy_body_right.png";
 constexpr auto ENEMY_BODY_LEFT = "Resources/Enemy/enemy_body_left.png";
+
+constexpr auto TANK_TOWER = "Resources/Enemy/tank_tower.png";
+constexpr auto TANK_BASE = "Resources/Enemy/tank_base.png";
 
 constexpr auto ENEMY_WALK_UP = "Resources/Enemy/enemy_walk_up.png";
 constexpr auto ENEMY_WALK_RIGHT = "Resources/Enemy/enemy_walk_right.png";
@@ -79,7 +83,6 @@ constexpr auto AMMO_ICON = "Resources/Hud/ammo_icon.png";
 constexpr auto HP_ICON = "Resources/Hud/hp_icon.png";
 
 //Pause
-constexpr auto PAUSE_BACKGROUND_FILEPATH = "Resources/pause_background.png";
 constexpr auto PAUSE_RESUME_BUTTON = "Resources/Buttons/button_resume.png";
 constexpr auto PAUSE_BACK_BUTTON = "Resources/Buttons/button_back.png";
 

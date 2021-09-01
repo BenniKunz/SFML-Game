@@ -22,10 +22,10 @@ namespace Engine
 
 	void PauseState::Init()
 	{
-		this->_data->assets.LoadTexture("pauseStateBackground", PAUSE_BACKGROUND_FILEPATH);
 		this->_data->assets.LoadTexture("resumeButton", PAUSE_RESUME_BUTTON);
 
-		_backgroundTexture.setTexture(this->_data->assets.GetTexture("pauseStateBackground"));
+		_backgroundTexture.setTexture(this->_data->assets.GetTexture("menuBackground"));
+		_backgroundTexture.setScale(SCREEN_WIDTH / _backgroundTexture.getGlobalBounds().width, SCREEN_HEIGHT / _backgroundTexture.getGlobalBounds().height);
 
 		std::shared_ptr<ResumeButton> resumeButton = std::make_shared<ResumeButton>(190, 100, _data, "resumeButton");
 		std::shared_ptr<BackButton> backButton = std::make_shared<BackButton>(490, 100, _data, "backButton");

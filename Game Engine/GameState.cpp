@@ -11,24 +11,25 @@
 #include "GameOverState.h"
 #include "Item.h"
 #include "ItemSpawner.h"
+#include "Tank.h"
 
 Engine::GameState::GameState(GameDataReference data)
-	:_data{ data }, _hudPtr{nullptr}
+	:_data{ data }, _hudPtr{ nullptr }
 {
-
+	
 }
 
 Engine::GameState::~GameState()
 {
 	_hudPtr = nullptr;
 	std::cout << "GameState Destructor" << std::endl;
-	
+
 }
 
 void Engine::GameState::Init()
 {
 	LoadAssets(this->_data);
-	this->_data->assets.PlayMusic(_music, MAIN_MENU_MUSIC, true);
+	//this->_data->assets.PlayMusic(_music, MAIN_MENU_MUSIC, true);
 
 	_map.load("Resources/tiles.png", sf::Vector2u(TILE_WIDTH, TILE_HEIGHT), _levelTest, MAP_WIDTH, MAP_HEIGHT);
 
@@ -39,15 +40,16 @@ void Engine::GameState::Init()
 
 	std::shared_ptr<BreadthFirstSearch> bfs = std::make_shared<BreadthFirstSearch>(graph, "bfs");
 	this->_path = bfs->CalculatePath();
-	
-	_player = std::make_shared<Player>(sf::Vector2f{ SCREEN_WIDTH /2, SCREEN_HEIGHT /2 }, "playerWalkUp", _data, _gameParts);
-	
+
+	_player = std::make_shared<Player>(sf::Vector2f{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, "playerWalkUp", _data, _gameParts);
+
 	std::shared_ptr<ItemSpawner> itemSpawner = std::make_shared<ItemSpawner>(_player, _data, _gameParts);
 	std::shared_ptr<Hud> _hud = std::make_shared<Hud>(_data, _player);
 	_hudPtr = _hud.get();
 	std::shared_ptr<EnemySpawner> enemySpawner = std::make_shared<EnemySpawner>(_path, _data, _gameParts, _hudPtr);
+	std::shared_ptr<Tank> tank = std::make_shared<Tank>(sf::Vector2f(600, 600), "tankBase", _data, _gameParts, _player);
 
-
+	_gameParts.push_back(tank);
 	_gameParts.push_back(enemySpawner);
 	_gameParts.push_back(itemSpawner);
 	_gameParts.push_back(_player);
@@ -70,6 +72,9 @@ void Engine::LoadAssets(GameDataReference _data)
 	_data->assets.LoadTexture("enemyWalkRight", ENEMY_WALK_RIGHT);
 	_data->assets.LoadTexture("enemyWalkLeft", ENEMY_WALK_LEFT);
 	_data->assets.LoadTexture("enemyWalkDown", ENEMY_WALK_DOWN);
+
+	_data->assets.LoadTexture("tankTower", TANK_TOWER);
+	_data->assets.LoadTexture("tankBase", TANK_BASE);
 
 	_data->assets.LoadTexture("playerWalkUp", PLAYER_WALK_UP);
 	_data->assets.LoadTexture("playerWalkRight", PLAYER_WALK_RIGHT);
@@ -106,10 +111,10 @@ void Engine::LoadAssets(GameDataReference _data)
 void Engine::GameState::InputHandler(float dt)
 {
 
-	if (_player->GetLives() <= 0) 
-	{ 
+	if (_player->GetLives() <= 0)
+	{
 		this->_data->stateMachine.AddState(StateReference(std::make_unique<GameOverState>(this->_data)), true);
-		
+
 	}
 	sf::Event event;
 
@@ -139,16 +144,13 @@ void Engine::GameState::InputHandler(float dt)
 	{
 		menuPart->InputHandler();
 	}
+
+
 }
 
 void Engine::GameState::Update(float dt)
 {
-	/*if (_player->GetPlayerPosition().x >= SCREEN_WIDTH / 2 && _player->GetPlayerPosition().x + SCREEN_WIDTH / 2 <= MAP_WIDTH*TILE_WIDTH)
-	{*/
-		this->_data->view.setCenter(_player->GetPlayerPosition());
-		_data->window.setView(_data->view);
-	/*}*/
-	
+	SetSFMLView();
 
 	std::vector<std::shared_ptr<IGamePart>> gamePartsArr(_gameParts.size());
 	std::copy(_gameParts.begin(), _gameParts.end(), gamePartsArr.begin());
@@ -178,12 +180,46 @@ void Engine::GameState::Update(float dt)
 	}
 }
 
+void Engine::GameState::SetSFMLView()
+{
+	if (_player->GetPlayerPosition().x - this->_data->view.getSize().x / 2 < 0 && _player->GetPlayerPosition().y - this->_data->view.getSize().y / 2 < 0
+		|| _player->GetPlayerPosition().x - this->_data->view.getSize().x / 2 < 0 && _player->GetPlayerPosition().y + this->_data->view.getSize().y / 2 > MAP_HEIGHT * TILE_HEIGHT
+		|| _player->GetPlayerPosition().x + this->_data->view.getSize().x / 2 > MAP_WIDTH * TILE_WIDTH && _player->GetPlayerPosition().y - this->_data->view.getSize().y / 2 < 0
+		|| _player->GetPlayerPosition().x + this->_data->view.getSize().x / 2 > MAP_WIDTH * TILE_WIDTH && _player->GetPlayerPosition().y + this->_data->view.getSize().y / 2 > MAP_HEIGHT * TILE_HEIGHT)
+	{
+		
+	}
+	else if (_player->GetPlayerPosition().x - this->_data->view.getSize().x / 2 < 0)
+	{
+		this->_data->view.setCenter(this->_data->view.getSize().x / 2, _player->GetPlayerPosition().y);
+		_data->window.setView(_data->view);
+	}
+	else if (_player->GetPlayerPosition().x + this->_data->view.getSize().x / 2 > MAP_WIDTH * TILE_WIDTH)
+	{
+		this->_data->view.setCenter(MAP_WIDTH * TILE_WIDTH - this->_data->view.getSize().x / 2, _player->GetPlayerPosition().y);
+		_data->window.setView(_data->view);
+	}
+	else if (_player->GetPlayerPosition().y - this->_data->view.getSize().y / 2 < 0)
+	{
+		this->_data->view.setCenter(_player->GetPlayerPosition().x, this->_data->view.getSize().y / 2);
+		_data->window.setView(_data->view);	
+	}
+	else if (_player->GetPlayerPosition().y + this->_data->view.getSize().y / 2 > MAP_HEIGHT * TILE_HEIGHT)
+	{
+		this->_data->view.setCenter(_player->GetPlayerPosition().x, MAP_HEIGHT * TILE_HEIGHT - this->_data->view.getSize().y / 2);
+		_data->window.setView(_data->view);
+	}
+	else
+	{
+		this->_data->view.setCenter(_player->GetPlayerPosition());
+		_data->window.setView(_data->view);
+	}
+}
+
 void Engine::GameState::Draw(float dt)
 {
 	this->_data->window.clear(sf::Color::Red);
 
-	this->_data->window.draw(this->_backgroundTexture);
-	
 	this->_data->window.draw(this->_map);
 
 	for (auto& gamePart : _gameParts)

@@ -19,15 +19,14 @@ Engine::MainMenuState::~MainMenuState()
 
 void Engine::MainMenuState::Init()
 {
-	this->_data->assets.LoadTexture("mainMenuBackground", MAIN_MENU_BACKGROUND_FILEPATH);
 	this->_data->assets.LoadTexture("playButton", MAIN_MENU_PLAY_BUTTON);
 	this->_data->assets.LoadTexture("settingsButton", MAIN_MENU_SETTINGS_BUTTON);
 	
-	_backgroundTexture.setTexture(this->_data->assets.GetTexture("mainMenuBackground"));
+	_backgroundTexture.setTexture(this->_data->assets.GetTexture("menuBackground"));
 	_backgroundTexture.setScale(SCREEN_WIDTH / _backgroundTexture.getGlobalBounds().width, SCREEN_HEIGHT / _backgroundTexture.getGlobalBounds().height);
 
 
-	this->_data->assets.PlayMusic(_music, MAIN_MENU_MUSIC, true);
+	//this->_data->assets.PlayMusic(_music, MAIN_MENU_MUSIC, true);
 	
 
 	std::shared_ptr<PlayButton> playButton = std::make_shared<PlayButton>(SCREEN_WIDTH / 2 ,100, _data, "playButton");

@@ -19,10 +19,10 @@ namespace Engine
 	}
 	void SettingState::Init()
 	{
-		this->_data->assets.LoadTexture("settingStateBackground", SETTING_MENU_BACKGROUND_FILEPATH);
 		this->_data->assets.LoadTexture("resumeButton", SETTING_RESUME_BUTTON);
 
-		_backgroundTexture.setTexture(this->_data->assets.GetTexture("settingStateBackground"));
+		_backgroundTexture.setTexture(this->_data->assets.GetTexture("menuBackground"));
+		_backgroundTexture.setScale(SCREEN_WIDTH / _backgroundTexture.getGlobalBounds().width, SCREEN_HEIGHT / _backgroundTexture.getGlobalBounds().height);
 		_resumeButton.setTexture(this->_data->assets.GetTexture("resumeButton"));
 
 		std::shared_ptr<ResumeButton> resumeButton = std::make_shared<ResumeButton>(190, 100, _data, "resumeButton");

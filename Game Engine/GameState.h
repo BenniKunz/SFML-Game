@@ -29,6 +29,8 @@ namespace Engine
 		virtual void Draw(float dt) override;
 
 	private:
+		void SetSFMLView();
+
 		Hud* _hudPtr;
 		std::shared_ptr<Player> _player;
 
@@ -36,8 +38,6 @@ namespace Engine
 		std::vector<std::shared_ptr<IGamePart>> _gameParts;
 		std::vector<std::shared_ptr<IMenuPart>> _menuParts;
 		std::vector<std::shared_ptr<Node>> _path;
-
-		sf::Sprite _backgroundTexture;
 
 		sf::Clock _clock;
 
