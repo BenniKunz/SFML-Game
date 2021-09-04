@@ -5,5 +5,6 @@ namespace Engine
 	{
 		gun,
 		rocket,
+		tankBullet
 	};
 }

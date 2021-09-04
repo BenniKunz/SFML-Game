@@ -8,11 +8,33 @@ Engine::Player::~Player()
 
 void Engine::Player::DealDamage(WeaponType type)
 {
+	switch (type)
+	{
+	case tankBullet:
+		_hp -= 10;
+		break;
+	default:
+		break;
+	}
+
+	float reduce = _hp / 100.0;
+
+	std::cout << "_hp " << _hp <<std::endl;
+	std::cout << "reduce " << reduce << std::endl;
+	std::cout << "Width initial " << _healthBar->_healthBarGreenWidth << std::endl;
+	std::cout << "Width now " << _healthBar->_healthBarGreenWidth * reduce<< std::endl;
+
+	_healthBar->_healthBarGreen.setScale(1, 1);
+	_healthBar->_healthBarGreen.setTextureRect(sf::IntRect(0, 0, _healthBar->_healthBarGreenWidth * reduce, _healthBar->_healthBarGreen.getGlobalBounds().height));
+	_healthBar->_healthBarGreen.setScale(0.1, 0.1);
 }
 
 void Engine::Player::CollectItem(ItemType type, int value, IGamePart* gamePart)
 {
-	if (type == health && _lives >= 4) { return; }
+	if (type == health && value + _hp > 100) 
+	{ 
+		_hp = 100;
+	}
 
 	switch (type)
 	{
@@ -26,6 +48,7 @@ void Engine::Player::CollectItem(ItemType type, int value, IGamePart* gamePart)
 		break;
 
 	case health:
+		_hp += 10;
 _lives++;
 Notify(healthCollected, *gamePart);
 break;
@@ -44,8 +67,13 @@ void Engine::Player::EventHandler(sf::Event event)
 		if (event.key.code == sf::Keyboard::M && _clock.getElapsedTime().asSeconds() > _weapon->_shootingDelay)
 		{
 			_clock.restart();
-			this->_weapon->Shoot(_data, _gameParts, GetWeaponPosition(), GetWeaponDirection(), this, GetActiveAmmo());
-			Notify(playerShoot, *this);
+			if (GetActiveAmmo() > 0)
+			{
+				this->_weapon->Shoot(_data, _gameParts, GetWeaponPosition(), GetWeaponDirection(), this, 0.0f);
+				GetActiveAmmo()--;
+				Notify(playerShoot, *this);
+			}
+			
 		}
 		else if (event.key.code == sf::Keyboard::P && this->_weaponType != rocket)
 		{
@@ -68,7 +96,6 @@ void Engine::Player::InputHandler(float dt)
 {
 	float x{ 0.0 };
 	float y{ 0.0 };
-	sf::Vector2f tempPos = _playerBody.getPosition();
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
@@ -115,29 +142,19 @@ void Engine::Player::InputHandler(float dt)
 		_isIdle = true;
 	}
 
-	_moveXY = sf::Vector2f(x, y);
-	tempPos += _moveXY;
-	if (tempPos.x <= 0 && tempPos.y <= 0 
-		|| tempPos.x <= 0 && tempPos.y >= (MAP_HEIGHT - 1) * TILE_HEIGHT 
-		|| tempPos.y <= 0 && tempPos.x >= (MAP_WIDTH - 1) * TILE_WIDTH 
-		|| tempPos.x >= (MAP_WIDTH - 1) * TILE_WIDTH && tempPos.y >= (MAP_HEIGHT - 1) * TILE_HEIGHT)
-	{
-		_moveXY = sf::Vector2f(0, 0);
-	}
-	else if (tempPos.x <= 0 || tempPos.x >= (MAP_WIDTH - 1) * TILE_WIDTH)
-	{
-		_moveXY = sf::Vector2f(0, y);
-	}
-	else if(tempPos.y <= 0 || tempPos.y >= (MAP_HEIGHT - 1) * TILE_HEIGHT)
-	{
-		_moveXY = sf::Vector2f(x, 0);
-	}
-	
+	_moveDirection = sf::Vector2f(x, y);
 }
 
 void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts)
 {
-	_position += _moveXY * _speed * dt;
+
+	sf::Vector2f tempPos = _playerBody.getPosition();
+	SetMoveDirectionForMapBoundaries(tempPos);
+	SetMoveDirectionForGamePartBoundaries();
+	_position += _moveDirection * _speed * dt;
+	
+	_healthBar->SetPosition(_position);
+
 	//_moveXY *= _speed;
 
 	SetPlayerTextures();
@@ -148,6 +165,7 @@ void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 		/*this->_animationManager._animation._texture.move(_moveXY);
 		this->_playerBody.move(_moveXY);*/
 		this->_animationManager.Update(dt);
+		
 	}
 	
 	for (auto& gamePart : _gameParts)
@@ -155,7 +173,7 @@ void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 		if (gamePart.get() == this) { continue; }
 		else if (this->_playerBody.getGlobalBounds().intersects(gamePart->GetGlobalBounds()))
 		{
-
+			std::cout << "Player collided" << std::endl;
 		}
 	}
 }
@@ -309,28 +327,57 @@ sf::Vector2f Engine::Player::GetWeaponPosition()
 	int posX = this->_playerBody.getPosition().x;
 	int posY = this->_playerBody.getPosition().y;
 
-	float weaponOffset = 0.0f;
-	if (_weaponType == gun)
-	{
-		weaponOffset = 10.0f;
-	}
 
 	switch (_walkDirection)
 	{
 	case left:
-		return sf::Vector2f(posX , posY + this->_playerBody.getGlobalBounds().height / 2 + weaponOffset);
+		return sf::Vector2f(posX , posY + this->_playerBody.getGlobalBounds().height / 2);
 		break;
 	case right:
-		return sf::Vector2f(posX + this->_playerBody.getGlobalBounds().width , posY + this->_playerBody.getGlobalBounds().height / 2 - weaponOffset);
+		return sf::Vector2f(posX + this->_playerBody.getGlobalBounds().width , posY + this->_playerBody.getGlobalBounds().height / 2);
 		break;
 	case up:
-		return sf::Vector2f(posX - weaponOffset + this->_playerBody.getGlobalBounds().width / 2 , posY);
+		return sf::Vector2f(posX + this->_playerBody.getGlobalBounds().width / 2 , posY);
 		break;
 	case down:
-		return sf::Vector2f(posX + weaponOffset + this->_playerBody.getGlobalBounds().width / 2, posY + this->_playerBody.getGlobalBounds().height);
+		return sf::Vector2f(posX + this->_playerBody.getGlobalBounds().width / 2, posY + this->_playerBody.getGlobalBounds().height);
 		break;
 	default:
 		break;
+	}
+}
+
+void Engine::Player::SetMoveDirectionForMapBoundaries(sf::Vector2f tempPos)
+{
+	tempPos += _moveDirection;
+	if (tempPos.x <= 0 && tempPos.y <= 0
+		|| tempPos.x <= 0 && tempPos.y >= (MAP_HEIGHT - 1) * TILE_HEIGHT
+		|| tempPos.y <= 0 && tempPos.x >= (MAP_WIDTH - 1) * TILE_WIDTH
+		|| tempPos.x >= (MAP_WIDTH - 1) * TILE_WIDTH && tempPos.y >= (MAP_HEIGHT - 1) * TILE_HEIGHT)
+	{
+		_moveDirection = sf::Vector2f(0, 0);
+	}
+	else if (tempPos.x <= 0 || tempPos.x >= (MAP_WIDTH - 1) * TILE_WIDTH)
+	{
+		_moveDirection = sf::Vector2f(0, _moveDirection.y);
+	}
+	else if (tempPos.y <= 0 || tempPos.y >= (MAP_HEIGHT - 1) * TILE_HEIGHT)
+	{
+		_moveDirection = sf::Vector2f(_moveDirection.x, 0);
+	}
+}
+
+void Engine::Player::SetMoveDirectionForGamePartBoundaries()
+{
+	sf::Sprite tempBody = _playerBody;
+	tempBody.move(_moveDirection);
+	for ( auto gamePart : _gameParts )
+	{
+		if (gamePart.get() == this) { continue; }
+		if (tempBody.getGlobalBounds().intersects(gamePart->GetGlobalBounds()))
+		{
+			_moveDirection = sf::Vector2f(0, 0);
+		}
 	}
 }
 

@@ -68,11 +68,17 @@ constexpr auto PLAYER_ROCKET_LEFT = "Resources/player_rocket_left.png";
 constexpr auto PLAYER_ROCKET_DOWN = "Resources/player_rocket_down.png";
 
 //Bullet
-constexpr auto BULLET_TEXTURE = "Resources/bullet_texture.png";
-
+constexpr auto BULLET_TEXTURE = "Resources/Bullets/bullet_texture.png";
 
 //Rocket
-constexpr auto ROCKET_TEXTURE = "Resources/rocket_texture.png";
+constexpr auto ROCKET_TEXTURE = "Resources/Bullets/rocket_texture.png";
+
+//Tank Bullet
+constexpr auto TANK_BULLET_TEXTURE = "Resources/Bullets/tank_bullet_texture.png";
+
+//HealthBar
+constexpr auto HEALTH_BAR_RED = "Resources/HealthBar/health_bar_red.png";
+constexpr auto HEALTH_BAR_GREEN = "Resources/HealthBar/health_bar_green.png";
 
 
 //HUD

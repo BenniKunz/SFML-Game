@@ -183,6 +183,15 @@
     <ClCompile Include="Tank.cpp">
       <Filter>Source Files\Sprite</Filter>
     </ClCompile>
+    <ClCompile Include="TankBullet.cpp">
+      <Filter>Source Files\Sprite\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="TankBulletParticle.cpp">
+      <Filter>Source Files\Sprite\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBar.cpp">
+      <Filter>Source Files\Sprite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -327,6 +336,15 @@
       <Filter>Header Files\Spawners</Filter>
     </ClInclude>
     <ClInclude Include="Tank.h">
+      <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="TankBullet.h">
+      <Filter>Header Files\Sprites\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="TankBulletParticle.h">
+      <Filter>Header Files\Sprites\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBar.h">
       <Filter>Header Files\Sprites</Filter>
     </ClInclude>
   </ItemGroup>

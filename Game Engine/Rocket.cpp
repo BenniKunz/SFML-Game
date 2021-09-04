@@ -11,11 +11,9 @@ namespace Engine
 	{
 		std::cout << "Rocket Destructor" << std::endl;
 	}
-	void Rocket::Shoot(GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, sf::Vector2f position, sf::Vector2f direction, IGamePart* player, int& ammo)
+	void Rocket::Shoot(GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, sf::Vector2f position, sf::Vector2f direction, IGamePart* player, float rotation)
 	{
-		if (ammo <= 0) { return; }
-		ammo--;
-		std::shared_ptr<RocketParticle> bullet = std::make_shared<RocketParticle>(position, direction, "rocketTexture", data, gameParts, player);
+		std::shared_ptr<RocketParticle> bullet = std::make_shared<RocketParticle>(position, direction, "rocketTexture", data, gameParts, player, rotation);
 		gameParts.push_back(bullet);
 	}
 }

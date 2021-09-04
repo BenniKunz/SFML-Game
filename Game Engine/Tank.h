@@ -1,11 +1,13 @@
 #pragma once
 #include "Sprite.h"
 #include "Player.h"
+#include "TankBullet.h"
+#include "ControllerStrategy.h"
 
 namespace Engine
 {
 	class Tank :
-		public Sprite
+		public Sprite, public ControllerStrategy
 	{
 	public:
 		Tank(sf::Vector2f position, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, std::shared_ptr<Player> player)
@@ -14,6 +16,8 @@ namespace Engine
 			_tankTower.setTexture(this->_data->assets.GetTexture("tankTower"));
 			_tankTower.setPosition(_position.x + 64, _position.y + 64);
 			_tankTower.setOrigin(_tankTower.getGlobalBounds().width / 2, 40);
+
+			this->_weapon = std::make_unique<TankBullet>();
 		}
 
 		virtual ~Tank();
@@ -27,6 +31,15 @@ namespace Engine
 	private:
 		sf::Sprite _tankTower;
 		std::shared_ptr<Player> _player;
+		float _shootingRangeMax{ 400.0 };
+		float _shootingRangeMin{ 50.0 };
+		int _ammo{ 100 };
+		sf::Clock _clock;
+		float _shootingDelay{ 5.0f };
+		sf::Vector2f _weaponSpawn;
+		sf::Vector2f _weaponDirection;
+		// Inherited via ControllerStrategy
+		virtual void Display() override;
 
 	};
 }

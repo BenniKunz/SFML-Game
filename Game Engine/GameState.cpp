@@ -41,13 +41,13 @@ void Engine::GameState::Init()
 	std::shared_ptr<BreadthFirstSearch> bfs = std::make_shared<BreadthFirstSearch>(graph, "bfs");
 	this->_path = bfs->CalculatePath();
 
-	_player = std::make_shared<Player>(sf::Vector2f{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, "playerWalkUp", _data, _gameParts);
+	_player = std::make_shared<Player>(sf::Vector2f{ 300,1200 }, "playerWalkUp", _data, _gameParts);
 
 	std::shared_ptr<ItemSpawner> itemSpawner = std::make_shared<ItemSpawner>(_player, _data, _gameParts);
 	std::shared_ptr<Hud> _hud = std::make_shared<Hud>(_data, _player);
 	_hudPtr = _hud.get();
 	std::shared_ptr<EnemySpawner> enemySpawner = std::make_shared<EnemySpawner>(_path, _data, _gameParts, _hudPtr);
-	std::shared_ptr<Tank> tank = std::make_shared<Tank>(sf::Vector2f(600, 600), "tankBase", _data, _gameParts, _player);
+	std::shared_ptr<Tank> tank = std::make_shared<Tank>(sf::Vector2f(300, 600), "tankBase", _data, _gameParts, _player);
 
 	_gameParts.push_back(tank);
 	_gameParts.push_back(enemySpawner);
@@ -93,6 +93,10 @@ void Engine::LoadAssets(GameDataReference _data)
 
 	_data->assets.LoadTexture("bulletTexture", BULLET_TEXTURE);
 	_data->assets.LoadTexture("rocketTexture", ROCKET_TEXTURE);
+	_data->assets.LoadTexture("tankBulletTexture", TANK_BULLET_TEXTURE);
+
+	_data->assets.LoadTexture("healthBarRed", HEALTH_BAR_RED);
+	_data->assets.LoadTexture("healthBarGreen", HEALTH_BAR_GREEN);
 
 	_data->assets.LoadFont("gameFont", GAME_FONT);
 

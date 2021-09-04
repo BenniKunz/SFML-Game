@@ -19,7 +19,7 @@ void Engine::EnemySpawner::EventHandler(sf::Event event)
 
 void Engine::EnemySpawner::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts)
 {
-	if (_clock.getElapsedTime().asSeconds() >= 3.0f)
+	if (_clock.getElapsedTime().asSeconds() >= 15.0f)
 	{
 		std::shared_ptr<Enemy> enemy = std::make_shared<Enemy>(_path, sf::Vector2f{ 0, 0 }, "enemyWalkDown", _data, _gameParts);
 		_gameParts.push_back(enemy);

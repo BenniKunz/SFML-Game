@@ -13,11 +13,9 @@ namespace Engine
 	{
 		std::cout << "Bullet Destructor" << std::endl;
 	}
-	void Bullet::Shoot(GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, sf::Vector2f position, sf::Vector2f direction, IGamePart *player, int& ammo)
+	void Bullet::Shoot(GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, sf::Vector2f position, sf::Vector2f direction, IGamePart *player, float rotation)
 	{
-		if (ammo <= 0) { return; }
-		ammo--;
-		std::shared_ptr<BulletParticle> bullet = std::make_shared<BulletParticle>(position, direction, "bulletTexture", data, gameParts, player);
+		std::shared_ptr<BulletParticle> bullet = std::make_shared<BulletParticle>(position, direction, "bulletTexture", data, gameParts, player, rotation);
 		gameParts.push_back(bullet);
 	}
 

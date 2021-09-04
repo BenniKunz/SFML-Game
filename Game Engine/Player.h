@@ -12,6 +12,7 @@
 #include "IObserver.h"
 #include "ISubject.h"
 #include "ItemType.h"
+#include "HealthBar.h"
 
 namespace Engine
 {
@@ -28,6 +29,8 @@ namespace Engine
 			this->_playerBody.setPosition(_position.x + PLAYER_TEXTURE_OFFSET, _position.y + PLAYER_TEXTURE_OFFSET);
 			_walkDirection = up;
 			_weaponType = gun;
+			_healthBar = std::make_shared<HealthBar>(_position, "healthBarRed", _data, _gameParts);
+			_gameParts.push_back(_healthBar);
 		}
 
 		virtual ~Player();
@@ -39,6 +42,7 @@ namespace Engine
 		sf::Vector2f GetPlayerPosition() { return _playerBody.getPosition(); }
 		int& GetLives();
 		void ReduceLives();
+		std::shared_ptr<HealthBar> _healthBar;
 
 		// Inherited via ISubject
 		virtual void RegisterObserver(IObserver* observer) override;
@@ -67,17 +71,20 @@ namespace Engine
 		WalkDirection _walkDirection;
 		WeaponType _weaponType;
 		sf::Clock _clock;
-		sf::Vector2f _moveXY;
+		sf::Vector2f _moveDirection;
 
 		bool _isIdle{ true };
-		int _lives = 400;
+		int _lives = 4;
 		int _bullets = 70;
 		int _rockets = 20;
 		float _speed = 120.0;
+		float _hp = 100.0;
 
 		sf::Texture& GetTexture();
 		sf::Vector2f GetWeaponDirection();
 		sf::Vector2f GetWeaponPosition();
+		void SetMoveDirectionForMapBoundaries(sf::Vector2f tempPos);
+		void SetMoveDirectionForGamePartBoundaries();
 
 		// Inherited via ControllerStrategy
 		virtual void Display() override;

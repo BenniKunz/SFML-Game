@@ -11,8 +11,6 @@ void Engine::BulletParticle::InputHandler(float dt)
 
 void Engine::BulletParticle::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts)
 {
-	SetBulletRotation();
-
 	ParticleMovement(dt);
 
 	CollisionDetection(_gameParts);

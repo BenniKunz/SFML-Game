@@ -11,8 +11,6 @@ void Engine::RocketParticle::InputHandler(float dt)
 
 void Engine::RocketParticle::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts)
 {
-	SetRocketRotation();
-
 	ParticleMovement(dt);
 
 	CollisionDetection(_gameParts);

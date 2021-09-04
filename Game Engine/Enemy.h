@@ -42,6 +42,7 @@ namespace Engine
 		sf::Vector2f _startPosition;
 		sf::Vector2f _nextPosition;
 		sf::Vector2f _targetPosition;
+		float _hp{ 100 };
 
 		float _speed;
 		bool _hasReachedTarget;

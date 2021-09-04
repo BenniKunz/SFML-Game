@@ -13,7 +13,7 @@ namespace Engine
 			std::vector<std::shared_ptr<IGamePart>>& gameParts,
 			sf::Vector2f position, sf::Vector2f direction,
 			IGamePart* player,
-			int& ammo) = 0;
+			float rotation) = 0;
 			
 		virtual ~IWeapon() {};
 		float _shootingDelay = 1.0f;

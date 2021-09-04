@@ -1,26 +1,25 @@
 #pragma once
-#include "Bullet.h"
+#include "TankBullet.h"
 #include "SFML/Graphics.hpp"
 #include "IGamePart.h"
 #include "Sprite.h"
 #include <iostream>
-#include "Player.h"
+
 
 namespace Engine
 {
-	class BulletParticle 
+	class TankBulletParticle
 		: public Sprite
 	{
 	public:
-		BulletParticle(sf::Vector2f position, sf::Vector2f direction, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, IGamePart *player, float rotation)
-			:Sprite(position, textureName, data, gameParts), _direction{direction}, _player{player}
-		{		
+		TankBulletParticle(sf::Vector2f position, sf::Vector2f direction, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, IGamePart* player, float rotation)
+			:Sprite(position, textureName, data, gameParts), _direction{ direction }, _player{ player }
+		{			
 				this->_texture.setOrigin(_texture.getGlobalBounds().width / 2, _texture.getGlobalBounds().height / 2);
-				SetBulletRotation();
-			
+				this->_texture.setRotation(rotation);
 		}
 
-		virtual ~BulletParticle();
+		virtual ~TankBulletParticle();
 
 		// Inherited via IGamePart
 		virtual void InputHandler(float dt) override;
@@ -40,10 +39,10 @@ namespace Engine
 		sf::Clock _clock;
 		float _bulletLifeTime = 2.0f;
 
-		void SetBulletRotation();
 		void CollisionDetection(std::vector<std::shared_ptr<Engine::IGamePart>>& _gameParts);
 		void ParticleMovement(float dt);
 	};
 }
+
 
 
