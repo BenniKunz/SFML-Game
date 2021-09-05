@@ -41,9 +41,12 @@ constexpr auto ENEMY_BODY_UP = "Resources/Enemy/enemy_body_up.png";
 constexpr auto ENEMY_BODY_DOWN = "Resources/Enemy/enemy_body_down.png";
 constexpr auto ENEMY_BODY_RIGHT = "Resources/Enemy/enemy_body_right.png";
 constexpr auto ENEMY_BODY_LEFT = "Resources/Enemy/enemy_body_left.png";
+constexpr auto ENEMY_MAX_HP = 100;
 
 constexpr auto TANK_TOWER = "Resources/Enemy/tank_tower.png";
 constexpr auto TANK_BASE = "Resources/Enemy/tank_base.png";
+constexpr auto TANK_BROKEN = "Resources/Enemy/tank_broken.png";
+constexpr auto TANK_MAX_HP = 150;
 
 constexpr auto ENEMY_WALK_UP = "Resources/Enemy/enemy_walk_up.png";
 constexpr auto ENEMY_WALK_RIGHT = "Resources/Enemy/enemy_walk_right.png";
@@ -55,6 +58,10 @@ constexpr auto PLAYER_WALK_UP = "Resources/player_walk_up.png";
 constexpr auto PLAYER_WALK_RIGHT = "Resources/player_walk_right.png";
 constexpr auto PLAYER_WALK_LEFT = "Resources/player_walk_left.png";
 constexpr auto PLAYER_WALK_DOWN = "Resources/player_walk_down.png";
+constexpr auto PLAYER_START_POSX = 300;
+constexpr auto PLAYER_START_POSY = 1200;
+constexpr auto PLAYER_MAX_HP = 100;
+
 
 constexpr auto PLAYER_TEXTURE_OFFSET = 16;
 constexpr auto PLAYER_BODY_UP = "Resources/player_body_up.png";

@@ -4,6 +4,7 @@
 #include <iostream>
 #include "ISubject.h"
 #include "Hud.h"
+#include "TankBullet.h"
 
 namespace Engine
 {
@@ -12,7 +13,7 @@ namespace Engine
 	{
 	public:
 		Enemy(std::vector<std::shared_ptr<Node>>& path, sf::Vector2f position, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts)
-			:_path{ path }, _speed{ 2.0f }, _hasReachedTarget{ false }, Sprite(position, textureName, data, gameParts),
+			:_path{ path }, _speed{ 60.0f }, _hasReachedTarget{ false }, Sprite(position, textureName, data, gameParts),
 			_animation(_textureName, 1, 7, _data, _position), _animationManager(_animation, _data)
 		{
 			_pathIterator = _path.begin() + 1;	
@@ -21,6 +22,9 @@ namespace Engine
 
 			this->_enemyBody.setTexture(this->_data->assets.GetTexture("enemyBodyDown"));
 			this->_enemyBody.setPosition(_position.x + PLAYER_TEXTURE_OFFSET, _position.y + PLAYER_TEXTURE_OFFSET);
+
+			_healthBar = std::make_shared<HealthBar>(_position, "healthBarRed", _data, _gameParts);
+			_gameParts.push_back(_healthBar);
 		};
 
 		virtual ~Enemy();
@@ -42,7 +46,9 @@ namespace Engine
 		sf::Vector2f _startPosition;
 		sf::Vector2f _nextPosition;
 		sf::Vector2f _targetPosition;
-		float _hp{ 100 };
+		sf::Vector2f _moveDirection;
+		std::shared_ptr<HealthBar> _healthBar;
+		float _hp{ ENEMY_MAX_HP };
 
 		float _speed;
 		bool _hasReachedTarget;
@@ -52,7 +58,7 @@ namespace Engine
 		virtual void Draw(float dt) override;
 		virtual void EventHandler(sf::Event event) override;
 
-		void SetEnemyPosition();
+		void SetEnemyPosition(float dt);
 		void SetEnemyTexture();
 
 		virtual sf::FloatRect GetGlobalBounds() override { return this->_enemyBody.getGlobalBounds(); };

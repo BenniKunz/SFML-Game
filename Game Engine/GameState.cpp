@@ -23,7 +23,6 @@ Engine::GameState::~GameState()
 {
 	_hudPtr = nullptr;
 	std::cout << "GameState Destructor" << std::endl;
-
 }
 
 void Engine::GameState::Init()
@@ -41,7 +40,7 @@ void Engine::GameState::Init()
 	std::shared_ptr<BreadthFirstSearch> bfs = std::make_shared<BreadthFirstSearch>(graph, "bfs");
 	this->_path = bfs->CalculatePath();
 
-	_player = std::make_shared<Player>(sf::Vector2f{ 300,1200 }, "playerWalkUp", _data, _gameParts);
+	_player = std::make_shared<Player>(sf::Vector2f{ 100,100 }, "playerWalkUp", _data, _gameParts);
 
 	std::shared_ptr<ItemSpawner> itemSpawner = std::make_shared<ItemSpawner>(_player, _data, _gameParts);
 	std::shared_ptr<Hud> _hud = std::make_shared<Hud>(_data, _player);
@@ -75,6 +74,7 @@ void Engine::LoadAssets(GameDataReference _data)
 
 	_data->assets.LoadTexture("tankTower", TANK_TOWER);
 	_data->assets.LoadTexture("tankBase", TANK_BASE);
+	_data->assets.LoadTexture("tankBroken", TANK_BROKEN);
 
 	_data->assets.LoadTexture("playerWalkUp", PLAYER_WALK_UP);
 	_data->assets.LoadTexture("playerWalkRight", PLAYER_WALK_RIGHT);

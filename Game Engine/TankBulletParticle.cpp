@@ -26,7 +26,7 @@ void Engine::TankBulletParticle::CollisionDetection(std::vector<std::shared_ptr<
 {
 	for (auto& gamePart : _gameParts)
 	{
-		if (gamePart.get() == this || gamePart.get() == _player) { continue; }
+		if (gamePart.get() == this || gamePart.get() == _gamePart) { continue; }
 		else if (this->_texture.getGlobalBounds().intersects(gamePart->GetGlobalBounds()))
 		{
 			gamePart->DealDamage(WeaponType::tankBullet);

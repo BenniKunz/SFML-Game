@@ -16,8 +16,9 @@ namespace Engine
 			_tankTower.setTexture(this->_data->assets.GetTexture("tankTower"));
 			_tankTower.setPosition(_position.x + 64, _position.y + 64);
 			_tankTower.setOrigin(_tankTower.getGlobalBounds().width / 2, 40);
-
+			_healthBar = std::make_shared<HealthBar>(_position, "healthBarRed", _data, _gameParts);
 			this->_weapon = std::make_unique<TankBullet>();
+			_gameParts.push_back(_healthBar);
 		}
 
 		virtual ~Tank();
@@ -27,6 +28,7 @@ namespace Engine
 		virtual void Draw(float dt) override;
 		virtual void EventHandler(sf::Event event) override;
 		virtual void DealDamage(WeaponType type) override;
+		std::shared_ptr<HealthBar> _healthBar;
 
 	private:
 		sf::Sprite _tankTower;
@@ -34,10 +36,15 @@ namespace Engine
 		float _shootingRangeMax{ 400.0 };
 		float _shootingRangeMin{ 50.0 };
 		int _ammo{ 100 };
+		float _hp{ TANK_MAX_HP };
+		bool _broken{ false };
 		sf::Clock _clock;
 		float _shootingDelay{ 5.0f };
 		sf::Vector2f _weaponSpawn;
 		sf::Vector2f _weaponDirection;
+
+		void SetTowerRotation(float& angle);
+		void TankShooting(float angle, sf::Vector2f tank_player_normalized);
 		// Inherited via ControllerStrategy
 		virtual void Display() override;
 

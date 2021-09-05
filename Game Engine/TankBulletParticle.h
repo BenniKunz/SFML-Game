@@ -13,7 +13,7 @@ namespace Engine
 	{
 	public:
 		TankBulletParticle(sf::Vector2f position, sf::Vector2f direction, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, IGamePart* player, float rotation)
-			:Sprite(position, textureName, data, gameParts), _direction{ direction }, _player{ player }
+			:Sprite(position, textureName, data, gameParts), _direction{ direction }, _gamePart{ player }
 		{			
 				this->_texture.setOrigin(_texture.getGlobalBounds().width / 2, _texture.getGlobalBounds().height / 2);
 				this->_texture.setRotation(rotation);
@@ -35,7 +35,7 @@ namespace Engine
 	private:
 		sf::Vector2f _direction;
 		float _speed = 200.0f;
-		IGamePart* _player;
+		IGamePart* _gamePart;
 		sf::Clock _clock;
 		float _bulletLifeTime = 2.0f;
 

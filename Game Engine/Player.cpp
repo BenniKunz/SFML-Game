@@ -8,32 +8,31 @@ Engine::Player::~Player()
 
 void Engine::Player::DealDamage(WeaponType type)
 {
-	switch (type)
+	if (type == tankBullet)
 	{
-	case tankBullet:
-		_hp -= 10;
-		break;
-	default:
-		break;
+		if (_hp - 10 <= 0)
+		{
+			_hp = 0;
+			_lives--;
+			PlayerReset();
+		}
+		else
+		{
+			_hp -= 10;
+		}
 	}
 
 	float reduce = _hp / 100.0;
-
-	std::cout << "_hp " << _hp <<std::endl;
-	std::cout << "reduce " << reduce << std::endl;
-	std::cout << "Width initial " << _healthBar->_healthBarGreenWidth << std::endl;
-	std::cout << "Width now " << _healthBar->_healthBarGreenWidth * reduce<< std::endl;
-
-	_healthBar->_healthBarGreen.setScale(1, 1);
-	_healthBar->_healthBarGreen.setTextureRect(sf::IntRect(0, 0, _healthBar->_healthBarGreenWidth * reduce, _healthBar->_healthBarGreen.getGlobalBounds().height));
-	_healthBar->_healthBarGreen.setScale(0.1, 0.1);
+	_healthBar->ChangeHealthBar(reduce);
 }
 
 void Engine::Player::CollectItem(ItemType type, int value, IGamePart* gamePart)
 {
-	if (type == health && value + _hp > 100) 
-	{ 
-		_hp = 100;
+	if (type == health && static_cast<float>(value) + _hp > PLAYER_MAX_HP)
+	{
+		_hp = PLAYER_MAX_HP;
+		_healthBar->ChangeHealthBar(1.0);
+		return;
 	}
 
 	switch (type)
@@ -48,16 +47,13 @@ void Engine::Player::CollectItem(ItemType type, int value, IGamePart* gamePart)
 		break;
 
 	case health:
-		_hp += 10;
-_lives++;
-Notify(healthCollected, *gamePart);
-break;
+		_hp += static_cast<float>(value);
+		_healthBar->ChangeHealthBar(_hp / PLAYER_MAX_HP);
+		break;
 
 	default:
 		break;
 	}
-
-
 }
 
 void Engine::Player::EventHandler(sf::Event event)
@@ -73,7 +69,7 @@ void Engine::Player::EventHandler(sf::Event event)
 				GetActiveAmmo()--;
 				Notify(playerShoot, *this);
 			}
-			
+
 		}
 		else if (event.key.code == sf::Keyboard::P && this->_weaponType != rocket)
 		{
@@ -152,7 +148,7 @@ void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 	SetMoveDirectionForMapBoundaries(tempPos);
 	SetMoveDirectionForGamePartBoundaries();
 	_position += _moveDirection * _speed * dt;
-	
+
 	_healthBar->SetPosition(_position);
 
 	//_moveXY *= _speed;
@@ -165,9 +161,8 @@ void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 		/*this->_animationManager._animation._texture.move(_moveXY);
 		this->_playerBody.move(_moveXY);*/
 		this->_animationManager.Update(dt);
-		
 	}
-	
+
 	for (auto& gamePart : _gameParts)
 	{
 		if (gamePart.get() == this) { continue; }
@@ -331,13 +326,13 @@ sf::Vector2f Engine::Player::GetWeaponPosition()
 	switch (_walkDirection)
 	{
 	case left:
-		return sf::Vector2f(posX , posY + this->_playerBody.getGlobalBounds().height / 2);
+		return sf::Vector2f(posX, posY + this->_playerBody.getGlobalBounds().height / 2);
 		break;
 	case right:
-		return sf::Vector2f(posX + this->_playerBody.getGlobalBounds().width , posY + this->_playerBody.getGlobalBounds().height / 2);
+		return sf::Vector2f(posX + this->_playerBody.getGlobalBounds().width, posY + this->_playerBody.getGlobalBounds().height / 2);
 		break;
 	case up:
-		return sf::Vector2f(posX + this->_playerBody.getGlobalBounds().width / 2 , posY);
+		return sf::Vector2f(posX + this->_playerBody.getGlobalBounds().width / 2, posY);
 		break;
 	case down:
 		return sf::Vector2f(posX + this->_playerBody.getGlobalBounds().width / 2, posY + this->_playerBody.getGlobalBounds().height);
@@ -371,7 +366,7 @@ void Engine::Player::SetMoveDirectionForGamePartBoundaries()
 {
 	sf::Sprite tempBody = _playerBody;
 	tempBody.move(_moveDirection);
-	for ( auto gamePart : _gameParts )
+	for (auto gamePart : _gameParts)
 	{
 		if (gamePart.get() == this) { continue; }
 		if (tempBody.getGlobalBounds().intersects(gamePart->GetGlobalBounds()))
@@ -379,6 +374,15 @@ void Engine::Player::SetMoveDirectionForGamePartBoundaries()
 			_moveDirection = sf::Vector2f(0, 0);
 		}
 	}
+}
+
+void Engine::Player::PlayerReset()
+{
+	_hp = 100;
+	_healthBar->ChangeHealthBar(1.0);
+	_position = sf::Vector2f(PLAYER_START_POSX, PLAYER_START_POSY);
+	this->_animationManager._animation._texture.setPosition(_position);
+	this->_playerBody.setPosition(_position + sf::Vector2f(PLAYER_TEXTURE_OFFSET, PLAYER_TEXTURE_OFFSET));
 }
 
 int& Engine::Player::GetLives()

@@ -32,6 +32,7 @@ namespace Engine
 	private:
 		sf::Clock _clock;
 		Hud* _hud;
+		int _count{ 0 };
 		std::vector<std::shared_ptr<Node>>& _path;
 		GameDataReference _data;
 		std::vector<std::shared_ptr<IGamePart>>& _gameParts;

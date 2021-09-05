@@ -9,11 +9,9 @@ void Engine::Enemy::InputHandler(float dt)
 
 void Engine::Enemy::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts)
 {
-	_nextPosition = _animationManager._animation._texture.getPosition() + (_targetPosition - _startPosition) * _speed * dt;
-
+	
 	SetEnemyTexture();
-
-	SetEnemyPosition();
+	SetEnemyPosition(dt);
 
 	if (abs(_animationManager._animation._texture.getPosition().x - _targetPosition.x) <= 0.01f && abs(_animationManager._animation._texture.getPosition().y - _targetPosition.y) <= 0.01f)
 	{
@@ -33,14 +31,47 @@ void Engine::Enemy::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _g
 		this->_removed = true;
 		Notify(GameEvent::enemyReachedTarget, *this);
 	}
+
 	this->_animationManager.Update(dt);
 
+	if (_hp <= 0)
+	{
+		_removed = true;
+		_healthBar->_removed = true;
+		Notify(GameEvent::enemyDestroyed, *this);
+	}
 }
 
-void Engine::Enemy::SetEnemyPosition()
+void Engine::Enemy::Draw(float dt)
 {
+	this->_animationManager.Draw(dt);
+	this->_data->window.draw(this->_enemyBody);
+	
+}
+
+void Engine::Enemy::SetEnemyPosition(float dt)
+{
+	if (_targetPosition.x > _startPosition.x)
+	{
+		_moveDirection = sf::Vector2f(1, 0);
+	}
+	else if (_targetPosition.x < _startPosition.x)
+	{
+		_moveDirection = sf::Vector2f(-1, 0);
+	}
+	else if (_targetPosition.y > _startPosition.y)
+	{
+		_moveDirection = sf::Vector2f(0, 1);
+	}
+	else if (_targetPosition.y < _startPosition.y)
+	{
+		_moveDirection = sf::Vector2f(0, -1);
+	}
+
+	_nextPosition = _animationManager._animation._texture.getPosition() + _moveDirection * _speed* dt;
 	_animationManager._animation._texture.setPosition(_nextPosition);
 	_enemyBody.setPosition(_nextPosition.x + PLAYER_TEXTURE_OFFSET, _nextPosition.y + PLAYER_TEXTURE_OFFSET);
+	_healthBar->SetPosition(sf::Vector2f(_animationManager._animation._texture.getPosition().x, _animationManager._animation._texture.getPosition().y));
 }
 
 void Engine::Enemy::SetEnemyTexture()
@@ -67,30 +98,21 @@ void Engine::Enemy::SetEnemyTexture()
 	}
 }
 
-void Engine::Enemy::Draw(float dt)
-{
-	this->_animationManager.Draw(dt);
-	this->_data->window.draw(this->_enemyBody);
-	
-}
 
 void Engine::Enemy::DealDamage(WeaponType type)
 {
 	switch (type)
 	{
 	case Engine::gun:
-		//to do deal damage
-		this->_removed = true;
-		Notify(GameEvent::enemyDestroyed, *this);
+		_hp -= 50;
 		break;
 	case Engine::rocket:
-		this->_removed = true;
-		Notify(GameEvent::enemyDestroyed, *this);
+		_hp -= -100;
 		break;
 	default:
 		break;
 	}
-
+	_healthBar->ChangeHealthBar(_hp / ENEMY_MAX_HP);
 }
 
 void Engine::Enemy::EventHandler(sf::Event event)

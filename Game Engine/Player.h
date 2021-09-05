@@ -40,6 +40,7 @@ namespace Engine
 		int& GetActiveAmmo();
 		WeaponType GetActiveWeapon() { return _weaponType; };
 		sf::Vector2f GetPlayerPosition() { return _playerBody.getPosition(); }
+		sf::Vector2f GetPlayerShootAtPos() { return sf::Vector2f(_playerBody.getPosition().x + _playerBody.getGlobalBounds().width / 2, _playerBody.getPosition().y + _playerBody.getGlobalBounds().height / 2); }
 		int& GetLives();
 		void ReduceLives();
 		std::shared_ptr<HealthBar> _healthBar;
@@ -85,6 +86,7 @@ namespace Engine
 		sf::Vector2f GetWeaponPosition();
 		void SetMoveDirectionForMapBoundaries(sf::Vector2f tempPos);
 		void SetMoveDirectionForGamePartBoundaries();
+		void PlayerReset();
 
 		// Inherited via ControllerStrategy
 		virtual void Display() override;

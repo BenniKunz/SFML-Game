@@ -22,6 +22,8 @@ namespace Engine
 		virtual ~HealthBar();
 
 		void SetPosition(sf::Vector2f pos);
+		void MovePosition(sf::Vector2f delta);
+		void ChangeHealthBar(float percentage);
 
 		// Inherited via IGamePart
 		virtual void InputHandler(float dt) override;

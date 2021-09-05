@@ -45,7 +45,7 @@ void Engine::RocketParticle::CollisionDetection(std::vector<std::shared_ptr<Engi
 		if (gamePart.get() == this || gamePart.get() == _player) { continue; }
 		else if (this->_texture.getGlobalBounds().intersects(gamePart->GetGlobalBounds()))
 		{
-			gamePart->DealDamage(WeaponType::gun);
+			gamePart->DealDamage(WeaponType::rocket);
 			this->_removed = true;
 		}
 	}
