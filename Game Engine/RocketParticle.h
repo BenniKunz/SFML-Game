@@ -14,6 +14,7 @@ namespace Engine
 			this->_texture.setScale(sf::Vector2f(0.4, 0.4));
 			SetRocketRotation();
 			_layer = weapon;
+			
 		}
 
 		virtual ~RocketParticle();
@@ -42,6 +43,8 @@ namespace Engine
 		IGamePart* _player;
 		sf::Clock _clock;
 		float _bulletLifeTime = 2.0f;
+		
+
 
 		void SetRocketRotation();
 	};

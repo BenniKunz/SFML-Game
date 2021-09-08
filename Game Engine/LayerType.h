@@ -5,7 +5,8 @@ namespace Engine
 	enum LayerType
 	{
 		standard,
-		weapon
+		weapon,
+		enemy
 	};
 }
 

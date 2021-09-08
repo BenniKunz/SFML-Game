@@ -23,7 +23,7 @@ namespace Engine
 
 			this->_enemyBody.setTexture(this->_data->assets.GetTexture("enemyBodyDown"));
 			this->_enemyBody.setPosition(_position.x + PLAYER_TEXTURE_OFFSET, _position.y + PLAYER_TEXTURE_OFFSET);
-
+			_layer = enemy;
 		};
 
 		virtual ~Enemy();

@@ -34,7 +34,11 @@ namespace Engine
 			_shootCounter.setFont(this->_data->assets.GetFont("gameFont"));
 			_shootCounter.setFillColor(sf::Color::Red);
 			_shootCounter.setCharacterSize(20);
-			_shootCounter.setPosition(_position.x + 90, _position.y);	
+			_shootCounter.setPosition(_position.x + 90, _position.y);
+
+			_rocketFire.setBuffer(this->_data->assets.GetSound("rocketFire"));
+			_gunFire.setBuffer(this->_data->assets.GetSound("gunFire"));
+			_weaponSwitch.setBuffer(this->_data->assets.GetSound("weaponSwitch"));
 		}
 
 		virtual ~Player();
@@ -78,6 +82,9 @@ namespace Engine
 		sf::Clock _clock;
 		sf::Vector2f _moveDirection;
 		sf::Text _shootCounter;
+		sf::Sound _weaponSwitch;
+		sf::Sound _gunFire;
+		sf::Sound _rocketFire;
 
 		bool _shot{ false };
 		bool _isIdle{ true };

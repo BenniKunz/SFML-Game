@@ -26,7 +26,7 @@ void Engine::MainMenuState::Init()
 	_backgroundTexture.setScale(SCREEN_WIDTH / _backgroundTexture.getGlobalBounds().width, SCREEN_HEIGHT / _backgroundTexture.getGlobalBounds().height);
 
 
-	//this->_data->assets.PlayMusic(_music, MAIN_MENU_MUSIC, true);
+	this->_data->assets.PlayMusic(_music, MAIN_MENU_MUSIC, true);
 	
 
 	std::shared_ptr<PlayButton> playButton = std::make_shared<PlayButton>(SCREEN_WIDTH / 2 ,100, _data, "playButton");
@@ -44,6 +44,11 @@ void Engine::MainMenuState::InputHandler(float dt)
 	while (this->_data->window.pollEvent(event))
 	{
 		if (sf::Event::Closed == event.type)
+		{
+			this->_data->window.close();
+		}
+
+		if (event.key.code == sf::Keyboard::Escape)
 		{
 			this->_data->window.close();
 		}

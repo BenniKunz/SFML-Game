@@ -4,7 +4,7 @@ constexpr double PI = 3.14159265358979323846;
 
 //screen
 constexpr auto SCREEN_WIDTH = 1920;
-constexpr auto SCREEN_HEIGHT = 1088;
+constexpr auto SCREEN_HEIGHT = 1080;
 
 //Splash Screen
 constexpr auto SPLASH_STATE_SHOW_TIME = 2.5;
@@ -18,6 +18,13 @@ constexpr auto MAIN_MENU_SETTINGS_BUTTON = "Resources/Buttons/button_settings.pn
 
 //Main Menu Sound
 constexpr auto MAIN_MENU_MUSIC = "Resources/main_menu_music.wav";
+
+//Game Music
+constexpr auto GAME_MUSIC = "Resources/game_music.wav";
+constexpr auto GUN_FIRE = "Resources/Sounds/gun_fire.wav";
+constexpr auto ROCKET_FIRE = "Resources/Sounds/rocket_fire.wav";
+constexpr auto TANK_FIRE = "Resources/Sounds/tank_fire.wav";
+constexpr auto WEAPON_SWITCH = "Resources/Sounds/weapon_switch.wav";
 
 //Settings
 constexpr auto SETTING_RESUME_BUTTON = "Resources/Buttons/button_resume.png";

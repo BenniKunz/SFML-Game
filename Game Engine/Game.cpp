@@ -6,7 +6,7 @@ namespace Engine
 {
 	Game::Game(int width, int height, std::string title)
 	{
-		_data->window.create(sf::VideoMode(width, height), title, sf::Style::Close | sf::Style::Titlebar);
+		_data->window.create(sf::VideoMode(width, height), title, sf::Style::Close | sf::Style::Titlebar | sf::Style::Fullscreen);
 		
 		this->_data->stateMachine.AddState(StateReference(std::make_unique<SplashState>(this->_data)), false);
 

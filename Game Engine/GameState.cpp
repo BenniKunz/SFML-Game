@@ -28,7 +28,7 @@ Engine::GameState::~GameState()
 void Engine::GameState::Init()
 {
 	LoadAssets();
-	//this->_data->assets.PlayMusic(_music, MAIN_MENU_MUSIC, true);
+	this->_data->assets.PlayMusic(_music, GAME_MUSIC, true);
 
 	_map.load("Resources/tiles.png", sf::Vector2u(TILE_WIDTH, TILE_HEIGHT), _levelTest, MAP_WIDTH, MAP_HEIGHT);
 
@@ -114,7 +114,14 @@ void Engine::GameState::LoadAssets()
 
 	_data->assets.LoadTexture("hudTable", HUD_TABLE);
 	_data->assets.LoadTexture("ammoIcon", AMMO_ICON);
-	_data->assets.LoadTexture("hpIcon", HP_ICON);
+
+	_data->assets.LoadSound("gunFire", GUN_FIRE);
+	_data->assets.LoadSound("rocketFire", ROCKET_FIRE);
+	_data->assets.LoadSound("tankFire", TANK_FIRE);
+	_data->assets.LoadSound("weaponSwitch", WEAPON_SWITCH);
+
+	
+
 }
 
 void Engine::GameState::SpawnTanks()
@@ -190,9 +197,9 @@ void Engine::GameState::InputHandler(float dt)
 
 void Engine::GameState::Update(float dt)
 {
-	sf::Vector2i pixelPos = sf::Mouse::getPosition(this->_data->window);
+	/*sf::Vector2i pixelPos = sf::Mouse::getPosition(this->_data->window);
 	sf::Vector2f worldPos = this->_data->window.mapPixelToCoords(pixelPos);
-	std::cout << worldPos.x << "//" << worldPos.y << std::endl;
+	std::cout << worldPos.x << "//" << worldPos.y << std::endl;*/
 
 	SetSFMLView();
 

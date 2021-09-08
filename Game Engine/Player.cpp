@@ -67,6 +67,19 @@ void Engine::Player::EventHandler(sf::Event event)
 			_clock.restart();
 			if (GetActiveAmmo() > 0)
 			{
+				switch (_weaponType)
+				{
+				case gun:
+					_gunFire.play();
+					break;
+				case rocket:
+					_rocketFire.play();
+					break;
+				default:
+					break;
+				}
+				
+				
 				_shot = true;
 				this->_weapon->Shoot(_data, _gameParts, GetWeaponPosition(), GetWeaponDirection(), this, 0.0f);
 				GetActiveAmmo()--;
@@ -79,7 +92,8 @@ void Engine::Player::EventHandler(sf::Event event)
 			this->_weapon = std::make_unique<Rocket>();
 			this->_weaponType = rocket;
 			this->_playerBody.setTexture(this->GetTexture());
-			Notify(weaponSwitch, *this);
+			Notify(weaponSwitch, * this);
+			_weaponSwitch.play();
 		}
 		else if (event.key.code == sf::Keyboard::O && this->_weaponType != gun)
 		{
@@ -87,6 +101,7 @@ void Engine::Player::EventHandler(sf::Event event)
 			this->_weaponType = gun;
 			this->_playerBody.setTexture(this->GetTexture());
 			Notify(weaponSwitch, *this);
+			_weaponSwitch.play();
 		}
 	}
 }

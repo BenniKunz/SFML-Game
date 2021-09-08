@@ -18,6 +18,8 @@ namespace Engine
 				this->_texture.setOrigin(_texture.getGlobalBounds().width / 2, _texture.getGlobalBounds().height / 2);
 				SetBulletRotation();
 				_layer = weapon;
+				
+				
 		}
 
 		virtual ~BulletParticle();
@@ -39,6 +41,7 @@ namespace Engine
 		IGamePart* _player;
 		sf::Clock _clock;
 		float _bulletLifeTime = 2.0f;
+		
 
 		void SetBulletRotation();
 		void CollisionDetection(std::vector<std::shared_ptr<Engine::IGamePart>>& _gameParts);
