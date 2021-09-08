@@ -12,9 +12,9 @@ namespace Engine
 		_player->RegisterObserver(this);
 
 		SetTextAttributes(_numberOfEnemiesText, this->_data->assets.GetFont("gameFont"),
-			std::to_string(_numberOfEnemies), sf::Color::Black, 80, SCREEN_WIDTH - 200, SCREEN_HEIGHT - 600);
-		SetTextAttributes(_enemiesReachedTargetText, this->_data->assets.GetFont("gameFont"),
-			std::to_string(_enemiesReachedTarget), sf::Color::Red, 80, SCREEN_WIDTH - 400, SCREEN_HEIGHT - 600);
+			std::to_string(_numberOfEnemies)+ " enemies on the map", sf::Color::White, 15, this->_data->view.getCenter().x + SCREEN_WIDTH / 3, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3);
+		SetTextAttributes(_enemiesReachedTargetText , this->_data->assets.GetFont("gameFont"),
+			std::to_string(_enemiesReachedTarget) + " enemies reached target", sf::Color::Red, 15, this->_data->view.getCenter().x + SCREEN_WIDTH / 3, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3);
 		SetTextAttributes(_activeAmmoText, this->_data->assets.GetFont("gameFont"),
 			std::to_string(_player->GetActiveAmmo()), sf::Color::White, 30, this->_data->view.getCenter().x + SCREEN_WIDTH / 3, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3);
 		
@@ -69,11 +69,13 @@ namespace Engine
 		case enemyReachedTarget:
 			_numberOfEnemies--;
 			_enemiesReachedTarget++;
-
+			_numberOfEnemiesText.setString(std::to_string(_numberOfEnemies) + " enemies on the map");
+			_enemiesReachedTargetText.setString(std::to_string(_enemiesReachedTarget) + " enemies reached target");
 			_player->ReduceLives();
 			break;
 		case enemySpawned:
 			_numberOfEnemies++;
+			_numberOfEnemiesText.setString(std::to_string(_numberOfEnemies) + " enemies on the map");
 			break;
 
 		case enemyDestroyed:
@@ -122,13 +124,13 @@ namespace Engine
 
 	void Engine::Hud::Update(float dt)
 	{
+		_numberOfEnemiesText.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3 + 8, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3 + 60);
+		_enemiesReachedTargetText.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3 + 8, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3 + 90);
 		_activeAmmoText.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3 + 37, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3);
 		_weaponTexture.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3 + 65, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3 - 5);
 		_ammoIcon.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3 + 18, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3 + 5);
-
 		_hudTable.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3);
-		_numberOfEnemiesText.setString(std::to_string(_numberOfEnemies));
-		_enemiesReachedTargetText.setString(std::to_string(_enemiesReachedTarget));
+		
 	}
 
 	void Engine::Hud::Draw(float dt)

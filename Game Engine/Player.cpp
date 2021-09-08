@@ -67,6 +67,7 @@ void Engine::Player::EventHandler(sf::Event event)
 			_clock.restart();
 			if (GetActiveAmmo() > 0)
 			{
+				_shot = true;
 				this->_weapon->Shoot(_data, _gameParts, GetWeaponPosition(), GetWeaponDirection(), this, 0.0f);
 				GetActiveAmmo()--;
 				Notify(playerShoot, *this);
@@ -174,6 +175,19 @@ void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 			//std::cout << "Player collided" << std::endl;
 		}
 	}
+	_shootCounter.setPosition(_position.x + 90, _position.y);
+	if (_shot)
+	{
+		
+		float y = _weapon->_shootingDelay - _clock.getElapsedTime().asSeconds();
+
+
+		_shootCounter.setString(std::to_string(y));
+	}
+	if (_clock.getElapsedTime().asSeconds() > _weapon->_shootingDelay)
+	{
+		_shot = false;
+	}
 }
 
 void Engine::Player::Draw(float dt)
@@ -181,7 +195,7 @@ void Engine::Player::Draw(float dt)
 	this->_animationManager.Draw(dt);
 	this->_healthBar.Draw(dt);
 	this->_data->window.draw(_playerBody);
-
+	if (_shot) { this->_data->window.draw(_shootCounter); };
 }
 
 void Engine::Player::SetPlayerTextures()

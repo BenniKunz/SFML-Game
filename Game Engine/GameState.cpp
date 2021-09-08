@@ -119,13 +119,14 @@ void Engine::GameState::LoadAssets()
 
 void Engine::GameState::SpawnTanks()
 {
-	std::array<sf::Vector2f, 22> array
+	std::array<sf::Vector2f, 28> array
 	{
 		sf::Vector2f(900, 600),sf::Vector2f(1400, 1000),sf::Vector2f(1600, 300),sf::Vector2f(1900, 500),sf::Vector2f(2200, 600),
 		sf::Vector2f(1600, 1200),sf::Vector2f(600, 1400),sf::Vector2f(400, 1000),sf::Vector2f(2500, 800),sf::Vector2f(2000, 1100),
 		sf::Vector2f(2400, 1000),sf::Vector2f(1400, 1600),sf::Vector2f(1800, 1800),sf::Vector2f(2000, 1400),sf::Vector2f(3300, 800),
 		sf::Vector2f(2800, 800),sf::Vector2f(650, 1100),sf::Vector2f(400, 1000),sf::Vector2f(200, 1400),sf::Vector2f(1200, 1200),
-		sf::Vector2f(2800, 400), sf::Vector2f(3200, 400)
+		sf::Vector2f(2800, 400), sf::Vector2f(3200, 400), sf::Vector2f(900, 1600), sf::Vector2f(1400, 100),sf::Vector2f(1400, 750),
+		sf::Vector2f(130, 830), sf::Vector2f(3000, 900),sf::Vector2f(3100, 400),
 	};
 
 	for (size_t i = 0; i < array.size(); i++)
@@ -137,10 +138,10 @@ void Engine::GameState::SpawnTanks()
 
 void Engine::GameState::SpawnHouses()
 {
-	std::array<sf::Vector2f, 6> array
+	std::array<sf::Vector2f, 7> array
 	{
 		sf::Vector2f(800, 300),sf::Vector2f(1400, 2000),sf::Vector2f(3200, 1400),sf::Vector2f(2200, 1600),sf::Vector2f(2200, 300),
-		sf::Vector2f(300, 1800)
+		sf::Vector2f(300, 1800),sf::Vector2f(3100, 1800)
 	};
 	for (size_t i = 0; i < array.size(); i++)
 	{
@@ -170,7 +171,7 @@ void Engine::GameState::InputHandler(float dt)
 		}
 		if (event.type == sf::Event::KeyPressed)
 		{
-			for (auto& gamePart : _gameParts)
+			for (auto& gamePart : gamePartsArr)
 			{
 				gamePart->EventHandler(event);
 			}
@@ -189,16 +190,16 @@ void Engine::GameState::InputHandler(float dt)
 
 void Engine::GameState::Update(float dt)
 {
-	/*sf::Vector2i pixelPos = sf::Mouse::getPosition(this->_data->window);
+	sf::Vector2i pixelPos = sf::Mouse::getPosition(this->_data->window);
 	sf::Vector2f worldPos = this->_data->window.mapPixelToCoords(pixelPos);
-	std::cout << worldPos.x << "//" << worldPos.y << std::endl;*/
+	std::cout << worldPos.x << "//" << worldPos.y << std::endl;
 
 	SetSFMLView();
 
-	/*std::vector<std::shared_ptr<IGamePart>> gamePartsArr(_gameParts.size());
-	std::copy(_gameParts.begin(), _gameParts.end(), gamePartsArr.begin());*/
+	std::vector<std::shared_ptr<IGamePart>> gamePartsArr(_gameParts.size());
+	std::copy(_gameParts.begin(), _gameParts.end(), gamePartsArr.begin());
 
-	for (auto& gamePart : _gameParts)
+	for (auto& gamePart : gamePartsArr)
 	{
 		gamePart->Update(dt, _gameParts);
 	}

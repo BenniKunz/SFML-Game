@@ -20,7 +20,7 @@ void Engine::PauseButton::InputHandler()
 
 void Engine::PauseButton::Update(float dt)
 {
-	_texture.setPosition(this->_data->view.getCenter().x + 500, this->_data->view.getCenter().y -500);
+	_texture.setPosition(this->_data->view.getCenter().x + 800, this->_data->view.getCenter().y -500);
 }
 
 void Engine::PauseButton::Draw(float dt)
