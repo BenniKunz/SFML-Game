@@ -22,9 +22,8 @@ void Engine::Tank::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _ga
 
 		angle = angle * (180.0 / PI);
 
-		SetTowerRotation(angle);
-
 		TankShooting(angle, sf::Vector2f(tank_player_n.x(), tank_player_n.y()));
+
 	}
 	
 	if (_hp <= 0)
@@ -71,7 +70,7 @@ void Engine::Tank::DealDamage(WeaponType type)
 		
 		break;
 	case Engine::rocket:
-		_hp -= 20;
+		_hp -= 75;
 		break;
 	default:
 		break;
@@ -86,6 +85,11 @@ void Engine::Tank::TankShooting(float angle, sf::Vector2f tank_player_normalized
 	length = tank_to_player.norm();
 	_weaponSpawn = sf::Vector2f(_tankTower.getPosition().x, _tankTower.getPosition().y) + sf::Vector2f(tank_player_normalized.x * 80.0, tank_player_normalized.y * 80.0);
 	_weaponDirection = sf::Vector2f(tank_to_player.normalized().x(), tank_to_player.normalized().y());
+
+	if (length <= _targetingRange)
+	{
+		SetTowerRotation(angle);
+	}
 
 	if (length <= _shootingRangeMax && length >= _shootingRangeMin && _clock.getElapsedTime().asSeconds() > _weapon->_shootingDelay)
 	{

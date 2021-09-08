@@ -10,7 +10,7 @@
 #include "Game.h"
 #include "GameOverState.h"
 #include "Item.h"
-#include "ItemSpawner.h"
+#include "House.h"
 #include "Tank.h"
 
 Engine::GameState::GameState(GameDataReference data)
@@ -27,37 +27,39 @@ Engine::GameState::~GameState()
 
 void Engine::GameState::Init()
 {
-	LoadAssets(this->_data);
+	LoadAssets();
 	//this->_data->assets.PlayMusic(_music, MAIN_MENU_MUSIC, true);
 
 	_map.load("Resources/tiles.png", sf::Vector2u(TILE_WIDTH, TILE_HEIGHT), _levelTest, MAP_WIDTH, MAP_HEIGHT);
 
-	std::shared_ptr<Graph> graph = std::make_shared<Graph>(this->_levelTest);
+	std::unique_ptr<Graph> graph = std::make_unique<Graph>(this->_levelTest);
 	graph->makeGraph();
 
-	std::shared_ptr<PauseButton> pauseButton = std::make_shared<PauseButton>(300, 100, _data, "pauseButton");
 
-	std::shared_ptr<BreadthFirstSearch> bfs = std::make_shared<BreadthFirstSearch>(graph, "bfs");
+	std::unique_ptr<BreadthFirstSearch> bfs = std::make_unique<BreadthFirstSearch>(std::move(graph), "bfs");
 	this->_path = bfs->CalculatePath();
 
-	_player = std::make_shared<Player>(sf::Vector2f{ 100,100 }, "playerWalkUp", _data, _gameParts);
+	_player = std::make_shared<Player>(sf::Vector2f{ PLAYER_START_POSX, PLAYER_START_POSY }, "playerWalkUp", _data, _gameParts);
+	std::shared_ptr<House> startPoint = std::make_shared<House>(_player, sf::Vector2f(100, 100), "humvee", _data, _gameParts);
 
-	std::shared_ptr<ItemSpawner> itemSpawner = std::make_shared<ItemSpawner>(_player, _data, _gameParts);
 	std::shared_ptr<Hud> _hud = std::make_shared<Hud>(_data, _player);
 	_hudPtr = _hud.get();
 	std::shared_ptr<EnemySpawner> enemySpawner = std::make_shared<EnemySpawner>(_path, _data, _gameParts, _hudPtr);
-	std::shared_ptr<Tank> tank = std::make_shared<Tank>(sf::Vector2f(300, 600), "tankBase", _data, _gameParts, _player);
+	
+	std::shared_ptr<PauseButton> pauseButton = std::make_shared<PauseButton>(300, 100, _data, "pauseButton");
 
-	_gameParts.push_back(tank);
+	SpawnTanks();
+	SpawnHouses();
+
+	_gameParts.push_back(startPoint);
 	_gameParts.push_back(enemySpawner);
-	_gameParts.push_back(itemSpawner);
 	_gameParts.push_back(_player);
 	_menuParts.push_back(_hud);
 	_menuParts.push_back(pauseButton);
 
 }
 
-void Engine::LoadAssets(GameDataReference _data)
+void Engine::GameState::LoadAssets()
 {
 	_data->assets.LoadTexture("backButton", PAUSE_BACK_BUTTON);
 	_data->assets.LoadTexture("pauseButton", GAME_MENU_PAUSE_BUTTON);
@@ -75,6 +77,9 @@ void Engine::LoadAssets(GameDataReference _data)
 	_data->assets.LoadTexture("tankTower", TANK_TOWER);
 	_data->assets.LoadTexture("tankBase", TANK_BASE);
 	_data->assets.LoadTexture("tankBroken", TANK_BROKEN);
+	_data->assets.LoadTexture("humvee", HUMVEE_TEXTURE);
+
+	_data->assets.LoadTexture("house", HOUSE_TEXTURE);
 
 	_data->assets.LoadTexture("playerWalkUp", PLAYER_WALK_UP);
 	_data->assets.LoadTexture("playerWalkRight", PLAYER_WALK_RIGHT);
@@ -112,6 +117,38 @@ void Engine::LoadAssets(GameDataReference _data)
 	_data->assets.LoadTexture("hpIcon", HP_ICON);
 }
 
+void Engine::GameState::SpawnTanks()
+{
+	std::array<sf::Vector2f, 22> array
+	{
+		sf::Vector2f(900, 600),sf::Vector2f(1400, 1000),sf::Vector2f(1600, 300),sf::Vector2f(1900, 500),sf::Vector2f(2200, 600),
+		sf::Vector2f(1600, 1200),sf::Vector2f(600, 1400),sf::Vector2f(400, 1000),sf::Vector2f(2500, 800),sf::Vector2f(2000, 1100),
+		sf::Vector2f(2400, 1000),sf::Vector2f(1400, 1600),sf::Vector2f(1800, 1800),sf::Vector2f(2000, 1400),sf::Vector2f(3300, 800),
+		sf::Vector2f(2800, 800),sf::Vector2f(650, 1100),sf::Vector2f(400, 1000),sf::Vector2f(200, 1400),sf::Vector2f(1200, 1200),
+		sf::Vector2f(2800, 400), sf::Vector2f(3200, 400)
+	};
+
+	for (size_t i = 0; i < array.size(); i++)
+	{
+		std::shared_ptr<Tank> tank = std::make_shared<Tank>(array[i], "tankBase", _data, _gameParts, _player);
+		_gameParts.push_back(tank);
+	}
+}
+
+void Engine::GameState::SpawnHouses()
+{
+	std::array<sf::Vector2f, 6> array
+	{
+		sf::Vector2f(800, 300),sf::Vector2f(1400, 2000),sf::Vector2f(3200, 1400),sf::Vector2f(2200, 1600),sf::Vector2f(2200, 300),
+		sf::Vector2f(300, 1800)
+	};
+	for (size_t i = 0; i < array.size(); i++)
+	{
+		std::shared_ptr<House> house = std::make_shared<House>(_player, array[i], "house", _data, _gameParts);
+		_gameParts.push_back(house);
+	}
+}
+
 void Engine::GameState::InputHandler(float dt)
 {
 
@@ -133,7 +170,7 @@ void Engine::GameState::InputHandler(float dt)
 		}
 		if (event.type == sf::Event::KeyPressed)
 		{
-			for (auto& gamePart : gamePartsArr)
+			for (auto& gamePart : _gameParts)
 			{
 				gamePart->EventHandler(event);
 			}
@@ -148,18 +185,20 @@ void Engine::GameState::InputHandler(float dt)
 	{
 		menuPart->InputHandler();
 	}
-
-
 }
 
 void Engine::GameState::Update(float dt)
 {
+	/*sf::Vector2i pixelPos = sf::Mouse::getPosition(this->_data->window);
+	sf::Vector2f worldPos = this->_data->window.mapPixelToCoords(pixelPos);
+	std::cout << worldPos.x << "//" << worldPos.y << std::endl;*/
+
 	SetSFMLView();
 
-	std::vector<std::shared_ptr<IGamePart>> gamePartsArr(_gameParts.size());
-	std::copy(_gameParts.begin(), _gameParts.end(), gamePartsArr.begin());
+	/*std::vector<std::shared_ptr<IGamePart>> gamePartsArr(_gameParts.size());
+	std::copy(_gameParts.begin(), _gameParts.end(), gamePartsArr.begin());*/
 
-	for (auto& gamePart : gamePartsArr)
+	for (auto& gamePart : _gameParts)
 	{
 		gamePart->Update(dt, _gameParts);
 	}
@@ -182,6 +221,23 @@ void Engine::GameState::Update(float dt)
 			it++;
 		}
 	}
+
+	/*for (auto& gamePart : _gameParts)
+	{
+		auto itr = _gameParts.begin();
+		while (itr != _gameParts.end())
+		{
+			if ((*itr)->_removed == true)
+			{
+				itr = _gameParts.erase(itr);
+			}
+			else
+			{
+				++itr;
+			}
+		}
+	}*/
+
 }
 
 void Engine::GameState::SetSFMLView()

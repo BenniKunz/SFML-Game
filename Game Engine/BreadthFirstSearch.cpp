@@ -2,8 +2,8 @@
 
 namespace Engine
 {
-	BreadthFirstSearch::BreadthFirstSearch(std::shared_ptr<Graph> graphPtr, std::string textureName)
-		:_graph{ graphPtr }
+	BreadthFirstSearch::BreadthFirstSearch(std::unique_ptr<Graph> graphPtr, std::string textureName)
+		:_graph{ std::move(graphPtr) }
 	{
 		
 		

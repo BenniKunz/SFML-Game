@@ -17,6 +17,7 @@ namespace Engine
 		{			
 				this->_texture.setOrigin(_texture.getGlobalBounds().width / 2, _texture.getGlobalBounds().height / 2);
 				this->_texture.setRotation(rotation);
+				_layer = weapon;
 		}
 
 		virtual ~TankBulletParticle();

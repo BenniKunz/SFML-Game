@@ -13,7 +13,7 @@ void Engine::Enemy::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _g
 	SetEnemyTexture();
 	SetEnemyPosition(dt);
 
-	if (abs(_animationManager._animation._texture.getPosition().x - _targetPosition.x) <= 0.01f && abs(_animationManager._animation._texture.getPosition().y - _targetPosition.y) <= 0.01f)
+	if (abs(_animationManager._animation._texture.getPosition().x - _targetPosition.x) <= 1.0f && abs(_animationManager._animation._texture.getPosition().y - _targetPosition.y) <= 1.0f)
 	{
 		//_texture.setPosition(_targetPosition);
 
@@ -25,19 +25,20 @@ void Engine::Enemy::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _g
 
 		}
 	}
-	if (_animationManager._animation._texture.getPosition().x >= (MAP_WIDTH - 1) * TILE_WIDTH && !_hasReachedTarget)
+	if (_animationManager._animation._texture.getPosition().x >= (MAP_WIDTH - 2) * TILE_WIDTH && !_hasReachedTarget)
 	{
 		_hasReachedTarget = true;
 		this->_removed = true;
+		this->_healthBar._removed = true;
 		Notify(GameEvent::enemyReachedTarget, *this);
 	}
 
 	this->_animationManager.Update(dt);
-
+	this->_healthBar.Update(dt, _gameParts);
 	if (_hp <= 0)
 	{
 		_removed = true;
-		_healthBar->_removed = true;
+		_healthBar._removed = true;
 		Notify(GameEvent::enemyDestroyed, *this);
 	}
 }
@@ -46,6 +47,7 @@ void Engine::Enemy::Draw(float dt)
 {
 	this->_animationManager.Draw(dt);
 	this->_data->window.draw(this->_enemyBody);
+	this->_healthBar.Draw(dt);
 	
 }
 
@@ -68,10 +70,10 @@ void Engine::Enemy::SetEnemyPosition(float dt)
 		_moveDirection = sf::Vector2f(0, -1);
 	}
 
-	_nextPosition = _animationManager._animation._texture.getPosition() + _moveDirection * _speed* dt;
+	_nextPosition = _animationManager._animation._texture.getPosition() + _moveDirection * _speed * dt;
 	_animationManager._animation._texture.setPosition(_nextPosition);
 	_enemyBody.setPosition(_nextPosition.x + PLAYER_TEXTURE_OFFSET, _nextPosition.y + PLAYER_TEXTURE_OFFSET);
-	_healthBar->SetPosition(sf::Vector2f(_animationManager._animation._texture.getPosition().x, _animationManager._animation._texture.getPosition().y));
+	_healthBar.SetPosition(sf::Vector2f(_animationManager._animation._texture.getPosition().x + 10.0, _animationManager._animation._texture.getPosition().y));
 }
 
 void Engine::Enemy::SetEnemyTexture()
@@ -107,12 +109,12 @@ void Engine::Enemy::DealDamage(WeaponType type)
 		_hp -= 50;
 		break;
 	case Engine::rocket:
-		_hp -= -100;
+		_hp -= 100;
 		break;
 	default:
 		break;
 	}
-	_healthBar->ChangeHealthBar(_hp / ENEMY_MAX_HP);
+	_healthBar.ChangeHealthBar(_hp / ENEMY_MAX_HP);
 }
 
 void Engine::Enemy::EventHandler(sf::Event event)

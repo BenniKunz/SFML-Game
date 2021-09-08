@@ -2,6 +2,7 @@
 #include "Parameters.h"
 #include "BackButton.h"
 #include "RetryButton.h"
+#include <iostream>
 
 Engine::GameOverState::GameOverState(GameDataReference data)
 	:_data{data}
@@ -11,13 +12,14 @@ Engine::GameOverState::GameOverState(GameDataReference data)
 
 Engine::GameOverState::~GameOverState()
 {
+	std::cout << "GameOver Destructor" << std::endl;
 }
 
 void Engine::GameOverState::Init()
 {
 	this->_data->assets.LoadTexture("retryButton", RETRY_BUTTON);
 
-	_backgroundTexture.setTexture(this->_data->assets.GetTexture("mainMenuBackground"));
+	_backgroundTexture.setTexture(this->_data->assets.GetTexture("menuBackground"));
 	_backgroundTexture.setScale(SCREEN_WIDTH / _backgroundTexture.getGlobalBounds().width, SCREEN_HEIGHT / _backgroundTexture.getGlobalBounds().height);
 
 	std::shared_ptr<BackButton> backButton = std::make_shared<BackButton>(490, 100, _data, "backButton");

@@ -13,6 +13,7 @@ namespace Engine
 		{
 			this->_texture.setScale(sf::Vector2f(0.4, 0.4));
 			SetRocketRotation();
+			_layer = weapon;
 		}
 
 		virtual ~RocketParticle();

@@ -64,7 +64,6 @@ namespace Engine
 
 	void Hud::OnNotify(GameEvent gameEvent, IGamePart& gamePart)
 	{
-		std::string text = " " + gamePart._name;
 		switch (gameEvent)
 		{
 		case enemyReachedTarget:
@@ -91,20 +90,20 @@ namespace Engine
 			_activeAmmoText.setString(std::to_string(_player->GetActiveAmmo()));
 
 			SetTextAttributes(_itemText, this->_data->assets.GetFont("gameFont"),
-				std::to_string(gamePart._value) + text + " picked up", sf::Color::Black, 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5);
+				std::to_string(gamePart._value) + " bullets" + " picked up", sf::Color::Black, 60, this->_data->view.getCenter().x, this->_data->view.getCenter().y - 100.0);
 			_itemCollected = true;
 			break;
 		case rocketsCollected:
 			_activeAmmoText.setString(std::to_string(_player->GetActiveAmmo()));
 			SetTextAttributes(_itemText, this->_data->assets.GetFont("gameFont"),
-			std::to_string(gamePart._value) + text + " picked up", sf::Color::Black, 60, this->_data->view.getCenter().x, this->_data->view.getCenter().y - 100.0);
+			std::to_string(gamePart._value) + " rockets" + " picked up", sf::Color::Black, 60, this->_data->view.getCenter().x, this->_data->view.getCenter().y - 100.0);
 			
 			_itemCollected = true;
 			break;
 
 		case healthCollected:
 			SetTextAttributes(_itemText, this->_data->assets.GetFont("gameFont"),
-				std::to_string(gamePart._value) + text + " picked up", sf::Color::Black, 60, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5);
+				std::to_string(gamePart._value) + " hp" + " picked up", sf::Color::Black, 60, this->_data->view.getCenter().x, this->_data->view.getCenter().y - 100.0);
 			_itemCollected = true;
 		default:
 

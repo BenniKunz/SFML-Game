@@ -17,7 +17,7 @@ namespace Engine
 		{		
 				this->_texture.setOrigin(_texture.getGlobalBounds().width / 2, _texture.getGlobalBounds().height / 2);
 				SetBulletRotation();
-			
+				_layer = weapon;
 		}
 
 		virtual ~BulletParticle();

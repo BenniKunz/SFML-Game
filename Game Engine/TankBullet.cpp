@@ -3,6 +3,7 @@
 
 Engine::TankBullet::TankBullet()
 {
+	_shootingDelay = 2.5f;
 }
 
 Engine::TankBullet::~TankBullet()

@@ -39,9 +39,10 @@ namespace Engine
 			currentTime = newTime;
 			accumulator += frameTime;
 
+			this->_data->stateMachine.GetActiveState()->InputHandler(dt);
+			
 			while (accumulator >= dt)
 			{
-				this->_data->stateMachine.GetActiveState()->InputHandler(dt);
 				this->_data->stateMachine.GetActiveState()->Update(dt);
 				
 				accumulator -= dt;

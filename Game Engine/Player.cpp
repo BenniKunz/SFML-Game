@@ -23,7 +23,7 @@ void Engine::Player::DealDamage(WeaponType type)
 	}
 
 	float reduce = _hp / 100.0;
-	_healthBar->ChangeHealthBar(reduce);
+	_healthBar.ChangeHealthBar(reduce);
 }
 
 void Engine::Player::CollectItem(ItemType type, int value, IGamePart* gamePart)
@@ -31,7 +31,8 @@ void Engine::Player::CollectItem(ItemType type, int value, IGamePart* gamePart)
 	if (type == health && static_cast<float>(value) + _hp > PLAYER_MAX_HP)
 	{
 		_hp = PLAYER_MAX_HP;
-		_healthBar->ChangeHealthBar(1.0);
+		_healthBar.ChangeHealthBar(1.0);
+		Notify(healthCollected, *gamePart);
 		return;
 	}
 
@@ -48,7 +49,8 @@ void Engine::Player::CollectItem(ItemType type, int value, IGamePart* gamePart)
 
 	case health:
 		_hp += static_cast<float>(value);
-		_healthBar->ChangeHealthBar(_hp / PLAYER_MAX_HP);
+		_healthBar.ChangeHealthBar(_hp / PLAYER_MAX_HP);
+		Notify(healthCollected, *gamePart);
 		break;
 
 	default:
@@ -149,7 +151,7 @@ void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 	SetMoveDirectionForGamePartBoundaries();
 	_position += _moveDirection * _speed * dt;
 
-	_healthBar->SetPosition(_position);
+	_healthBar.SetPosition(sf::Vector2f(_position.x + 10, _position.y));
 
 	//_moveXY *= _speed;
 
@@ -161,6 +163,7 @@ void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 		/*this->_animationManager._animation._texture.move(_moveXY);
 		this->_playerBody.move(_moveXY);*/
 		this->_animationManager.Update(dt);
+		this->_healthBar.Update(dt, _gameParts);
 	}
 
 	for (auto& gamePart : _gameParts)
@@ -168,7 +171,7 @@ void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 		if (gamePart.get() == this) { continue; }
 		else if (this->_playerBody.getGlobalBounds().intersects(gamePart->GetGlobalBounds()))
 		{
-			std::cout << "Player collided" << std::endl;
+			//std::cout << "Player collided" << std::endl;
 		}
 	}
 }
@@ -176,7 +179,9 @@ void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 void Engine::Player::Draw(float dt)
 {
 	this->_animationManager.Draw(dt);
+	this->_healthBar.Draw(dt);
 	this->_data->window.draw(_playerBody);
+
 }
 
 void Engine::Player::SetPlayerTextures()
@@ -379,10 +384,12 @@ void Engine::Player::SetMoveDirectionForGamePartBoundaries()
 void Engine::Player::PlayerReset()
 {
 	_hp = 100;
-	_healthBar->ChangeHealthBar(1.0);
+	_healthBar.ChangeHealthBar(1.0);
 	_position = sf::Vector2f(PLAYER_START_POSX, PLAYER_START_POSY);
 	this->_animationManager._animation._texture.setPosition(_position);
 	this->_playerBody.setPosition(_position + sf::Vector2f(PLAYER_TEXTURE_OFFSET, PLAYER_TEXTURE_OFFSET));
+	_data->view.reset(sf::FloatRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT));
+	_data->window.setView(_data->view);
 }
 
 int& Engine::Player::GetLives()

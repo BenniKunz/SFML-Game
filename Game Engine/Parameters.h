@@ -28,6 +28,8 @@ constexpr auto GAME_MENU_PAUSE_BUTTON = "Resources/Buttons/button_pause.png";
 constexpr auto AMMO_TEXTURE = "Resources/Items/ammo.png";
 constexpr auto HP_TEXTURE = "Resources/Items/hp.png";
 constexpr auto SPEED_TEXTURE = "Resources/Items/speed.png";
+constexpr auto HOUSE_TEXTURE = "Resources/Buildings/house.png";
+constexpr auto HUMVEE_TEXTURE = "Resources/humvee.png";
 constexpr auto MAP_WIDTH = 60;
 constexpr auto MAP_HEIGHT = 34;
 constexpr auto TILE_WIDTH = 64;
@@ -58,8 +60,8 @@ constexpr auto PLAYER_WALK_UP = "Resources/player_walk_up.png";
 constexpr auto PLAYER_WALK_RIGHT = "Resources/player_walk_right.png";
 constexpr auto PLAYER_WALK_LEFT = "Resources/player_walk_left.png";
 constexpr auto PLAYER_WALK_DOWN = "Resources/player_walk_down.png";
-constexpr auto PLAYER_START_POSX = 300;
-constexpr auto PLAYER_START_POSY = 1200;
+constexpr auto PLAYER_START_POSX = 100;
+constexpr auto PLAYER_START_POSY = 300;
 constexpr auto PLAYER_MAX_HP = 100;
 
 

@@ -42,7 +42,7 @@ void Engine::RocketParticle::CollisionDetection(std::vector<std::shared_ptr<Engi
 {
 	for (auto& gamePart : _gameParts)
 	{
-		if (gamePart.get() == this || gamePart.get() == _player) { continue; }
+		if (gamePart.get() == this || gamePart.get() == _player || gamePart->_layer == weapon) { continue; }
 		else if (this->_texture.getGlobalBounds().intersects(gamePart->GetGlobalBounds()))
 		{
 			gamePart->DealDamage(WeaponType::rocket);
