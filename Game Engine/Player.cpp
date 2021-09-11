@@ -28,6 +28,7 @@ void Engine::Player::DealDamage(WeaponType type)
 
 void Engine::Player::CollectItem(ItemType type, int value, IGamePart* gamePart)
 {
+	_weaponSwitch.play();
 	if (type == health && static_cast<float>(value) + _hp > PLAYER_MAX_HP)
 	{
 		_hp = PLAYER_MAX_HP;
@@ -62,7 +63,7 @@ void Engine::Player::EventHandler(sf::Event event)
 {
 	if (event.type == sf::Event::KeyPressed)
 	{
-		if (event.key.code == sf::Keyboard::M && _clock.getElapsedTime().asSeconds() > _weapon->_shootingDelay)
+		if (event.key.code == sf::Keyboard::L && _clock.getElapsedTime().asSeconds() > _weapon->_shootingDelay)
 		{
 			_clock.restart();
 			if (GetActiveAmmo() > 0)
@@ -78,8 +79,8 @@ void Engine::Player::EventHandler(sf::Event event)
 				default:
 					break;
 				}
-				
-				
+
+
 				_shot = true;
 				this->_weapon->Shoot(_data, _gameParts, GetWeaponPosition(), GetWeaponDirection(), this, 0.0f);
 				GetActiveAmmo()--;
@@ -92,10 +93,10 @@ void Engine::Player::EventHandler(sf::Event event)
 			this->_weapon = std::make_unique<Rocket>();
 			this->_weaponType = rocket;
 			this->_playerBody.setTexture(this->GetTexture());
-			Notify(weaponSwitch, * this);
+			Notify(weaponSwitch, *this);
 			_weaponSwitch.play();
 		}
-		else if (event.key.code == sf::Keyboard::O && this->_weaponType != gun)
+		else if (event.key.code == sf::Keyboard::P && this->_weaponType != gun)
 		{
 			this->_weapon = std::make_unique<Bullet>();
 			this->_weaponType = gun;
@@ -110,6 +111,7 @@ void Engine::Player::InputHandler(float dt)
 {
 	float x{ 0.0 };
 	float y{ 0.0 };
+	_isIdle = true;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
@@ -121,7 +123,7 @@ void Engine::Player::InputHandler(float dt)
 		x = -1.0f;
 		y = 0.0f;
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		_isIdle = false;
 		if (_walkDirection != right)
@@ -131,7 +133,7 @@ void Engine::Player::InputHandler(float dt)
 		x = 1.0f;
 		y = 0.0f;
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
 		_isIdle = false;
 		if (_walkDirection != up)
@@ -141,7 +143,7 @@ void Engine::Player::InputHandler(float dt)
 		x = 0.0f;
 		y = -1.0f;
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
 		_isIdle = false;
 		if (_walkDirection != down)
@@ -151,12 +153,9 @@ void Engine::Player::InputHandler(float dt)
 		x = 0.0f;
 		y = 1.0f;
 	}
-	else
-	{
-		_isIdle = true;
-	}
-
+	
 	_moveDirection = sf::Vector2f(x, y);
+
 }
 
 void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts)
@@ -193,7 +192,7 @@ void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 	_shootCounter.setPosition(_position.x + 90, _position.y);
 	if (_shot)
 	{
-		
+
 		float y = _weapon->_shootingDelay - _clock.getElapsedTime().asSeconds();
 
 

@@ -41,12 +41,12 @@ namespace Engine
 
 			this->_data->stateMachine.GetActiveState()->InputHandler(dt);
 			
-			while (accumulator >= dt)
-			{
-				this->_data->stateMachine.GetActiveState()->Update(dt);
+		/*	while (accumulator >= dt)
+			{*/
+				this->_data->stateMachine.GetActiveState()->Update(frameTime);
 				
-				accumulator -= dt;
-			}
+				/*accumulator -= dt;*/
+			//}
 
 			interpolation = accumulator / dt;
 

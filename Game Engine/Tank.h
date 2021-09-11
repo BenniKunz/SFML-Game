@@ -19,6 +19,9 @@ namespace Engine
 			_healthBar = std::make_shared<HealthBar>(sf::Vector2f(_position.x + 30, _position.y), "healthBarRed", _data, _gameParts);
 			this->_weapon = std::make_unique<TankBullet>();
 			_gameParts.push_back(_healthBar);
+
+			_hit.setBuffer(this->_data->assets.GetSound("tankHit"));
+			_destruction.setBuffer(this->_data->assets.GetSound("tankDestruction"));
 		}
 
 		virtual ~Tank();
@@ -42,6 +45,8 @@ namespace Engine
 		sf::Clock _clock;
 		sf::Vector2f _weaponSpawn;
 		sf::Vector2f _weaponDirection;
+		sf::Sound _hit;
+		sf::Sound _destruction;
 
 		void SetTowerRotation(float& angle);
 		void TankShooting(float angle, sf::Vector2f tank_player_normalized);

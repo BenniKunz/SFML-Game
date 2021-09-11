@@ -19,7 +19,7 @@ namespace Engine
 	{
 	public:
 
-		GameState(GameDataReference data);
+		GameState(GameDataReference data, int level);
 		virtual ~GameState();
 
 		// Inherited via State
@@ -30,7 +30,9 @@ namespace Engine
 
 	private:
 		void SetSFMLView();
-
+		void CheckIfPlayerDead();
+		void CheckIfGameWon();
+		int _currentLevel;
 		Hud* _hudPtr;
 		std::shared_ptr<Player> _player;
 

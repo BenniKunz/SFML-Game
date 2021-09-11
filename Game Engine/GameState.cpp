@@ -12,9 +12,10 @@
 #include "Item.h"
 #include "House.h"
 #include "Tank.h"
+#include "WinState.h"
 
-Engine::GameState::GameState(GameDataReference data)
-	:_data{ data }, _hudPtr{ nullptr }
+Engine::GameState::GameState(GameDataReference data, int level)
+	:_data{ data }, _hudPtr{ nullptr }, _currentLevel{level}
 {
 	
 }
@@ -103,8 +104,6 @@ void Engine::GameState::LoadAssets()
 	_data->assets.LoadTexture("healthBarRed", HEALTH_BAR_RED);
 	_data->assets.LoadTexture("healthBarGreen", HEALTH_BAR_GREEN);
 
-	_data->assets.LoadFont("gameFont", GAME_FONT);
-
 	_data->assets.LoadTexture("ammoTexture", AMMO_TEXTURE);
 	_data->assets.LoadTexture("hpTexture", HP_TEXTURE);
 	_data->assets.LoadTexture("speedTexture", SPEED_TEXTURE);
@@ -114,14 +113,16 @@ void Engine::GameState::LoadAssets()
 
 	_data->assets.LoadTexture("hudTable", HUD_TABLE);
 	_data->assets.LoadTexture("ammoIcon", AMMO_ICON);
+	_data->assets.LoadTexture("hpIcon", HP_ICON);
 
 	_data->assets.LoadSound("gunFire", GUN_FIRE);
 	_data->assets.LoadSound("rocketFire", ROCKET_FIRE);
 	_data->assets.LoadSound("tankFire", TANK_FIRE);
 	_data->assets.LoadSound("weaponSwitch", WEAPON_SWITCH);
-
-	
-
+	_data->assets.LoadSound("tankHit", TANK_HIT);
+	_data->assets.LoadSound("tankDestruction", TANK_DESTRUCTION);
+	_data->assets.LoadSound("enemyHit", ENEMY_HIT);
+	_data->assets.LoadSound("enemyDestruction", ENEMY_DESTRUCTION);
 }
 
 void Engine::GameState::SpawnTanks()
@@ -159,12 +160,6 @@ void Engine::GameState::SpawnHouses()
 
 void Engine::GameState::InputHandler(float dt)
 {
-
-	if (_player->GetLives() <= 0)
-	{
-		this->_data->stateMachine.AddState(StateReference(std::make_unique<GameOverState>(this->_data)), true);
-
-	}
 	sf::Event event;
 
 	std::vector<std::shared_ptr<IGamePart>> gamePartsArr(_gameParts.size());
@@ -201,6 +196,8 @@ void Engine::GameState::Update(float dt)
 	sf::Vector2f worldPos = this->_data->window.mapPixelToCoords(pixelPos);
 	std::cout << worldPos.x << "//" << worldPos.y << std::endl;*/
 
+	CheckIfPlayerDead();
+	CheckIfGameWon();
 	SetSFMLView();
 
 	std::vector<std::shared_ptr<IGamePart>> gamePartsArr(_gameParts.size());
@@ -281,6 +278,25 @@ void Engine::GameState::SetSFMLView()
 	{
 		this->_data->view.setCenter(_player->GetPlayerPosition());
 		_data->window.setView(_data->view);
+	}
+}
+
+void Engine::GameState::CheckIfPlayerDead()
+{
+	if (_player->GetLives() <= 0)
+	{
+		this->_data->stateMachine.AddState(StateReference(std::make_unique<GameOverState>(this->_data)), true);
+		return;
+	}
+}
+
+void Engine::GameState::CheckIfGameWon()
+{
+
+	if (_hudPtr->GetNumberOfEnemiesDestroyed() == NUMBER_OF_ENEMIES_LEVEL_ONE + _currentLevel * 10)
+	{
+		this->_data->stateMachine.AddState(StateReference(std::make_unique<WinState>(this->_data, _currentLevel)), true);
+		return;
 	}
 }
 

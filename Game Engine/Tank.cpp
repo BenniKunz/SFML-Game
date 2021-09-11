@@ -28,6 +28,7 @@ void Engine::Tank::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _ga
 	
 	if (_hp <= 0)
 	{
+		_destruction.play();
 		_broken = true;
 		_texture.setTexture(this->_data->assets.GetTexture("tankBroken"));
 		_healthBar->_removed = true;
@@ -67,14 +68,16 @@ void Engine::Tank::DealDamage(WeaponType type)
 	{
 	case Engine::gun:
 		_hp -= 5;
-		
+		_hit.play();
 		break;
 	case Engine::rocket:
+		_hit.play();
 		_hp -= 75;
 		break;
 	default:
 		break;
 	}
+	
 	_healthBar->ChangeHealthBar(_hp / TANK_MAX_HP);
 }
 

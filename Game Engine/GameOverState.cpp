@@ -23,10 +23,17 @@ void Engine::GameOverState::Init()
 	_backgroundTexture.setScale(SCREEN_WIDTH / _backgroundTexture.getGlobalBounds().width, SCREEN_HEIGHT / _backgroundTexture.getGlobalBounds().height);
 
 	std::shared_ptr<BackButton> backButton = std::make_shared<BackButton>(490, 100, _data, "backButton");
-	std::shared_ptr<RetryButton> retryButton = std::make_shared<RetryButton>(490, 400, _data, "retryButton");
+	std::shared_ptr<RetryButton> retryButton = std::make_shared<RetryButton>(190, 100, _data, "retryButton");
+
+	_loosingMessage.setFont(this->_data->assets.GetFont("gameFont"));
+	_loosingMessage.setString("YOU LOST!");
+	_loosingMessage.setFillColor(sf::Color::White);
+	_loosingMessage.setCharacterSize(60);
+	_loosingMessage.setPosition(SCREEN_WIDTH / 3, 150);
 
 	_menuParts.push_back(backButton);
 	_menuParts.push_back(retryButton);
+
 
 }
 
@@ -63,6 +70,7 @@ void Engine::GameOverState::Draw(float dt)
 {
 	this->_data->window.clear(sf::Color::Red);
 	this->_data->window.draw(this->_backgroundTexture);
+	this->_data->window.draw(this->_loosingMessage);
 
 	for (auto menuPart : _menuParts)
 	{

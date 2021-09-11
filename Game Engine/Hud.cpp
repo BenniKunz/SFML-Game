@@ -9,6 +9,7 @@ namespace Engine
 	{
 		_numberOfEnemies = 0;
 		_enemiesReachedTarget = 0;
+		_enemiesDestroyed = 0 ;
 		_player->RegisterObserver(this);
 
 		SetTextAttributes(_numberOfEnemiesText, this->_data->assets.GetFont("gameFont"),
@@ -30,6 +31,8 @@ namespace Engine
 		_ammoIcon.setPosition(this->_data->view.getCenter().x + SCREEN_WIDTH / 3, this->_data->view.getCenter().y + SCREEN_HEIGHT / 3);
 
 		_hp.setTexture(this->_data->assets.GetTexture("hpIcon"));
+
+		_enemyDestruction.setBuffer(this->_data->assets.GetSound("enemyDestruction"));
 	}
 
 	Hud::~Hud()
@@ -80,6 +83,8 @@ namespace Engine
 
 		case enemyDestroyed:
 			_numberOfEnemies--;
+			_enemiesDestroyed++;
+			_enemyDestruction.play();
 			break;
 		case playerShoot:
 			_activeAmmoText.setString(std::to_string(_player->GetActiveAmmo()));
@@ -116,6 +121,11 @@ namespace Engine
 	void Hud::Display()
 	{
 
+	}
+
+	int Hud::GetNumberOfEnemiesDestroyed()
+	{
+		return _enemiesDestroyed;
 	}
 
 	void Engine::Hud::InputHandler()

@@ -114,6 +114,7 @@ void Engine::Enemy::DealDamage(WeaponType type)
 	default:
 		break;
 	}
+	_hit.play();
 	_healthBar.ChangeHealthBar(_hp / ENEMY_MAX_HP);
 }
 

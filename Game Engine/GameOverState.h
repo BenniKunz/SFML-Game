@@ -22,6 +22,7 @@ namespace Engine
 		GameDataReference _data;
 		std::vector<std::shared_ptr<IMenuPart>> _menuParts;
 		sf::Sprite _backgroundTexture;
+		sf::Text _loosingMessage;
 	};
 }
 

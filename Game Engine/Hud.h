@@ -20,11 +20,14 @@ namespace Engine
 		// Inherited via IObserver
 		virtual void OnNotify(GameEvent gameEvent, IGamePart& gamePart) override;
 		virtual void Display() override;
+
+		int GetNumberOfEnemiesDestroyed();
 	private:
 		GameDataReference _data;
 		std::shared_ptr<Player> _player;
 		int _numberOfEnemies;
 		int _enemiesReachedTarget;
+		int _enemiesDestroyed;
 
 		sf::Text _numberOfEnemiesText;
 		sf::Text _enemiesReachedTargetText;
@@ -36,6 +39,7 @@ namespace Engine
 		sf::Sprite _ammoIcon;
 		sf::Sprite _hudTable;
 		sf::Sprite _hp;
+		sf::Sound _enemyDestruction;
 		bool _clockStarted{ false };
 
 		bool _itemCollected { false };

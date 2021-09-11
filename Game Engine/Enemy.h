@@ -24,6 +24,8 @@ namespace Engine
 			this->_enemyBody.setTexture(this->_data->assets.GetTexture("enemyBodyDown"));
 			this->_enemyBody.setPosition(_position.x + PLAYER_TEXTURE_OFFSET, _position.y + PLAYER_TEXTURE_OFFSET);
 			_layer = enemy;
+
+			_hit.setBuffer(this->_data->assets.GetSound("enemyHit"));
 		};
 
 		virtual ~Enemy();
@@ -48,6 +50,7 @@ namespace Engine
 		sf::Vector2f _moveDirection;
 		HealthBar _healthBar;
 		float _hp{ ENEMY_MAX_HP };
+		sf::Sound _hit;
 
 		float _speed;
 		bool _hasReachedTarget;

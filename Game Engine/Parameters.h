@@ -15,6 +15,7 @@ constexpr auto SPLASH_STATE_LOGO = "Resources/logo.png";
 constexpr auto MENU_BACKGROUND = "Resources/menu_background.png";
 constexpr auto MAIN_MENU_PLAY_BUTTON = "Resources/Buttons/button_play.png";
 constexpr auto MAIN_MENU_SETTINGS_BUTTON = "Resources/Buttons/button_settings.png";
+constexpr auto MAIN_MENU_BOMBER = "Resources/bomber.png";
 
 //Main Menu Sound
 constexpr auto MAIN_MENU_MUSIC = "Resources/main_menu_music.wav";
@@ -25,6 +26,10 @@ constexpr auto GUN_FIRE = "Resources/Sounds/gun_fire.wav";
 constexpr auto ROCKET_FIRE = "Resources/Sounds/rocket_fire.wav";
 constexpr auto TANK_FIRE = "Resources/Sounds/tank_fire.wav";
 constexpr auto WEAPON_SWITCH = "Resources/Sounds/weapon_switch.wav";
+constexpr auto TANK_HIT = "Resources/Sounds/tank_hit.wav";
+constexpr auto TANK_DESTRUCTION = "Resources/Sounds/tank_destruction.wav";
+constexpr auto ENEMY_HIT = "Resources/Sounds/enemy_hit.wav";
+constexpr auto ENEMY_DESTRUCTION = "Resources/Sounds/enemy_destroyed.wav";
 
 //Settings
 constexpr auto SETTING_RESUME_BUTTON = "Resources/Buttons/button_resume.png";
@@ -41,6 +46,7 @@ constexpr auto MAP_WIDTH = 60;
 constexpr auto MAP_HEIGHT = 34;
 constexpr auto TILE_WIDTH = 64;
 constexpr auto TILE_HEIGHT = 64;
+constexpr auto NUMBER_OF_ENEMIES_LEVEL_ONE = 2;
 
 //GameOver
 constexpr auto RETRY_BUTTON = "Resources/Buttons/button_retry.png";
@@ -107,6 +113,9 @@ constexpr auto HP_ICON = "Resources/Hud/hp_icon.png";
 //Pause
 constexpr auto PAUSE_RESUME_BUTTON = "Resources/Buttons/button_resume.png";
 constexpr auto PAUSE_BACK_BUTTON = "Resources/Buttons/button_back.png";
+
+//Win
+constexpr auto NEXT_LEVEL_BUTTON = "Resources/Buttons/next_level.png";
 
 //Font
 constexpr auto GAME_FONT = "Resources/game_font.ttf";

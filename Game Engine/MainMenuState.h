@@ -25,8 +25,11 @@ namespace Engine
 		std::vector<std::shared_ptr<IMenuPart>> _menuParts;
 
 		sf::Sprite _backgroundTexture;
-
+		sf::Sprite _bomber;
+		sf::Sprite _bomberTwo;
 		sf::Clock _clock;
+		sf::Text _instructions;
+		sf::Text _exitText;
 	};
 }
 
