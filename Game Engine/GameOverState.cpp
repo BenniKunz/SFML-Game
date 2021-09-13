@@ -25,7 +25,7 @@ void Engine::GameOverState::Init()
 	std::shared_ptr<BackButton> backButton = std::make_shared<BackButton>(490, 100, _data, "backButton");
 	std::shared_ptr<RetryButton> retryButton = std::make_shared<RetryButton>(190, 100, _data, "retryButton");
 
-	_loosingMessage.setFont(this->_data->assets.GetFont("gameFont"));
+	_loosingMessage.setFont(*this->_data->assets.GetFont("gameFont"));
 	_loosingMessage.setString("YOU LOST!");
 	_loosingMessage.setFillColor(sf::Color::White);
 	_loosingMessage.setCharacterSize(60);

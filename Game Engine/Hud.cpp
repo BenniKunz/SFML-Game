@@ -32,7 +32,7 @@ namespace Engine
 
 		_hp.setTexture(this->_data->assets.GetTexture("hpIcon"));
 
-		_enemyDestruction.setBuffer(this->_data->assets.GetSound("enemyDestruction"));
+		_enemyDestruction.setBuffer(*this->_data->assets.GetSound("enemyDestruction"));
 	}
 
 	Hud::~Hud()
@@ -40,9 +40,9 @@ namespace Engine
 		std::cout << "Hud destructor called" << std::endl;
 	}
 
-	void Hud::SetTextAttributes(sf::Text& text, sf::Font& font, std::string output, sf::Color color, int characterSize, int x, int y)
+	void Hud::SetTextAttributes(sf::Text& text, std::shared_ptr<sf::Font> font, std::string output, sf::Color color, int characterSize, int x, int y)
 	{
-		text.setFont(font);
+		text.setFont(*font);
 		text.setString(output);
 		text.setFillColor(color);
 		text.setCharacterSize(characterSize);

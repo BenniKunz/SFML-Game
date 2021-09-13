@@ -44,7 +44,7 @@ namespace Engine
 
 		bool _itemCollected { false };
 
-		void SetTextAttributes(sf::Text& text, sf::Font &font, std::string output, sf::Color color, int characterSize, int x, int y);
+		void SetTextAttributes(sf::Text& text, std::shared_ptr<sf::Font>, std::string output, sf::Color color, int characterSize, int x, int y);
 		void ChangeWeaponTexture();
 
 		// Inherited via IGamePart

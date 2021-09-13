@@ -30,30 +30,30 @@ namespace Engine
 
 	void AssetManager::LoadFont(std::string name, std::string fileName)
 	{
-		sf::Font font;
+		std::shared_ptr<sf::Font> font = std::make_shared<sf::Font>();
 
-		if (font.loadFromFile(fileName))
+		if (font->loadFromFile(fileName))
 		{
 			this->_fonts[name] = font;
 		}
 
 	}
 
-	sf::Font& AssetManager::GetFont(std::string name)
+	std::shared_ptr<sf::Font> AssetManager::GetFont(std::string name)
 	{
 		return this->_fonts[name];
 	}
 	void AssetManager::LoadSound(std::string name, std::string fileName)
 	{
-		sf::SoundBuffer buffer;
+		std::shared_ptr<sf::SoundBuffer> buffer = std::make_shared<sf::SoundBuffer>();
 
-		if (buffer.loadFromFile(fileName))
+		if (buffer->loadFromFile(fileName))
 		{
 			this->_sounds.insert(std::make_pair(name, buffer));
 		}
 	}
 
-	sf::SoundBuffer& AssetManager::GetSound(std::string name)
+	std::shared_ptr<sf::SoundBuffer> AssetManager::GetSound(std::string name)
 	{
 		return this->_sounds[name];
 	}

@@ -14,7 +14,7 @@ namespace Engine
 		this->_isAdding = true;
 		this->_isReplacing = isReplacing;
 
-		this->_newState = std::move(newState);
+		this->_newState = newState;
 
 	}
 
@@ -52,7 +52,7 @@ namespace Engine
 					this->_states.top()->Pause();
 				}
 			}
-			this->_states.push(std::move(this->_newState));
+			this->_states.push(this->_newState);
 			this->_states.top()->Init();
 			this->_isAdding = false;
 

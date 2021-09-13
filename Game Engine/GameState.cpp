@@ -287,7 +287,7 @@ void Engine::GameState::CheckIfPlayerDead()
 {
 	if (_player->GetLives() <= 0)
 	{
-		this->_data->stateMachine.AddState(StateReference(std::make_unique<GameOverState>(this->_data)), true);
+		this->_data->stateMachine.AddState(StateReference(std::make_shared<GameOverState>(this->_data)), true);
 		return;
 	}
 }
@@ -297,7 +297,7 @@ void Engine::GameState::CheckIfGameWon()
 
 	if (_hudPtr->GetNumberOfEnemiesDestroyed() == NUMBER_OF_ENEMIES_LEVEL_ONE + _currentLevel * 10)
 	{
-		this->_data->stateMachine.AddState(StateReference(std::make_unique<WinState>(this->_data, _currentLevel)), true);
+		this->_data->stateMachine.AddState(StateReference(std::make_shared<WinState>(this->_data, _currentLevel)), true);
 		return;
 	}
 }

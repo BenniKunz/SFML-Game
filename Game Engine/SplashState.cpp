@@ -47,7 +47,7 @@ namespace Engine
 	{
 		if (this->_clock.getElapsedTime().asSeconds() > SPLASH_STATE_SHOW_TIME)
 		{
-			this->_data->stateMachine.AddState(StateReference(std::make_unique<MainMenuState>(this->_data)), true);
+			this->_data->stateMachine.AddState(StateReference(std::make_shared<MainMenuState>(this->_data)), true);
 			this->_data->stateMachine.ProcessStateChanges();
 		}
 

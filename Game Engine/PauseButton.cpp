@@ -14,7 +14,7 @@ void Engine::PauseButton::InputHandler()
 
 	if (Button::IsClicked(this->_texture, _previousClicked, _currentClicked))
 	{
-		this->_data->stateMachine.AddState(StateReference(std::make_unique<PauseState>(this->_data)), false);
+		this->_data->stateMachine.AddState(StateReference(std::make_shared<PauseState>(this->_data)), false);
 	}
 }
 

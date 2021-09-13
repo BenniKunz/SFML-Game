@@ -20,8 +20,8 @@ namespace Engine
 			this->_weapon = std::make_unique<TankBullet>();
 			_gameParts.push_back(_healthBar);
 
-			_hit.setBuffer(this->_data->assets.GetSound("tankHit"));
-			_destruction.setBuffer(this->_data->assets.GetSound("tankDestruction"));
+			_hit.setBuffer(*this->_data->assets.GetSound("tankHit"));
+			_destruction.setBuffer(*this->_data->assets.GetSound("tankDestruction"));
 		}
 
 		virtual ~Tank();

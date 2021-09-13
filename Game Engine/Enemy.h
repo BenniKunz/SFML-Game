@@ -25,7 +25,7 @@ namespace Engine
 			this->_enemyBody.setPosition(_position.x + PLAYER_TEXTURE_OFFSET, _position.y + PLAYER_TEXTURE_OFFSET);
 			_layer = enemy;
 
-			_hit.setBuffer(this->_data->assets.GetSound("enemyHit"));
+			_hit.setBuffer(*this->_data->assets.GetSound("enemyHit"));
 		};
 
 		virtual ~Enemy();

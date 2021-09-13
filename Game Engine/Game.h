@@ -25,7 +25,6 @@ namespace Engine
 		Game(int width, int height, std::string title);
 
 	private:
-		const float dt = 1.0f / 60.0f;
 		sf::Clock _clock;
 
 		GameDataReference _data = std::make_shared<GameData>();

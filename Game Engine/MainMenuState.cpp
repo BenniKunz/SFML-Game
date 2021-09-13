@@ -36,13 +36,13 @@ void Engine::MainMenuState::Init()
 	std::shared_ptr<PlayButton> playButton = std::make_shared<PlayButton>(SCREEN_WIDTH / 2 ,300, _data, "playButton");
 	_menuParts.push_back(playButton);
 
-	_instructions.setFont(this->_data->assets.GetFont("gameFont"));
+	_instructions.setFont(*this->_data->assets.GetFont("gameFont"));
 	_instructions.setString("Walk up : W\nWalk down: S\nWalk left: A\nWalk right: D\nShoot: L\nWeapon change: P");
 	_instructions.setFillColor(sf::Color::White);
 	_instructions.setCharacterSize(30);
 	_instructions.setPosition(SCREEN_WIDTH / 2 - 100, 400);
 
-	_exitText.setFont(this->_data->assets.GetFont("gameFont"));
+	_exitText.setFont(*this->_data->assets.GetFont("gameFont"));
 	_exitText.setString("Press 'ESC' to exit");
 	_exitText.setFillColor(sf::Color::White);
 	_exitText.setCharacterSize(20);

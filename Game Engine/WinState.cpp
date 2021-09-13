@@ -29,13 +29,13 @@ void Engine::WinState::Init()
 	_menuParts.push_back(backButton);
 	_menuParts.push_back(levelButton);
 
-	_winningMessage.setFont(this->_data->assets.GetFont("gameFont"));
+	_winningMessage.setFont(*this->_data->assets.GetFont("gameFont"));
 	_winningMessage.setString("Level " + std::to_string(_level + 1) + " complete!");
 	_winningMessage.setFillColor(sf::Color::White);
 	_winningMessage.setCharacterSize(60);
 	_winningMessage.setPosition(SCREEN_WIDTH/3, 150);
 
-	_nextLevel.setFont(this->_data->assets.GetFont("gameFont"));
+	_nextLevel.setFont(*this->_data->assets.GetFont("gameFont"));
 	_nextLevel.setString("next Level");
 	_nextLevel.setFillColor(sf::Color::White);
 	_nextLevel.setCharacterSize(40);

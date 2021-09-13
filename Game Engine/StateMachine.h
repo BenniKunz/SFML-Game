@@ -5,7 +5,7 @@
 
 namespace Engine
 {
-	typedef std::unique_ptr<State> StateReference;
+	typedef std::shared_ptr<State> StateReference;
 
 	class StateMachine
 	{

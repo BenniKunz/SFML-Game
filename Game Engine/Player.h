@@ -31,14 +31,14 @@ namespace Engine
 			_walkDirection = up;
 			_weaponType = gun;
 
-			_shootCounter.setFont(this->_data->assets.GetFont("gameFont"));
+			_shootCounter.setFont(*this->_data->assets.GetFont("gameFont"));
 			_shootCounter.setFillColor(sf::Color::Red);
 			_shootCounter.setCharacterSize(20);
 			_shootCounter.setPosition(_position.x + 90, _position.y);
 
-			_rocketFire.setBuffer(this->_data->assets.GetSound("rocketFire"));
-			_gunFire.setBuffer(this->_data->assets.GetSound("gunFire"));
-			_weaponSwitch.setBuffer(this->_data->assets.GetSound("weaponSwitch"));
+			_rocketFire.setBuffer(*this->_data->assets.GetSound("rocketFire"));
+			_gunFire.setBuffer(*this->_data->assets.GetSound("gunFire"));
+			_weaponSwitch.setBuffer(*this->_data->assets.GetSound("weaponSwitch"));
 		}
 
 		virtual ~Player();
