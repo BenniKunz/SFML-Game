@@ -17,13 +17,13 @@ namespace Engine
 
 
 		// Inherited via IGamePart
-		virtual void InputHandler(float dt) override;
+		virtual void InputHandler() override;
 
 		virtual void EventHandler(sf::Event event) override;
 
 		virtual void Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts) override;
 
-		virtual void Draw(float dt) override;
+		virtual void Draw() override;
 
 		virtual sf::FloatRect GetGlobalBounds() override;
 

@@ -158,12 +158,12 @@ void Engine::GameState::SpawnHouses()
 	}
 }
 
-void Engine::GameState::InputHandler(float dt)
+void Engine::GameState::InputHandler()
 {
 	sf::Event event;
 
-	std::vector<std::shared_ptr<IGamePart>> gamePartsArr(_gameParts.size());
-	std::copy(_gameParts.begin(), _gameParts.end(), gamePartsArr.begin());
+	/*std::vector<std::shared_ptr<IGamePart>> gamePartsArr(_gameParts.size());
+	std::copy(_gameParts.begin(), _gameParts.end(), gamePartsArr.begin())*/;
 
 	while (this->_data->window.pollEvent(event))
 	{
@@ -173,20 +173,21 @@ void Engine::GameState::InputHandler(float dt)
 		}
 		if (event.type == sf::Event::KeyPressed)
 		{
-			for (auto& gamePart : gamePartsArr)
+			for (size_t i = 0; i < _gameParts.size(); i++)
 			{
-				gamePart->EventHandler(event);
+				_gameParts[i]->EventHandler(event);
 			}
 		}
 	}
-	for (auto& gamePart : gamePartsArr)
+
+	for (size_t i = 0; i < _gameParts.size(); i++)
 	{
-		gamePart->InputHandler(dt);
+		_gameParts[i]->InputHandler();
 	}
 
-	for (auto& menuPart : _menuParts)
+	for (size_t i = 0; i < _menuParts.size(); i++)
 	{
-		menuPart->InputHandler();
+		_menuParts[i]->InputHandler();
 	}
 }
 
@@ -200,18 +201,19 @@ void Engine::GameState::Update(float dt)
 	CheckIfGameWon();
 	SetSFMLView();
 
-	std::vector<std::shared_ptr<IGamePart>> gamePartsArr(_gameParts.size());
-	std::copy(_gameParts.begin(), _gameParts.end(), gamePartsArr.begin());
+	/*std::vector<std::shared_ptr<IGamePart>> gamePartsArr(_gameParts.size());
+	std::copy(_gameParts.begin(), _gameParts.end(), gamePartsArr.begin());*/
 
-	for (auto& gamePart : gamePartsArr)
+	for (size_t i = 0; i < _gameParts.size(); i++)
 	{
-		gamePart->Update(dt, _gameParts);
+		_gameParts[i]->Update(dt, _gameParts);
 	}
 
-	for (auto& menuPart : _menuParts)
+	for (size_t i = 0; i < _menuParts.size(); i++)
 	{
-		menuPart->Update(dt);
+		_menuParts[i]->Update(dt);
 	}
+
 
 	//remove GameParts which are marked as "removed"
 	std::vector<std::shared_ptr<IGamePart>>::iterator it = _gameParts.begin();
@@ -300,7 +302,7 @@ void Engine::GameState::CheckIfGameWon()
 	}
 }
 
-void Engine::GameState::Draw(float dt)
+void Engine::GameState::Draw()
 {
 	this->_data->window.clear(sf::Color::Red);
 
@@ -310,13 +312,13 @@ void Engine::GameState::Draw(float dt)
 	{
 		if (!gamePart->_removed)
 		{
-			gamePart->Draw(dt);
+			gamePart->Draw();
 		}
 	}
 
 	for (auto& menuPart : _menuParts)
 	{
-		menuPart->Draw(dt);
+		menuPart->Draw();
 	}
 
 	this->_data->window.display();

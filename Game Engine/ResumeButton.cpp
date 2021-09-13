@@ -24,9 +24,9 @@ namespace Engine
 		
 	}
 
-	void ResumeButton::Draw(float dt)
+	void ResumeButton::Draw()
 	{
-		Button::Draw(dt);
+		Button::Draw();
 	}
 }
 

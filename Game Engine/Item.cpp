@@ -5,7 +5,7 @@ Engine::Item::~Item()
     std::cout << "Item Destructor" << std::endl;
 }
 
-void Engine::Item::InputHandler(float dt)
+void Engine::Item::InputHandler()
 {
 }
 
@@ -23,7 +23,7 @@ void Engine::Item::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _ga
     }
 }
 
-void Engine::Item::Draw(float dt)
+void Engine::Item::Draw()
 {
     this->_data->window.draw(this->_texture);
 }

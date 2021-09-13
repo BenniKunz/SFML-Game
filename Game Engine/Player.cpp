@@ -107,7 +107,7 @@ void Engine::Player::EventHandler(sf::Event event)
 	}
 }
 
-void Engine::Player::InputHandler(float dt)
+void Engine::Player::InputHandler()
 {
 	float x{ 0.0 };
 	float y{ 0.0 };
@@ -204,10 +204,10 @@ void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 	}
 }
 
-void Engine::Player::Draw(float dt)
+void Engine::Player::Draw()
 {
-	this->_animationManager.Draw(dt);
-	this->_healthBar.Draw(dt);
+	this->_animationManager.Draw();
+	this->_healthBar.Draw();
 	this->_data->window.draw(_playerBody);
 	if (_shot) { this->_data->window.draw(_shootCounter); };
 }

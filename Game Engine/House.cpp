@@ -11,7 +11,7 @@ sf::Vector2f Engine::House::GetHousePosition()
 	return _position;
 }
 
-void Engine::House::InputHandler(float dt)
+void Engine::House::InputHandler()
 {
 }
 
@@ -24,7 +24,7 @@ void Engine::House::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _g
 	ItemRespawn();
 }
 
-void Engine::House::Draw(float dt)
+void Engine::House::Draw()
 {
 	this->_data->window.draw(this->_texture);
 }
@@ -68,21 +68,21 @@ void Engine::House::Display()
 
 void Engine::House::ItemRespawn()
 {
-	if (_rocketsCollected && _rocketsClock.getElapsedTime().asSeconds() >= 15.0f)
+	if (_rocketsCollected && _rocketsClock.getElapsedTime().asSeconds() >= _itemRespawnTime)
 	{
-		_rocketItem = std::make_shared<Item>(_player, rocketAmmo, sf::Vector2f{ _position.x + 200, _position.y - 50 }, "ammoTexture", _data, _gameParts, 4);
+		_rocketItem = std::make_shared<Item>(_player, rocketAmmo, sf::Vector2f{ _position.x + 200, _position.y - 50 }, "ammoTexture", _data, _gameParts, 2);
 		_rocketsCollected = false;
 		_gameParts.push_back(_rocketItem);
 	}
-	if (_bulletsCollected && _bulletsClock.getElapsedTime().asSeconds() >= 15.0f)
+	if (_bulletsCollected && _bulletsClock.getElapsedTime().asSeconds() >= _itemRespawnTime)
 	{
-		_bulletItem = std::make_shared<Item>(_player, gunAmmo, sf::Vector2f{ _position.x, _position.y - 50 }, "ammoTexture", _data, _gameParts, 6);
+		_bulletItem = std::make_shared<Item>(_player, gunAmmo, sf::Vector2f{ _position.x, _position.y - 50 }, "ammoTexture", _data, _gameParts, 5);
 		_bulletsCollected = false;
 		_gameParts.push_back(_bulletItem);
 	}
-	if (_healthCollected && _healthClock.getElapsedTime().asSeconds() >= 15.0f)
+	if (_healthCollected && _healthClock.getElapsedTime().asSeconds() >= _itemRespawnTime)
 	{
-		_healthItem = std::make_shared<Item>(_player, health, sf::Vector2f{ _position.x + 100, _position.y - 50 }, "hpTexture", _data, _gameParts, 10);
+		_healthItem = std::make_shared<Item>(_player, health, sf::Vector2f{ _position.x + 100, _position.y - 50 }, "hpTexture", _data, _gameParts, 20);
 		_healthCollected = false;
 		_gameParts.push_back(_healthItem);
 	}

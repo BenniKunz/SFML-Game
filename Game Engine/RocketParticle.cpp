@@ -5,7 +5,7 @@ Engine::RocketParticle::~RocketParticle()
 	std::cout << "RocketParticle Destructor" << std::endl;
 }
 
-void Engine::RocketParticle::InputHandler(float dt)
+void Engine::RocketParticle::InputHandler()
 {
 }
 
@@ -51,7 +51,7 @@ void Engine::RocketParticle::CollisionDetection(std::vector<std::shared_ptr<Engi
 	}
 }
 
-void Engine::RocketParticle::Draw(float dt)
+void Engine::RocketParticle::Draw()
 {
 	this->_data->window.draw(this->_texture);
 }

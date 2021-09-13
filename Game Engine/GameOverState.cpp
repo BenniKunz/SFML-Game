@@ -37,7 +37,7 @@ void Engine::GameOverState::Init()
 
 }
 
-void Engine::GameOverState::InputHandler(float dt)
+void Engine::GameOverState::InputHandler()
 {
 	sf::Event event;
 
@@ -66,7 +66,7 @@ void Engine::GameOverState::Update(float dt)
 	}
 }
 
-void Engine::GameOverState::Draw(float dt)
+void Engine::GameOverState::Draw()
 {
 	this->_data->window.clear(sf::Color::Red);
 	this->_data->window.draw(this->_backgroundTexture);
@@ -74,7 +74,7 @@ void Engine::GameOverState::Draw(float dt)
 
 	for (auto menuPart : _menuParts)
 	{
-		menuPart->Draw(dt);
+		menuPart->Draw();
 	}
 
 	this->_data->window.display();

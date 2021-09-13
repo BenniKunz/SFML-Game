@@ -17,7 +17,7 @@ namespace Engine
 		// Inherited via IGamePart
 		virtual void InputHandler() override;
 		virtual void Update(float dt) override;
-		virtual void Draw(float dt) override;
+		virtual void Draw() override;
 
 	private:
 		int _level;

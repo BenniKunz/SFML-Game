@@ -30,7 +30,7 @@ namespace Engine
 
 		virtual void Update(float dt) override;
 
-		virtual void Draw(float dt) override;
+		virtual void Draw() override;
 
 	};
 }

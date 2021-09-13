@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "SplashState.h"
 #include "Parameters.h"
+#include <vld.h>
 
 namespace Engine
 {
@@ -21,8 +22,6 @@ namespace Engine
 
 		float currentTime = this->_clock.getElapsedTime().asSeconds();
 
-		float accumulator = 0.0f;
-
 		while (this->_data->window.isOpen())
 		{
 			this->_data->stateMachine.ProcessStateChanges();
@@ -31,26 +30,13 @@ namespace Engine
 
 			frameTime = newTime - currentTime;
 
-			if (frameTime > 0.25f)
-			{
-				frameTime = 0.25f;
-			}
-
 			currentTime = newTime;
-			accumulator += frameTime;
 
-			this->_data->stateMachine.GetActiveState()->InputHandler(dt);
-			
-		/*	while (accumulator >= dt)
-			{*/
-				this->_data->stateMachine.GetActiveState()->Update(frameTime);
-				
-				/*accumulator -= dt;*/
-			//}
+			this->_data->stateMachine.GetActiveState()->InputHandler();		
+		
+			this->_data->stateMachine.GetActiveState()->Update(frameTime);
 
-			interpolation = accumulator / dt;
-
-			this->_data->stateMachine.GetActiveState()->Draw(interpolation);
+			this->_data->stateMachine.GetActiveState()->Draw();
 		}
 
 	}

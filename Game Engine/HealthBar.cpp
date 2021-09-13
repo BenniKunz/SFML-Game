@@ -23,7 +23,7 @@ void Engine::HealthBar::ChangeHealthBar(float percentage)
 	this->_healthBarGreen.setScale(0.1, 0.1);
 }
 
-void Engine::HealthBar::InputHandler(float dt)
+void Engine::HealthBar::InputHandler()
 {
 }
 
@@ -38,7 +38,7 @@ void Engine::HealthBar::Update(float dt, std::vector<std::shared_ptr<IGamePart>>
 
 }
 
-void Engine::HealthBar::Draw(float dt)
+void Engine::HealthBar::Draw()
 {
 	this->_data->window.draw(_texture); //healthBarRed
 	this->_data->window.draw(_healthBarGreen);

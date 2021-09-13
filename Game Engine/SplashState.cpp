@@ -29,7 +29,7 @@ namespace Engine
 	
 	}
 
-	void SplashState::InputHandler(float dt)
+	void SplashState::InputHandler()
 	{
 		sf::Event event;
 
@@ -53,7 +53,7 @@ namespace Engine
 
 	}
 
-	void SplashState::Draw(float dt)
+	void SplashState::Draw()
 	{
 		this->_data->window.clear(sf::Color::Red);
 

@@ -143,7 +143,7 @@ namespace Engine
 		
 	}
 
-	void Engine::Hud::Draw(float dt)
+	void Engine::Hud::Draw()
 	{
 		this->_data->window.draw(_hudTable);
 		this->_data->window.draw(_numberOfEnemiesText);

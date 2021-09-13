@@ -10,7 +10,7 @@ Engine::EnemySpawner::~EnemySpawner()
 	std::cout << "EnemySpawner Destructor" << std::endl;
 }
 
-void Engine::EnemySpawner::InputHandler(float dt)
+void Engine::EnemySpawner::InputHandler()
 {
 }
 
@@ -32,7 +32,7 @@ void Engine::EnemySpawner::Update(float dt, std::vector<std::shared_ptr<IGamePar
 	}
 }
 
-void Engine::EnemySpawner::Draw(float dt)
+void Engine::EnemySpawner::Draw()
 {
 
 }

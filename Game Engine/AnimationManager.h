@@ -12,7 +12,7 @@ namespace Engine
 
 		void Update(float dt);
 
-		void Draw(float dt);
+		void Draw();
 		Animation _animation;
 
 	private:

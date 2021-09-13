@@ -20,7 +20,7 @@ void Engine::RetryButton::Update(float dt)
 {
 }
 
-void Engine::RetryButton::Draw(float dt)
+void Engine::RetryButton::Draw()
 {
-	Button::Draw(dt);
+	Button::Draw();
 }

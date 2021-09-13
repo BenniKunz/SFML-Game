@@ -23,7 +23,7 @@ void Engine::PauseButton::Update(float dt)
 	_texture.setPosition(this->_data->view.getCenter().x + 800, this->_data->view.getCenter().y -500);
 }
 
-void Engine::PauseButton::Draw(float dt)
+void Engine::PauseButton::Draw()
 {
-	Button::Draw(dt);
+	Button::Draw();
 }

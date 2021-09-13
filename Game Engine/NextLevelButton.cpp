@@ -20,8 +20,8 @@ void Engine::NextLevelButton::Update(float dt)
 {
 }
 
-void Engine::NextLevelButton::Draw(float dt)
+void Engine::NextLevelButton::Draw()
 {
-	Button::Draw(dt);
+	Button::Draw();
 }
 

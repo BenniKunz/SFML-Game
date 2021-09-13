@@ -56,7 +56,7 @@ namespace Engine
 	{
 
 	}
-	void Button::Draw(float dt)
+	void Button::Draw()
 	{
 		this->_data->window.draw(this->_texture);
 	}

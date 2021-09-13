@@ -45,7 +45,7 @@ namespace Engine
 		
 	}
 
-	void AnimationManager::Draw(float dt)
+	void AnimationManager::Draw()
 	{
 		this->_data->window.draw(_animation._texture);
 	}

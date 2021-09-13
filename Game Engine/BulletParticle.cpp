@@ -5,7 +5,7 @@ Engine::BulletParticle::~BulletParticle()
 	std::cout << "BulletParticle Destructor" << std::endl;
 }
 
-void Engine::BulletParticle::InputHandler(float dt)
+void Engine::BulletParticle::InputHandler()
 {
 }
 
@@ -57,7 +57,7 @@ void Engine::BulletParticle::SetBulletRotation()
 
 }
 
-void Engine::BulletParticle::Draw(float dt)
+void Engine::BulletParticle::Draw()
 {
 	this->_data->window.draw(this->_texture);
 }

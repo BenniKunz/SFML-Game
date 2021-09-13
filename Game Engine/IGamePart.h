@@ -9,13 +9,13 @@ namespace Engine
 	{
 	public:
 
-		virtual void InputHandler(float dt) = 0;
+		virtual void InputHandler() = 0;
 
 		virtual void EventHandler(sf::Event event) = 0;
 
 		virtual void Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts) = 0;
 
-		virtual void Draw(float dt) = 0;
+		virtual void Draw() = 0;
 
 		virtual sf::FloatRect GetGlobalBounds() = 0;
 

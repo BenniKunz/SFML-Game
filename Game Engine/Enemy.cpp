@@ -3,7 +3,7 @@
 #include <cmath>
 #include "Parameters.h"
 
-void Engine::Enemy::InputHandler(float dt)
+void Engine::Enemy::InputHandler()
 {
 }
 
@@ -43,11 +43,11 @@ void Engine::Enemy::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _g
 	}
 }
 
-void Engine::Enemy::Draw(float dt)
+void Engine::Enemy::Draw()
 {
-	this->_animationManager.Draw(dt);
+	this->_animationManager.Draw();
 	this->_data->window.draw(this->_enemyBody);
-	this->_healthBar.Draw(dt);
+	this->_healthBar.Draw();
 	
 }
 

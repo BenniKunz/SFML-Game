@@ -8,7 +8,7 @@ Engine::Sprite::Sprite(sf::Vector2f position, std::string textureName, GameDataR
 
 }
 
-void Engine::Sprite::InputHandler(float dt)
+void Engine::Sprite::InputHandler()
 {
 }
 
@@ -16,7 +16,7 @@ void Engine::Sprite::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 {
 }
 
-void Engine::Sprite::Draw(float dt)
+void Engine::Sprite::Draw()
 {
 }
 

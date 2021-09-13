@@ -67,10 +67,10 @@ namespace Engine
 
 		// Inherited via Sprite
 		virtual void EventHandler(sf::Event event) override;
-		virtual void InputHandler(float dt) override;
+		virtual void InputHandler() override;
 		virtual void Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts) override;
 		void SetPlayerTextures();
-		virtual void Draw(float dt) override;
+		virtual void Draw() override;
 		
 
 		std::vector<IObserver*> _observerList;

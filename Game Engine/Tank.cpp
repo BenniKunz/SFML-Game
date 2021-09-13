@@ -6,7 +6,7 @@ Engine::Tank::~Tank()
 	std::cout << "Tank destructor" << std::endl;
 }
 
-void Engine::Tank::InputHandler(float dt)
+void Engine::Tank::InputHandler()
 {
 
 }
@@ -48,7 +48,7 @@ void Engine::Tank::SetTowerRotation(float& angle)
 	}
 }
 
-void Engine::Tank::Draw(float dt)
+void Engine::Tank::Draw()
 {
 	this->_data->window.draw(this->_texture);
 	if (!_broken)

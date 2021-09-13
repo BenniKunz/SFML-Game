@@ -25,9 +25,9 @@ namespace Engine
 		
 	}
 
-	void SettingsButton::Draw(float dt)
+	void SettingsButton::Draw()
 	{
-		Button::Draw(dt);
+		Button::Draw();
 	}
 }
 

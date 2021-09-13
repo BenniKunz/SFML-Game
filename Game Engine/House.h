@@ -25,10 +25,10 @@ namespace Engine
 
 		sf::Vector2f GetHousePosition();
 
-		virtual void InputHandler(float dt) override;
+		virtual void InputHandler() override;
 		virtual void EventHandler(sf::Event event) override;
 		virtual void Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts) override;
-		virtual void Draw(float dt) override;
+		virtual void Draw() override;
 		virtual sf::FloatRect GetGlobalBounds() override;
 		virtual void DealDamage(WeaponType type) override;
 
@@ -48,6 +48,7 @@ namespace Engine
 		bool _rocketsCollected{ false };
 		bool _bulletsCollected{ false };
 		bool _healthCollected{ false };
+		float _itemRespawnTime{ 30.0f };
 
 		void ItemRespawn();
 	};

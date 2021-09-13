@@ -25,7 +25,7 @@ void Engine::BackButton::Update(float dt)
 
 }
 
-void Engine::BackButton::Draw(float dt)
+void Engine::BackButton::Draw()
 {
-	Button::Draw(dt);
+	Button::Draw();
 }

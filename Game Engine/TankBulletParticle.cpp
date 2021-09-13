@@ -5,7 +5,7 @@ Engine::TankBulletParticle::~TankBulletParticle()
 	std::cout << "TankBulletParticle Destructor" << std::endl;
 }
 
-void Engine::TankBulletParticle::InputHandler(float dt)
+void Engine::TankBulletParticle::InputHandler()
 {
 }
 
@@ -43,7 +43,7 @@ void Engine::TankBulletParticle::ParticleMovement(float dt)
 
 
 
-void Engine::TankBulletParticle::Draw(float dt)
+void Engine::TankBulletParticle::Draw()
 {
 	this->_data->window.draw(this->_texture);
 }

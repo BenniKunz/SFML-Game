@@ -50,7 +50,7 @@ void Engine::MainMenuState::Init()
 	
 }
 
-void Engine::MainMenuState::InputHandler(float dt)
+void Engine::MainMenuState::InputHandler()
 {
 	sf::Event event;
 
@@ -93,7 +93,7 @@ void Engine::MainMenuState::Update(float dt)
 	}
 }
 
-void Engine::MainMenuState::Draw(float dt)
+void Engine::MainMenuState::Draw()
 {
 	this->_data->window.clear(sf::Color::Red);
 
@@ -102,7 +102,7 @@ void Engine::MainMenuState::Draw(float dt)
 
 	for (auto &menuPart : _menuParts)
 	{
-		menuPart->Draw(dt);
+		menuPart->Draw();
 	}
 
 	this->_data->window.draw(_instructions);

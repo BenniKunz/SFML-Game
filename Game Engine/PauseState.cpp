@@ -34,7 +34,7 @@ namespace Engine
 		_menuParts.push_back(backButton);
 	}
 
-	void PauseState::InputHandler(float dt)
+	void PauseState::InputHandler()
 	{
 		sf::Event event;
 
@@ -63,7 +63,7 @@ namespace Engine
 		}
 	}
 
-	void PauseState::Draw(float dt)
+	void PauseState::Draw()
 	{
 		this->_data->window.clear(sf::Color::Red);
 
@@ -71,7 +71,7 @@ namespace Engine
 		
 		for (auto& menuPart : _menuParts)
 		{
-			menuPart->Draw(dt);
+			menuPart->Draw();
 		}
 
 		this->_data->window.display();

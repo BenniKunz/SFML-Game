@@ -43,7 +43,7 @@ void Engine::WinState::Init()
 
 }
 
-void Engine::WinState::InputHandler(float dt)
+void Engine::WinState::InputHandler()
 {
 	sf::Event event;
 
@@ -72,7 +72,7 @@ void Engine::WinState::Update(float dt)
 	}
 }
 
-void Engine::WinState::Draw(float dt)
+void Engine::WinState::Draw()
 {
 	this->_data->window.clear(sf::Color::Red);
 	this->_data->window.draw(this->_backgroundTexture);
@@ -81,7 +81,7 @@ void Engine::WinState::Draw(float dt)
 
 	for (auto menuPart : _menuParts)
 	{
-		menuPart->Draw(dt);
+		menuPart->Draw();
 	}
 
 	this->_data->window.display();

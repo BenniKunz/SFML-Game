@@ -29,9 +29,9 @@ namespace Engine
 		
 	}
 
-	void PlayButton::Draw(float dt)
+	void PlayButton::Draw()
 	{	
-		Button::Draw(dt);
+		Button::Draw();
 	}
 }
 
