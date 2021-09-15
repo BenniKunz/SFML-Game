@@ -15,7 +15,7 @@ namespace Engine
 		std::shared_ptr<Node> goal = _graph->_allNodes[11][59];
 		_frontier.push(start);
 
-		_cameFrom[start] = nullptr;
+		_cameFrom[start].lock() = nullptr;
 
 
 		while (!_frontier.empty())
@@ -26,10 +26,10 @@ namespace Engine
 
 			for (auto &node : _current->GetNeighbour())
 			{
-				if (_cameFrom.find(node) == _cameFrom.end() && node->GetTileType() == TileType::street)
+				if (_cameFrom.find(node.lock()) == _cameFrom.end() && node.lock()->GetTileType() == TileType::street)
 				{
-					_frontier.push(node);
-					_cameFrom[node] = _current;
+					_frontier.push(node.lock());
+					_cameFrom[node.lock()] = _current;
 				}
 			}
 		}
@@ -39,7 +39,7 @@ namespace Engine
 		while (_current != start)
 		{
 			_path.push_back(_current);
-			_current = _cameFrom[_current];
+			_current = _cameFrom[_current].lock();
 			
 		}
 		_path.push_back(start);

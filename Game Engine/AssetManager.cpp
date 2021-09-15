@@ -1,4 +1,5 @@
 #include "AssetManager.h"
+#include <iostream>
 
 namespace Engine
 {
@@ -9,6 +10,7 @@ namespace Engine
 
 	AssetManager::~AssetManager()
 	{
+		std::cout << "AssetManager Destructor" << std::endl;
 	}
 
 	void AssetManager::LoadTexture(std::string name, std::string fileName)
@@ -17,7 +19,7 @@ namespace Engine
 
 		if (texture.loadFromFile(fileName))
 		{
-			//this->_textures[name] = texture;
+			
 			this->_textures.insert(std::make_pair(name, texture));
 			
 		}
@@ -30,30 +32,30 @@ namespace Engine
 
 	void AssetManager::LoadFont(std::string name, std::string fileName)
 	{
-		std::shared_ptr<sf::Font> font = std::make_shared<sf::Font>();
+		sf::Font font;
 
-		if (font->loadFromFile(fileName))
+		if (font.loadFromFile(fileName))
 		{
 			this->_fonts[name] = font;
 		}
 
 	}
 
-	std::shared_ptr<sf::Font> AssetManager::GetFont(std::string name)
+	sf::Font& AssetManager::GetFont(std::string name)
 	{
 		return this->_fonts[name];
 	}
 	void AssetManager::LoadSound(std::string name, std::string fileName)
 	{
-		std::shared_ptr<sf::SoundBuffer> buffer = std::make_shared<sf::SoundBuffer>();
+		sf::SoundBuffer buffer;
 
-		if (buffer->loadFromFile(fileName))
+		if (buffer.loadFromFile(fileName))
 		{
 			this->_sounds.insert(std::make_pair(name, buffer));
 		}
 	}
 
-	std::shared_ptr<sf::SoundBuffer> AssetManager::GetSound(std::string name)
+	sf::SoundBuffer& AssetManager::GetSound(std::string name)
 	{
 		return this->_sounds[name];
 	}

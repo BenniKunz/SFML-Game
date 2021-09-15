@@ -45,7 +45,7 @@ void Engine::TankBulletParticle::ParticleMovement(float dt)
 
 void Engine::TankBulletParticle::Draw()
 {
-	this->_data->window.draw(this->_texture);
+	this->_data.window.draw(this->_texture);
 }
 
 void Engine::TankBulletParticle::EventHandler(sf::Event event)

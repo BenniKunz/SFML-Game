@@ -14,7 +14,7 @@
 #include "Tank.h"
 #include "WinState.h"
 
-Engine::GameState::GameState(GameDataReference data, int level)
+Engine::GameState::GameState(GameData& data, int level)
 	:_data{ data }, _hudPtr{ nullptr }, _currentLevel{level}
 {
 	
@@ -29,7 +29,7 @@ Engine::GameState::~GameState()
 void Engine::GameState::Init()
 {
 	LoadAssets();
-	this->_data->assets.PlayMusic(_music, GAME_MUSIC, true);
+	this->_data.assets.PlayMusic(_music, GAME_MUSIC, true);
 
 	_map.load("Resources/tiles.png", sf::Vector2u(TILE_WIDTH, TILE_HEIGHT), _levelTest, MAP_WIDTH, MAP_HEIGHT);
 
@@ -62,67 +62,67 @@ void Engine::GameState::Init()
 
 void Engine::GameState::LoadAssets()
 {
-	_data->assets.LoadTexture("backButton", PAUSE_BACK_BUTTON);
-	_data->assets.LoadTexture("pauseButton", GAME_MENU_PAUSE_BUTTON);
+	_data.assets.LoadTexture("backButton", PAUSE_BACK_BUTTON);
+	_data.assets.LoadTexture("pauseButton", GAME_MENU_PAUSE_BUTTON);
 
-	_data->assets.LoadTexture("enemyBodyUp", ENEMY_BODY_UP);
-	_data->assets.LoadTexture("enemyBodyDown", ENEMY_BODY_DOWN);
-	_data->assets.LoadTexture("enemyBodyRight", ENEMY_BODY_RIGHT);
-	_data->assets.LoadTexture("enemyBodyLeft", ENEMY_BODY_LEFT);
+	_data.assets.LoadTexture("enemyBodyUp", ENEMY_BODY_UP);
+	_data.assets.LoadTexture("enemyBodyDown", ENEMY_BODY_DOWN);
+	_data.assets.LoadTexture("enemyBodyRight", ENEMY_BODY_RIGHT);
+	_data.assets.LoadTexture("enemyBodyLeft", ENEMY_BODY_LEFT);
 
-	_data->assets.LoadTexture("enemyWalkUp", ENEMY_WALK_UP);
-	_data->assets.LoadTexture("enemyWalkRight", ENEMY_WALK_RIGHT);
-	_data->assets.LoadTexture("enemyWalkLeft", ENEMY_WALK_LEFT);
-	_data->assets.LoadTexture("enemyWalkDown", ENEMY_WALK_DOWN);
+	_data.assets.LoadTexture("enemyWalkUp", ENEMY_WALK_UP);
+	_data.assets.LoadTexture("enemyWalkRight", ENEMY_WALK_RIGHT);
+	_data.assets.LoadTexture("enemyWalkLeft", ENEMY_WALK_LEFT);
+	_data.assets.LoadTexture("enemyWalkDown", ENEMY_WALK_DOWN);
 
-	_data->assets.LoadTexture("tankTower", TANK_TOWER);
-	_data->assets.LoadTexture("tankBase", TANK_BASE);
-	_data->assets.LoadTexture("tankBroken", TANK_BROKEN);
-	_data->assets.LoadTexture("humvee", HUMVEE_TEXTURE);
+	_data.assets.LoadTexture("tankTower", TANK_TOWER);
+	_data.assets.LoadTexture("tankBase", TANK_BASE);
+	_data.assets.LoadTexture("tankBroken", TANK_BROKEN);
+	_data.assets.LoadTexture("humvee", HUMVEE_TEXTURE);
 
-	_data->assets.LoadTexture("house", HOUSE_TEXTURE);
+	_data.assets.LoadTexture("house", HOUSE_TEXTURE);
 
-	_data->assets.LoadTexture("playerWalkUp", PLAYER_WALK_UP);
-	_data->assets.LoadTexture("playerWalkRight", PLAYER_WALK_RIGHT);
-	_data->assets.LoadTexture("playerWalkLeft", PLAYER_WALK_LEFT);
-	_data->assets.LoadTexture("playerWalkDown", PLAYER_WALK_DOWN);
+	_data.assets.LoadTexture("playerWalkUp", PLAYER_WALK_UP);
+	_data.assets.LoadTexture("playerWalkRight", PLAYER_WALK_RIGHT);
+	_data.assets.LoadTexture("playerWalkLeft", PLAYER_WALK_LEFT);
+	_data.assets.LoadTexture("playerWalkDown", PLAYER_WALK_DOWN);
 
-	_data->assets.LoadTexture("playerBodyUp", PLAYER_BODY_UP);
-	_data->assets.LoadTexture("playerBodyRight", PLAYER_BODY_RIGHT);
-	_data->assets.LoadTexture("playerBodyLeft", PLAYER_BODY_LEFT);
-	_data->assets.LoadTexture("playerBodyDown", PLAYER_BODY_DOWN);
+	_data.assets.LoadTexture("playerBodyUp", PLAYER_BODY_UP);
+	_data.assets.LoadTexture("playerBodyRight", PLAYER_BODY_RIGHT);
+	_data.assets.LoadTexture("playerBodyLeft", PLAYER_BODY_LEFT);
+	_data.assets.LoadTexture("playerBodyDown", PLAYER_BODY_DOWN);
 
-	_data->assets.LoadTexture("playerRocketUp", PLAYER_ROCKET_UP);
-	_data->assets.LoadTexture("playerRocketRight", PLAYER_ROCKET_RIGHT);
-	_data->assets.LoadTexture("playerRocketLeft", PLAYER_ROCKET_LEFT);
-	_data->assets.LoadTexture("playerRocketDown", PLAYER_ROCKET_DOWN);
+	_data.assets.LoadTexture("playerRocketUp", PLAYER_ROCKET_UP);
+	_data.assets.LoadTexture("playerRocketRight", PLAYER_ROCKET_RIGHT);
+	_data.assets.LoadTexture("playerRocketLeft", PLAYER_ROCKET_LEFT);
+	_data.assets.LoadTexture("playerRocketDown", PLAYER_ROCKET_DOWN);
 
-	_data->assets.LoadTexture("bulletTexture", BULLET_TEXTURE);
-	_data->assets.LoadTexture("rocketTexture", ROCKET_TEXTURE);
-	_data->assets.LoadTexture("tankBulletTexture", TANK_BULLET_TEXTURE);
+	_data.assets.LoadTexture("bulletTexture", BULLET_TEXTURE);
+	_data.assets.LoadTexture("rocketTexture", ROCKET_TEXTURE);
+	_data.assets.LoadTexture("tankBulletTexture", TANK_BULLET_TEXTURE);
 
-	_data->assets.LoadTexture("healthBarRed", HEALTH_BAR_RED);
-	_data->assets.LoadTexture("healthBarGreen", HEALTH_BAR_GREEN);
+	_data.assets.LoadTexture("healthBarRed", HEALTH_BAR_RED);
+	_data.assets.LoadTexture("healthBarGreen", HEALTH_BAR_GREEN);
 
-	_data->assets.LoadTexture("ammoTexture", AMMO_TEXTURE);
-	_data->assets.LoadTexture("hpTexture", HP_TEXTURE);
-	_data->assets.LoadTexture("speedTexture", SPEED_TEXTURE);
+	_data.assets.LoadTexture("ammoTexture", AMMO_TEXTURE);
+	_data.assets.LoadTexture("hpTexture", HP_TEXTURE);
+	_data.assets.LoadTexture("speedTexture", SPEED_TEXTURE);
 
-	_data->assets.LoadTexture("gunTexture", GUN_TEXTURE);
-	_data->assets.LoadTexture("rocketLauncherTexture", ROCKETLAUNCHER_TEXTURE);
+	_data.assets.LoadTexture("gunTexture", GUN_TEXTURE);
+	_data.assets.LoadTexture("rocketLauncherTexture", ROCKETLAUNCHER_TEXTURE);
 
-	_data->assets.LoadTexture("hudTable", HUD_TABLE);
-	_data->assets.LoadTexture("ammoIcon", AMMO_ICON);
-	_data->assets.LoadTexture("hpIcon", HP_ICON);
+	_data.assets.LoadTexture("hudTable", HUD_TABLE);
+	_data.assets.LoadTexture("ammoIcon", AMMO_ICON);
+	_data.assets.LoadTexture("hpIcon", HP_ICON);
 
-	_data->assets.LoadSound("gunFire", GUN_FIRE);
-	_data->assets.LoadSound("rocketFire", ROCKET_FIRE);
-	_data->assets.LoadSound("tankFire", TANK_FIRE);
-	_data->assets.LoadSound("weaponSwitch", WEAPON_SWITCH);
-	_data->assets.LoadSound("tankHit", TANK_HIT);
-	_data->assets.LoadSound("tankDestruction", TANK_DESTRUCTION);
-	_data->assets.LoadSound("enemyHit", ENEMY_HIT);
-	_data->assets.LoadSound("enemyDestruction", ENEMY_DESTRUCTION);
+	_data.assets.LoadSound("gunFire", GUN_FIRE);
+	_data.assets.LoadSound("rocketFire", ROCKET_FIRE);
+	_data.assets.LoadSound("tankFire", TANK_FIRE);
+	_data.assets.LoadSound("weaponSwitch", WEAPON_SWITCH);
+	_data.assets.LoadSound("tankHit", TANK_HIT);
+	_data.assets.LoadSound("tankDestruction", TANK_DESTRUCTION);
+	_data.assets.LoadSound("enemyHit", ENEMY_HIT);
+	_data.assets.LoadSound("enemyDestruction", ENEMY_DESTRUCTION);
 }
 
 void Engine::GameState::SpawnTanks()
@@ -165,11 +165,11 @@ void Engine::GameState::InputHandler()
 	/*std::vector<std::shared_ptr<IGamePart>> gamePartsArr(_gameParts.size());
 	std::copy(_gameParts.begin(), _gameParts.end(), gamePartsArr.begin())*/;
 
-	while (this->_data->window.pollEvent(event))
+	while (this->_data.window.pollEvent(event))
 	{
 		if (sf::Event::Closed == event.type)
 		{
-			this->_data->window.close();
+			this->_data.window.close();
 		}
 		if (event.type == sf::Event::KeyPressed)
 		{
@@ -193,8 +193,8 @@ void Engine::GameState::InputHandler()
 
 void Engine::GameState::Update(float dt)
 {
-	/*sf::Vector2i pixelPos = sf::Mouse::getPosition(this->_data->window);
-	sf::Vector2f worldPos = this->_data->window.mapPixelToCoords(pixelPos);
+	/*sf::Vector2i pixelPos = sf::Mouse::getPosition(this->_data.window);
+	sf::Vector2f worldPos = this->_data.window.mapPixelToCoords(pixelPos);
 	std::cout << worldPos.x << "//" << worldPos.y << std::endl;*/
 
 	CheckIfPlayerDead();
@@ -249,37 +249,37 @@ void Engine::GameState::Update(float dt)
 
 void Engine::GameState::SetSFMLView()
 {
-	if (_player->GetPlayerPosition().x - this->_data->view.getSize().x / 2 < 0 && _player->GetPlayerPosition().y - this->_data->view.getSize().y / 2 < 0
-		|| _player->GetPlayerPosition().x - this->_data->view.getSize().x / 2 < 0 && _player->GetPlayerPosition().y + this->_data->view.getSize().y / 2 > MAP_HEIGHT * TILE_HEIGHT
-		|| _player->GetPlayerPosition().x + this->_data->view.getSize().x / 2 > MAP_WIDTH * TILE_WIDTH && _player->GetPlayerPosition().y - this->_data->view.getSize().y / 2 < 0
-		|| _player->GetPlayerPosition().x + this->_data->view.getSize().x / 2 > MAP_WIDTH * TILE_WIDTH && _player->GetPlayerPosition().y + this->_data->view.getSize().y / 2 > MAP_HEIGHT * TILE_HEIGHT)
+	if (_player->GetPlayerPosition().x - this->_data.view.getSize().x / 2 < 0 && _player->GetPlayerPosition().y - this->_data.view.getSize().y / 2 < 0
+		|| _player->GetPlayerPosition().x - this->_data.view.getSize().x / 2 < 0 && _player->GetPlayerPosition().y + this->_data.view.getSize().y / 2 > MAP_HEIGHT * TILE_HEIGHT
+		|| _player->GetPlayerPosition().x + this->_data.view.getSize().x / 2 > MAP_WIDTH * TILE_WIDTH && _player->GetPlayerPosition().y - this->_data.view.getSize().y / 2 < 0
+		|| _player->GetPlayerPosition().x + this->_data.view.getSize().x / 2 > MAP_WIDTH * TILE_WIDTH && _player->GetPlayerPosition().y + this->_data.view.getSize().y / 2 > MAP_HEIGHT * TILE_HEIGHT)
 	{
 		
 	}
-	else if (_player->GetPlayerPosition().x - this->_data->view.getSize().x / 2 < 0)
+	else if (_player->GetPlayerPosition().x - this->_data.view.getSize().x / 2 < 0)
 	{
-		this->_data->view.setCenter(this->_data->view.getSize().x / 2, _player->GetPlayerPosition().y);
-		_data->window.setView(_data->view);
+		this->_data.view.setCenter(this->_data.view.getSize().x / 2, _player->GetPlayerPosition().y);
+		_data.window.setView(_data.view);
 	}
-	else if (_player->GetPlayerPosition().x + this->_data->view.getSize().x / 2 > MAP_WIDTH * TILE_WIDTH)
+	else if (_player->GetPlayerPosition().x + this->_data.view.getSize().x / 2 > MAP_WIDTH * TILE_WIDTH)
 	{
-		this->_data->view.setCenter(MAP_WIDTH * TILE_WIDTH - this->_data->view.getSize().x / 2, _player->GetPlayerPosition().y);
-		_data->window.setView(_data->view);
+		this->_data.view.setCenter(MAP_WIDTH * TILE_WIDTH - this->_data.view.getSize().x / 2, _player->GetPlayerPosition().y);
+		_data.window.setView(_data.view);
 	}
-	else if (_player->GetPlayerPosition().y - this->_data->view.getSize().y / 2 < 0)
+	else if (_player->GetPlayerPosition().y - this->_data.view.getSize().y / 2 < 0)
 	{
-		this->_data->view.setCenter(_player->GetPlayerPosition().x, this->_data->view.getSize().y / 2);
-		_data->window.setView(_data->view);	
+		this->_data.view.setCenter(_player->GetPlayerPosition().x, this->_data.view.getSize().y / 2);
+		_data.window.setView(_data.view);	
 	}
-	else if (_player->GetPlayerPosition().y + this->_data->view.getSize().y / 2 > MAP_HEIGHT * TILE_HEIGHT)
+	else if (_player->GetPlayerPosition().y + this->_data.view.getSize().y / 2 > MAP_HEIGHT * TILE_HEIGHT)
 	{
-		this->_data->view.setCenter(_player->GetPlayerPosition().x, MAP_HEIGHT * TILE_HEIGHT - this->_data->view.getSize().y / 2);
-		_data->window.setView(_data->view);
+		this->_data.view.setCenter(_player->GetPlayerPosition().x, MAP_HEIGHT * TILE_HEIGHT - this->_data.view.getSize().y / 2);
+		_data.window.setView(_data.view);
 	}
 	else
 	{
-		this->_data->view.setCenter(_player->GetPlayerPosition());
-		_data->window.setView(_data->view);
+		this->_data.view.setCenter(_player->GetPlayerPosition());
+		_data.window.setView(_data.view);
 	}
 }
 
@@ -287,7 +287,7 @@ void Engine::GameState::CheckIfPlayerDead()
 {
 	if (_player->GetLives() <= 0)
 	{
-		this->_data->stateMachine.AddState(StateReference(std::make_shared<GameOverState>(this->_data)), true);
+		this->_data.stateMachine.AddState(StateReference(std::make_shared<GameOverState>(this->_data)), true);
 		return;
 	}
 }
@@ -297,16 +297,16 @@ void Engine::GameState::CheckIfGameWon()
 
 	if (_hudPtr->GetNumberOfEnemiesDestroyed() == NUMBER_OF_ENEMIES_LEVEL_ONE + _currentLevel * 10)
 	{
-		this->_data->stateMachine.AddState(StateReference(std::make_shared<WinState>(this->_data, _currentLevel)), true);
+		this->_data.stateMachine.AddState(StateReference(std::make_shared<WinState>(this->_data, _currentLevel)), true);
 		return;
 	}
 }
 
 void Engine::GameState::Draw()
 {
-	this->_data->window.clear(sf::Color::Red);
+	this->_data.window.clear(sf::Color::Red);
 
-	this->_data->window.draw(this->_map);
+	this->_data.window.draw(this->_map);
 
 	for (auto& gamePart : _gameParts)
 	{
@@ -321,5 +321,5 @@ void Engine::GameState::Draw()
 		menuPart->Draw();
 	}
 
-	this->_data->window.display();
+	this->_data.window.display();
 }

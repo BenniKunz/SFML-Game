@@ -7,7 +7,7 @@ namespace Engine
 		: public Button
 	{
 	public:
-		NextLevelButton(float x, float y, GameDataReference data, std::string textureName, int level) 
+		NextLevelButton(float x, float y, GameData& data, std::string textureName, int level) 
 			: Button(x, y, data, textureName), _level{level}
 		{
 			_texture.scale(2.0, 2.0);

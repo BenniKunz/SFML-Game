@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "SFML/Graphics.hpp"
 #include "IMenuPart.h"
+#include "PlayButton.h"
 
 namespace Engine
 {
@@ -10,7 +11,7 @@ namespace Engine
 		:public State
 	{
 	public:
-		MainMenuState(GameDataReference data);
+		MainMenuState(GameData& data);
 
 		virtual ~MainMenuState();
 
@@ -21,7 +22,7 @@ namespace Engine
 		virtual void Draw() override;
 
 	private:
-		GameDataReference _data;
+		GameData& _data;;
 		std::vector<std::shared_ptr<IMenuPart>> _menuParts;
 
 		sf::Sprite _backgroundTexture;
@@ -30,6 +31,7 @@ namespace Engine
 		sf::Clock _clock;
 		sf::Text _instructions;
 		sf::Text _exitText;
+		std::shared_ptr<PlayButton> _playButton;
 	};
 }
 

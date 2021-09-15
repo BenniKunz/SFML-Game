@@ -14,17 +14,17 @@ namespace Engine
 	public:
 
 		BreadthFirstSearch(std::unique_ptr<Graph> graph, std::string textureFile);
+		~BreadthFirstSearch() { std::cout << "BFS Destructor"<<  std::endl; };
 		std::vector<std::shared_ptr<Node>> CalculatePath();
 
 	private:
 		std::queue<std::shared_ptr<Node>> _frontier;
-		std::unordered_map<std::shared_ptr<Node>, std::shared_ptr<Node>> _cameFrom;
+		std::unordered_map<std::shared_ptr<Node>, std::weak_ptr<Node>> _cameFrom;
 		std::unique_ptr<Graph> _graph;
 
 		std::shared_ptr<Node> _current;
 		std::vector<std::shared_ptr<Node>> _path;
 
-		GameDataReference _data;
 	};
 }
 

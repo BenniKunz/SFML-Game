@@ -7,6 +7,7 @@ namespace Engine
 
 	SettingsButton::~SettingsButton()
 	{
+		std::cout << "SettingsButton Destructor" << std::endl;
 	}
 
 	void SettingsButton::InputHandler()
@@ -16,7 +17,7 @@ namespace Engine
 
 		if (Button::IsClicked(this->_texture, _previousClicked, _currentClicked))
 		{
-			this->_data->stateMachine.AddState(StateReference(std::make_shared<SettingState>(this->_data)), false);
+			this->_data.stateMachine.AddState(StateReference(std::make_shared<SettingState>(this->_data)), false);
 		}
 	}
 

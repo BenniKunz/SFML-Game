@@ -3,10 +3,8 @@
 
 namespace Engine
 {
-	AnimationManager::AnimationManager()
-	{
-	}
-	AnimationManager::AnimationManager(Animation &animation, GameDataReference data)
+	
+	AnimationManager::AnimationManager(Animation &animation, GameData& data)
 		:_animation{ animation }, _data {data}, _textureWidth{ (int)_animation._texture.getGlobalBounds().width }, _textureHeight{ (int)_animation._texture.getGlobalBounds().height }
 	{
 		Update(1.0f / 60.0f);
@@ -47,7 +45,7 @@ namespace Engine
 
 	void AnimationManager::Draw()
 	{
-		this->_data->window.draw(_animation._texture);
+		this->_data.window.draw(_animation._texture);
 	}
 }
 

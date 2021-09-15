@@ -10,18 +10,18 @@ namespace Engine
 		public Sprite, public ControllerStrategy
 	{
 	public:
-		Tank(sf::Vector2f position, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, std::shared_ptr<Player> player)
+		Tank(sf::Vector2f position, std::string textureName, GameData& data, std::vector<std::shared_ptr<IGamePart>>& gameParts, std::shared_ptr<Player> player)
 			: Sprite(position, textureName, data, gameParts), _player {player}
 		{
-			_tankTower.setTexture(this->_data->assets.GetTexture("tankTower"));
+			_tankTower.setTexture(this->_data.assets.GetTexture("tankTower"));
 			_tankTower.setPosition(_position.x + 64, _position.y + 64);
 			_tankTower.setOrigin(_tankTower.getGlobalBounds().width / 2, 40);
 			_healthBar = std::make_shared<HealthBar>(sf::Vector2f(_position.x + 30, _position.y), "healthBarRed", _data, _gameParts);
 			this->_weapon = std::make_unique<TankBullet>();
 			_gameParts.push_back(_healthBar);
 
-			_hit.setBuffer(*this->_data->assets.GetSound("tankHit"));
-			_destruction.setBuffer(*this->_data->assets.GetSound("tankDestruction"));
+			_hit.setBuffer(this->_data.assets.GetSound("tankHit"));
+			_destruction.setBuffer(this->_data.assets.GetSound("tankDestruction"));
 		}
 
 		virtual ~Tank();

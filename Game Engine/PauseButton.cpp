@@ -5,6 +5,7 @@
 
 Engine::PauseButton::~PauseButton()
 {
+	std::cout << "PauseButton Destructor" << std::endl;
 }
 
 void Engine::PauseButton::InputHandler()
@@ -14,13 +15,13 @@ void Engine::PauseButton::InputHandler()
 
 	if (Button::IsClicked(this->_texture, _previousClicked, _currentClicked))
 	{
-		this->_data->stateMachine.AddState(StateReference(std::make_shared<PauseState>(this->_data)), false);
+		this->_data.stateMachine.AddState(StateReference(std::make_shared<PauseState>(this->_data)), false);
 	}
 }
 
 void Engine::PauseButton::Update(float dt)
 {
-	_texture.setPosition(this->_data->view.getCenter().x + 800, this->_data->view.getCenter().y -500);
+	_texture.setPosition(this->_data.view.getCenter().x + 800, this->_data.view.getCenter().y -500);
 }
 
 void Engine::PauseButton::Draw()

@@ -9,7 +9,7 @@ namespace Engine
 		public State
 	{
 	public:
-		GameOverState(GameDataReference data);
+		GameOverState(GameData& data);
 		virtual ~GameOverState();
 
 		// Inherited via State
@@ -19,7 +19,7 @@ namespace Engine
 		virtual void Draw() override;
 
 	private:
-		GameDataReference _data;
+		GameData& _data;;
 		std::vector<std::shared_ptr<IMenuPart>> _menuParts;
 		sf::Sprite _backgroundTexture;
 		sf::Text _loosingMessage;

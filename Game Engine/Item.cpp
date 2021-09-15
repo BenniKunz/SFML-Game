@@ -25,7 +25,7 @@ void Engine::Item::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _ga
 
 void Engine::Item::Draw()
 {
-    this->_data->window.draw(this->_texture);
+    this->_data.window.draw(this->_texture);
 }
 
 sf::FloatRect Engine::Item::GetGlobalBounds()

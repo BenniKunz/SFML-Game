@@ -9,7 +9,7 @@ namespace Engine
 		: public Button
 	{
 	public:
-		PlayButton(float x, float y, GameDataReference data, std::string textureName) : Button(x, y, data, textureName) 
+		PlayButton(float x, float y, GameData& data, std::string textureName) : Button(x, y, data, textureName) 
 		{
 			
 		};

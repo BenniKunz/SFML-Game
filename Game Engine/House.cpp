@@ -26,7 +26,7 @@ void Engine::House::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _g
 
 void Engine::House::Draw()
 {
-	this->_data->window.draw(this->_texture);
+	this->_data.window.draw(this->_texture);
 }
 
 sf::FloatRect Engine::House::GetGlobalBounds()
@@ -36,7 +36,7 @@ sf::FloatRect Engine::House::GetGlobalBounds()
 
 void Engine::House::DealDamage(WeaponType type)
 {
-	this->_data->window.draw(_texture);
+	this->_data.window.draw(_texture);
 }
 
 void Engine::House::OnNotify(GameEvent gameEvent, IGamePart& gamePart)

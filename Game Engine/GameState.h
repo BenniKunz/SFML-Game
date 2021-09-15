@@ -19,7 +19,7 @@ namespace Engine
 	{
 	public:
 
-		GameState(GameDataReference data, int level);
+		GameState(GameData& data, int level);
 		virtual ~GameState();
 
 		// Inherited via State
@@ -36,7 +36,7 @@ namespace Engine
 		Hud* _hudPtr;
 		std::shared_ptr<Player> _player;
 
-		GameDataReference _data;
+		GameData& _data;
 		std::vector<std::shared_ptr<IGamePart>> _gameParts;
 		std::vector<std::shared_ptr<IMenuPart>> _menuParts;
 		std::vector<std::shared_ptr<Node>> _path;

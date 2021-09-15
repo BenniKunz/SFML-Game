@@ -9,7 +9,7 @@ namespace Engine
 	class IWeapon
 	{
 	public:
-		virtual void Shoot(GameDataReference data,
+		virtual void Shoot(GameData& data,
 			std::vector<std::shared_ptr<IGamePart>>& gameParts,
 			sf::Vector2f position, sf::Vector2f direction,
 			IGamePart* player,

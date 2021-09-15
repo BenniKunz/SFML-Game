@@ -3,6 +3,7 @@
 
 Engine::NextLevelButton::~NextLevelButton()
 {
+	std::cout << "NextLevel Destructor" << std::endl;
 }
 
 void Engine::NextLevelButton::InputHandler()
@@ -12,7 +13,7 @@ void Engine::NextLevelButton::InputHandler()
 
 	if (Button::IsClicked(this->_texture, _previousClicked, _currentClicked))
 	{
-		this->_data->stateMachine.AddState(StateReference(std::make_shared<GameState>(this->_data, _level + 1)), true);
+		this->_data.stateMachine.AddState(StateReference(std::make_shared<GameState>(this->_data, _level + 1)), true);
 	}
 }
 

@@ -1,9 +1,9 @@
 #include "Sprite.h"
 
-Engine::Sprite::Sprite(sf::Vector2f position, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts)
+Engine::Sprite::Sprite(sf::Vector2f position, std::string textureName, GameData& data, std::vector<std::shared_ptr<IGamePart>>& gameParts)
 	:_position{position}, _data{data}, _textureName{textureName}, _gameParts{gameParts}
 {
-	_texture.setTexture(this->_data->assets.GetTexture(textureName));
+	_texture.setTexture(this->_data.assets.GetTexture(textureName));
 	_texture.setPosition(this->_position.x, this->_position.y);
 
 }

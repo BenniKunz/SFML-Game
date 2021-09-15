@@ -20,25 +20,25 @@ namespace Engine
 		public Sprite, public ControllerStrategy, public ISubject
 	{
 	public:
-		Player(sf::Vector2f position, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts)
+		Player(sf::Vector2f position, std::string textureName, GameData& data, std::vector<std::shared_ptr<IGamePart>>& gameParts)
 			: Sprite(position, textureName, data, gameParts),
 			_animation(_textureName, 1, 7,_data, _position), _animationManager(_animation, _data),
 			_healthBar(_position, "healthBarRed", _data, _gameParts)
 		{
 			this->_weapon = std::make_unique<Bullet>();
-			this->_playerBody.setTexture(this->_data->assets.GetTexture("playerBodyUp"));
+			this->_playerBody.setTexture(this->_data.assets.GetTexture("playerBodyUp"));
 			this->_playerBody.setPosition(_position.x + PLAYER_TEXTURE_OFFSET, _position.y + PLAYER_TEXTURE_OFFSET);
 			_walkDirection = up;
 			_weaponType = gun;
 
-			_shootCounter.setFont(*this->_data->assets.GetFont("gameFont"));
+			_shootCounter.setFont(this->_data.assets.GetFont("gameFont"));
 			_shootCounter.setFillColor(sf::Color::Red);
 			_shootCounter.setCharacterSize(20);
 			_shootCounter.setPosition(_position.x + 90, _position.y);
 
-			_rocketFire.setBuffer(*this->_data->assets.GetSound("rocketFire"));
-			_gunFire.setBuffer(*this->_data->assets.GetSound("gunFire"));
-			_weaponSwitch.setBuffer(*this->_data->assets.GetSound("weaponSwitch"));
+			_rocketFire.setBuffer(this->_data.assets.GetSound("rocketFire"));
+			_gunFire.setBuffer(this->_data.assets.GetSound("gunFire"));
+			_weaponSwitch.setBuffer(this->_data.assets.GetSound("weaponSwitch"));
 		}
 
 		virtual ~Player();

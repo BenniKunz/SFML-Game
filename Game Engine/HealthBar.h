@@ -8,10 +8,10 @@ namespace Engine
 		public Sprite
 	{
 	public:
-		HealthBar(sf::Vector2f position, std::string healthBarRed, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts)
+		HealthBar(sf::Vector2f position, std::string healthBarRed, GameData& data, std::vector<std::shared_ptr<IGamePart>>& gameParts)
 			:Sprite(position, healthBarRed, data, gameParts)
 		{
-			_healthBarGreen.setTexture(this->_data->assets.GetTexture("healthBarGreen"));
+			_healthBarGreen.setTexture(this->_data.assets.GetTexture("healthBarGreen"));
 			_healthBarGreen.setPosition(_position);
 			_healthBarGreenWidth = _healthBarGreen.getGlobalBounds().width;
 			_texture.setScale(0.1, 0.1);

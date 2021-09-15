@@ -7,11 +7,11 @@
 
 namespace Engine
 {
-	SettingState::SettingState(GameDataReference data)
+	SettingState::SettingState(GameData& data)
 		:_data{data}
 	{
-		_data->view.reset(sf::FloatRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT));
-		_data->window.setView(_data->view);
+		_data.view.reset(sf::FloatRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT));
+		_data.window.setView(_data.view);
 	}
 	SettingState::~SettingState()
 	{
@@ -19,11 +19,11 @@ namespace Engine
 	}
 	void SettingState::Init()
 	{
-		this->_data->assets.LoadTexture("resumeButton", SETTING_RESUME_BUTTON);
+		this->_data.assets.LoadTexture("resumeButton", SETTING_RESUME_BUTTON);
 
-		_backgroundTexture.setTexture(this->_data->assets.GetTexture("menuBackground"));
+		_backgroundTexture.setTexture(this->_data.assets.GetTexture("menuBackground"));
 		_backgroundTexture.setScale(SCREEN_WIDTH / _backgroundTexture.getGlobalBounds().width, SCREEN_HEIGHT / _backgroundTexture.getGlobalBounds().height);
-		_resumeButton.setTexture(this->_data->assets.GetTexture("resumeButton"));
+		_resumeButton.setTexture(this->_data.assets.GetTexture("resumeButton"));
 
 		std::shared_ptr<ResumeButton> resumeButton = std::make_shared<ResumeButton>(190, 100, _data, "resumeButton");
 
@@ -34,11 +34,11 @@ namespace Engine
 	{
 		sf::Event event;
 
-		while (this->_data->window.pollEvent(event))
+		while (this->_data.window.pollEvent(event))
 		{
 			if (sf::Event::Closed == event.type)
 			{
-				this->_data->window.close();
+				this->_data.window.close();
 			}
 		}
 
@@ -60,15 +60,15 @@ namespace Engine
 
 	void SettingState::Draw()
 	{
-		this->_data->window.clear(sf::Color::Red);
+		this->_data.window.clear(sf::Color::Red);
 
-		this->_data->window.draw(this->_backgroundTexture);
+		this->_data.window.draw(this->_backgroundTexture);
 
 		for (auto& menuPart : _menuParts)
 		{
 			menuPart->Draw();
 		}
 
-		this->_data->window.display();
+		this->_data.window.display();
 	}
 }

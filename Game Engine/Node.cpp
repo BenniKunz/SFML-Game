@@ -16,12 +16,12 @@ TileType& Node::GetTileType()
 	return this->_tiletype;
 }
 
-void Node::SetNeighbour(std::shared_ptr<Node> node)
+void Node::SetNeighbour(std::weak_ptr<Node> node)
 {
 	_neighbours.push_back(node);
 }
 
-std::vector<std::shared_ptr<Node>>& Node::GetNeighbour()
+std::vector<std::weak_ptr<Node>>& Node::GetNeighbour()
 {
 	return _neighbours;
 }

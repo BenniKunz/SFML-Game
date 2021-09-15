@@ -9,7 +9,7 @@ namespace Engine
 		public Sprite, public IObserver
 	{
 	public:
-		House(std::shared_ptr<Player> player, sf::Vector2f position, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts)
+		House(std::shared_ptr<Player> player, sf::Vector2f position, std::string textureName, GameData& data, std::vector<std::shared_ptr<IGamePart>>& gameParts)
 			: Sprite(position, textureName, data, gameParts), _player{ player }
 		{
 			_bulletItem = std::make_shared<Item>(player, gunAmmo, sf::Vector2f{ _position.x, _position.y - 50 }, "ammoTexture", _data, _gameParts, 8);

@@ -14,7 +14,7 @@ namespace Engine
 	{
 	public:
 
-		Hud(GameDataReference data, std::shared_ptr<Player> player);
+		Hud(GameData& data, std::shared_ptr<Player> player);
 		virtual ~Hud();
 
 		// Inherited via IObserver
@@ -23,7 +23,7 @@ namespace Engine
 
 		int GetNumberOfEnemiesDestroyed();
 	private:
-		GameDataReference _data;
+		GameData& _data;
 		std::shared_ptr<Player> _player;
 		int _numberOfEnemies;
 		int _enemiesReachedTarget;
@@ -44,7 +44,7 @@ namespace Engine
 
 		bool _itemCollected { false };
 
-		void SetTextAttributes(sf::Text& text, std::shared_ptr<sf::Font>, std::string output, sf::Color color, int characterSize, int x, int y);
+		void SetTextAttributes(sf::Text& text, sf::Font&, std::string output, sf::Color color, int characterSize, int x, int y);
 		void ChangeWeaponTexture();
 
 		// Inherited via IGamePart

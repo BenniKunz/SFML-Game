@@ -53,7 +53,7 @@ void Engine::RocketParticle::CollisionDetection(std::vector<std::shared_ptr<Engi
 
 void Engine::RocketParticle::Draw()
 {
-	this->_data->window.draw(this->_texture);
+	this->_data.window.draw(this->_texture);
 }
 
 void Engine::RocketParticle::SetRocketRotation()

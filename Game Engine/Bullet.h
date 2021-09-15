@@ -11,7 +11,7 @@ namespace Engine
 		Bullet();
 		virtual ~Bullet();
 		// Inherited via IWeapon
-		virtual void Shoot(GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, sf::Vector2f position, sf::Vector2f direction, IGamePart *player, float rotation) override;
+		virtual void Shoot(GameData& data, std::vector<std::shared_ptr<IGamePart>>& gameParts, sf::Vector2f position, sf::Vector2f direction, IGamePart *player, float rotation) override;
 	};
 }
 

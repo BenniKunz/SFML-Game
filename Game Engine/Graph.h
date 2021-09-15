@@ -11,6 +11,7 @@ class Graph
 public:
 
 	Graph(std::array<int, MAP_WIDTH * MAP_HEIGHT> &levelTest);
+	~Graph() { std::cout << "Graph Destructor"; }
 
 	void makeGraph();
 

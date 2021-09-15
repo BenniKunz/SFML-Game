@@ -46,7 +46,7 @@ void Engine::Enemy::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _g
 void Engine::Enemy::Draw()
 {
 	this->_animationManager.Draw();
-	this->_data->window.draw(this->_enemyBody);
+	this->_data.window.draw(this->_enemyBody);
 	this->_healthBar.Draw();
 	
 }
@@ -80,23 +80,23 @@ void Engine::Enemy::SetEnemyTexture()
 {
 	if (_targetPosition.x > _startPosition.x)
 	{
-		this->_enemyBody.setTexture(this->_data->assets.GetTexture("enemyBodyRight"));
-		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("enemyWalkRight"));
+		this->_enemyBody.setTexture(this->_data.assets.GetTexture("enemyBodyRight"));
+		this->_animationManager._animation._texture.setTexture(this->_data.assets.GetTexture("enemyWalkRight"));
 	}
 	else if (_targetPosition.x < _startPosition.x)
 	{
-		this->_enemyBody.setTexture(this->_data->assets.GetTexture("enemyBodyLeft"));
-		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("enemyWalkLeft"));
+		this->_enemyBody.setTexture(this->_data.assets.GetTexture("enemyBodyLeft"));
+		this->_animationManager._animation._texture.setTexture(this->_data.assets.GetTexture("enemyWalkLeft"));
 	}
 	else if (_targetPosition.y < _startPosition.y)
 	{
-		this->_enemyBody.setTexture(this->_data->assets.GetTexture("enemyBodyUp"));
-		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("enemyWalkUp"));
+		this->_enemyBody.setTexture(this->_data.assets.GetTexture("enemyBodyUp"));
+		this->_animationManager._animation._texture.setTexture(this->_data.assets.GetTexture("enemyWalkUp"));
 	}
 	else if (_targetPosition.y > _startPosition.y)
 	{
-		this->_enemyBody.setTexture(this->_data->assets.GetTexture("enemyBodyDown"));
-		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("enemyWalkDown"));
+		this->_enemyBody.setTexture(this->_data.assets.GetTexture("enemyBodyDown"));
+		this->_animationManager._animation._texture.setTexture(this->_data.assets.GetTexture("enemyWalkDown"));
 	}
 }
 

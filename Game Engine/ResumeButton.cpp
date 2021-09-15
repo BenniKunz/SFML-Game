@@ -6,6 +6,7 @@ namespace Engine
 
 	ResumeButton::~ResumeButton()
 	{
+		std::cout << "ResumeButton Destructor" << std::endl;
 	}
 
 	void ResumeButton::InputHandler()
@@ -15,7 +16,7 @@ namespace Engine
 
 		if (Button::IsClicked(this->_texture, _previousClicked, _currentClicked))
 		{
-			this->_data->stateMachine.RemoveState();
+			this->_data.stateMachine.RemoveState();
 		}
 	}
 

@@ -40,8 +40,8 @@ void Engine::HealthBar::Update(float dt, std::vector<std::shared_ptr<IGamePart>>
 
 void Engine::HealthBar::Draw()
 {
-	this->_data->window.draw(_texture); //healthBarRed
-	this->_data->window.draw(_healthBarGreen);
+	this->_data.window.draw(_texture); //healthBarRed
+	this->_data.window.draw(_healthBarGreen);
 }
 
 sf::FloatRect Engine::HealthBar::GetGlobalBounds()

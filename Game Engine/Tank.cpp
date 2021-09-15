@@ -30,7 +30,7 @@ void Engine::Tank::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _ga
 	{
 		_destruction.play();
 		_broken = true;
-		_texture.setTexture(this->_data->assets.GetTexture("tankBroken"));
+		_texture.setTexture(this->_data.assets.GetTexture("tankBroken"));
 		_healthBar->_removed = true;
 	}
 }
@@ -50,10 +50,10 @@ void Engine::Tank::SetTowerRotation(float& angle)
 
 void Engine::Tank::Draw()
 {
-	this->_data->window.draw(this->_texture);
+	this->_data.window.draw(this->_texture);
 	if (!_broken)
 	{
-		this->_data->window.draw(this->_tankTower);
+		this->_data.window.draw(this->_tankTower);
 	}
 	
 }

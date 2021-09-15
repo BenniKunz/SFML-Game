@@ -1,6 +1,6 @@
 #include "EnemySpawner.h"
 
-Engine::EnemySpawner::EnemySpawner(std::vector<std::shared_ptr<Node>>& path, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, Hud* hud)
+Engine::EnemySpawner::EnemySpawner(std::vector<std::shared_ptr<Node>>& path, GameData& data, std::vector<std::shared_ptr<IGamePart>>& gameParts, Hud* hud)
 	:_path{path}, _data {data}, _gameParts{gameParts}, _hud{hud}
 {
 }

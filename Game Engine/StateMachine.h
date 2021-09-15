@@ -2,6 +2,7 @@
 #include <memory>
 #include <stack>
 #include "State.h"
+#include <iostream>
 
 namespace Engine
 {
@@ -11,7 +12,7 @@ namespace Engine
 	{
 	public:
 		StateMachine();
-		~StateMachine() {};
+		virtual ~StateMachine();
 
 		void AddState(StateReference newState, bool isReplacing = true);
 		void RemoveState();

@@ -9,6 +9,7 @@ namespace Engine
 
 	PlayButton::~PlayButton()
 	{
+		std::cout << "PlayButton Destructor" << std::endl;
 	}
 
 	void PlayButton::InputHandler()
@@ -19,7 +20,7 @@ namespace Engine
 
 		if (Button::IsClicked(this->_texture, _previousClicked, _currentClicked))
 		{
-			this->_data->stateMachine.AddState(StateReference(std::make_shared<GameState>(this->_data, 0)), true);
+			this->_data.stateMachine.AddState(StateReference(std::make_shared<GameState>(this->_data, 0)), true);
 			
 		}
 	}

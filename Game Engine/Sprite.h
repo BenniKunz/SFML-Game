@@ -9,14 +9,14 @@ namespace Engine
 		public IGamePart
 	{
 	public:
-		Sprite(sf::Vector2f position, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts);
+		Sprite(sf::Vector2f position, std::string textureName, GameData& data, std::vector<std::shared_ptr<IGamePart>>& gameParts);
 
 		void DealDamage(WeaponType type);
 	protected:
 		sf::Sprite _texture;
 		sf::Vector2f _position;
 		std::string _textureName;
-		GameDataReference _data;
+		GameData& _data;
 
 		std::vector<std::shared_ptr<IGamePart>>& _gameParts;
 

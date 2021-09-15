@@ -3,6 +3,7 @@
 
 Engine::RetryButton::~RetryButton()
 {
+	std::cout << "RetryButton Destructor" << std::endl;
 }
 
 void Engine::RetryButton::InputHandler()
@@ -12,7 +13,7 @@ void Engine::RetryButton::InputHandler()
 
 	if (Button::IsClicked(this->_texture, _previousClicked, _currentClicked))
 	{
-		this->_data->stateMachine.AddState(StateReference(std::make_shared<GameState>(this->_data, 0)), true);
+		this->_data.stateMachine.AddState(StateReference(std::make_shared<GameState>(this->_data, 0)), true);
 	}
 }
 

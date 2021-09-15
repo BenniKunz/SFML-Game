@@ -9,7 +9,7 @@ namespace Engine
 		:public State
 	{
 	public:
-		SplashState(GameDataReference data);
+		SplashState(GameData& data);
 		virtual ~SplashState();
 
 		// Inherited via State
@@ -19,7 +19,7 @@ namespace Engine
 		virtual void Draw() override;
 
 	private:
-		GameDataReference _data;
+		GameData& _data;
 
 		sf::Clock _clock;
 

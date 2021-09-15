@@ -362,5 +362,8 @@
     <ClInclude Include="NextLevelButton.h">
       <Filter>Header Files\Button</Filter>
     </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

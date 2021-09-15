@@ -8,7 +8,7 @@ namespace Engine
 	{
 	public:
 		AnimationManager();
-		AnimationManager(Animation &animation, GameDataReference data);
+		AnimationManager(Animation &animation, GameData& data);
 
 		void Update(float dt);
 
@@ -17,7 +17,7 @@ namespace Engine
 
 	private:
 		sf::Clock _clock;
-		GameDataReference _data;
+		GameData& _data;
 		int _textureWidth;
 		int _textureHeight;
 

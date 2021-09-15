@@ -6,7 +6,7 @@
 
 namespace Engine
 {
-	SplashState::SplashState(GameDataReference data)
+	SplashState::SplashState(GameData& data)
 		:_data{data}
 	{
 	}
@@ -18,13 +18,13 @@ namespace Engine
 
 	void SplashState::Init()
 	{
-		this->_data->assets.LoadTexture("menuBackground", MENU_BACKGROUND);
-		this->_data->assets.LoadTexture("splashLogo", SPLASH_STATE_LOGO);
+		this->_data.assets.LoadTexture("menuBackground", MENU_BACKGROUND);
+		this->_data.assets.LoadTexture("splashLogo", SPLASH_STATE_LOGO);
 
-		_backgroundTexture.setTexture(this->_data->assets.GetTexture("menuBackground"));
+		_backgroundTexture.setTexture(this->_data.assets.GetTexture("menuBackground"));
 		_backgroundTexture.setScale(SCREEN_WIDTH / _backgroundTexture.getGlobalBounds().width, SCREEN_HEIGHT / _backgroundTexture.getGlobalBounds().height);
 		
-		_splashLogo.setTexture(this->_data->assets.GetTexture("splashLogo"));
+		_splashLogo.setTexture(this->_data.assets.GetTexture("splashLogo"));
 		_splashLogo.setPosition(SCREEN_WIDTH / 2 - _splashLogo.getGlobalBounds().width / 2, SCREEN_HEIGHT / 2 - _splashLogo.getGlobalBounds().height / 2);
 	
 	}
@@ -33,11 +33,18 @@ namespace Engine
 	{
 		sf::Event event;
 
-		while (this->_data->window.pollEvent(event))
+		while (this->_data.window.pollEvent(event))
 		{
 			if (sf::Event::Closed == event.type)
 			{
-				this->_data->window.close();
+				this->_data.window.close();
+				
+			}
+
+			if (event.key.code == sf::Keyboard::Escape)
+			{
+				this->_data.window.close();
+				
 			}
 		}
 
@@ -47,19 +54,19 @@ namespace Engine
 	{
 		if (this->_clock.getElapsedTime().asSeconds() > SPLASH_STATE_SHOW_TIME)
 		{
-			this->_data->stateMachine.AddState(StateReference(std::make_shared<MainMenuState>(this->_data)), true);
-			this->_data->stateMachine.ProcessStateChanges();
+			this->_data.stateMachine.AddState(StateReference(std::make_shared<MainMenuState>(this->_data)), true);
+			this->_data.stateMachine.ProcessStateChanges();
 		}
 
 	}
 
 	void SplashState::Draw()
 	{
-		this->_data->window.clear(sf::Color::Red);
+		this->_data.window.clear(sf::Color::Red);
 
-		this->_data->window.draw(this->_backgroundTexture);
-		this->_data->window.draw(this->_splashLogo);
-		this->_data->window.display();
+		this->_data.window.draw(this->_backgroundTexture);
+		this->_data.window.draw(this->_splashLogo);
+		this->_data.window.display();
 	}
 }
 

@@ -10,7 +10,7 @@ namespace Engine
 	{
 	public:
 
-		Item(std::shared_ptr<Player> player, ItemType type, sf::Vector2f position, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, int value)
+		Item(std::shared_ptr<Player> player, ItemType type, sf::Vector2f position, std::string textureName, GameData& data, std::vector<std::shared_ptr<IGamePart>>& gameParts, int value)
 			: Sprite(position, textureName, data, gameParts), _player {player}, _type {type}
 		{
 			_value = value;

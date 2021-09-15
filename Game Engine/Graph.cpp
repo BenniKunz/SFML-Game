@@ -22,8 +22,8 @@ void Graph::makeGraph()
 			if (j > 0) { x += TILE_WIDTH; }
 
 			TileType type = static_cast<TileType>(_levelTest[i * MAP_WIDTH + j]);
-			std::shared_ptr<Node> node = std::make_shared<Node>(x,y,type);
-			_allNodes[i][j] = node;
+			
+			_allNodes[i][j] = std::make_shared<Node>(x, y, type);
 		}
 		x = 0;
 	}
@@ -66,8 +66,8 @@ void Graph::printGraph()
 			for (auto &node : _allNodes[i][j]->GetNeighbour())
 			{
 				std::cout << "NeighbourNode:"
-					<< "Position:" << node->GetPosition().x
-					<< "/" << node->GetPosition().y << std::endl;
+					<< "Position:" << node.lock()->GetPosition().x
+					<< "/" << node.lock()->GetPosition().y << std::endl;
 			}
 		}
 	}

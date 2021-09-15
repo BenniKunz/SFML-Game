@@ -12,7 +12,7 @@ namespace Engine
 		: public Sprite
 	{
 	public:
-		TankBulletParticle(sf::Vector2f position, sf::Vector2f direction, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, IGamePart* gamePart, float rotation)
+		TankBulletParticle(sf::Vector2f position, sf::Vector2f direction, std::string textureName, GameData& data, std::vector<std::shared_ptr<IGamePart>>& gameParts, IGamePart* gamePart, float rotation)
 			:Sprite(position, textureName, data, gameParts), _direction{ direction }, _gamePart{ gamePart }
 		{			
 				this->_texture.setOrigin(_texture.getGlobalBounds().width / 2, _texture.getGlobalBounds().height / 2);

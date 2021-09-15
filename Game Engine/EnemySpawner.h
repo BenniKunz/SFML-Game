@@ -12,7 +12,7 @@ namespace Engine
 	{
 	public:
 
-		EnemySpawner(std::vector<std::shared_ptr<Node>>& path, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, Hud* hud);
+		EnemySpawner(std::vector<std::shared_ptr<Node>>& path, GameData& data, std::vector<std::shared_ptr<IGamePart>>& gameParts, Hud* hud);
 		virtual ~EnemySpawner();
 
 
@@ -34,7 +34,7 @@ namespace Engine
 		Hud* _hud;
 		int _count{ 0 };
 		std::vector<std::shared_ptr<Node>>& _path;
-		GameDataReference _data;
+		GameData& _data;
 		std::vector<std::shared_ptr<IGamePart>>& _gameParts;
 	};
 }

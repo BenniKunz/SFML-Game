@@ -10,7 +10,7 @@ namespace Engine
 	public:
 
 		Animation();
-		Animation(std::string textureName, int rowCount, int columnCount, GameDataReference data, sf::Vector2f position);
+		Animation(std::string textureName, int rowCount, int columnCount, GameData& data, sf::Vector2f position);
 
 		int GetFrameHeight();
 		int GetFrameWidth();
@@ -29,7 +29,7 @@ namespace Engine
 
 		sf::Sprite _texture;
 		std::string _textureName;
-		GameDataReference _data;
+		GameData& _data;
 
 	private:
 

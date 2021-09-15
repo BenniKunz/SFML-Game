@@ -4,7 +4,7 @@
 #include "RetryButton.h"
 #include <iostream>
 
-Engine::GameOverState::GameOverState(GameDataReference data)
+Engine::GameOverState::GameOverState(GameData& data)
 	:_data{data}
 {
 	
@@ -17,15 +17,15 @@ Engine::GameOverState::~GameOverState()
 
 void Engine::GameOverState::Init()
 {
-	this->_data->assets.LoadTexture("retryButton", RETRY_BUTTON);
+	this->_data.assets.LoadTexture("retryButton", RETRY_BUTTON);
 
-	_backgroundTexture.setTexture(this->_data->assets.GetTexture("menuBackground"));
+	_backgroundTexture.setTexture(this->_data.assets.GetTexture("menuBackground"));
 	_backgroundTexture.setScale(SCREEN_WIDTH / _backgroundTexture.getGlobalBounds().width, SCREEN_HEIGHT / _backgroundTexture.getGlobalBounds().height);
 
 	std::shared_ptr<BackButton> backButton = std::make_shared<BackButton>(490, 100, _data, "backButton");
 	std::shared_ptr<RetryButton> retryButton = std::make_shared<RetryButton>(190, 100, _data, "retryButton");
 
-	_loosingMessage.setFont(*this->_data->assets.GetFont("gameFont"));
+	_loosingMessage.setFont(this->_data.assets.GetFont("gameFont"));
 	_loosingMessage.setString("YOU LOST!");
 	_loosingMessage.setFillColor(sf::Color::White);
 	_loosingMessage.setCharacterSize(60);
@@ -41,11 +41,11 @@ void Engine::GameOverState::InputHandler()
 {
 	sf::Event event;
 
-	while (this->_data->window.pollEvent(event))
+	while (this->_data.window.pollEvent(event))
 	{
 		if (sf::Event::Closed == event.type)
 		{
-			this->_data->window.close();
+			this->_data.window.close();
 		}
 	}
 
@@ -57,8 +57,8 @@ void Engine::GameOverState::InputHandler()
 
 void Engine::GameOverState::Update(float dt)
 {
-	_data->view.reset(sf::FloatRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT));
-	_data->window.setView(_data->view);
+	_data.view.reset(sf::FloatRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT));
+	_data.window.setView(_data.view);
 
 	for (auto menuPart : _menuParts)
 	{
@@ -68,14 +68,14 @@ void Engine::GameOverState::Update(float dt)
 
 void Engine::GameOverState::Draw()
 {
-	this->_data->window.clear(sf::Color::Red);
-	this->_data->window.draw(this->_backgroundTexture);
-	this->_data->window.draw(this->_loosingMessage);
+	this->_data.window.clear(sf::Color::Red);
+	this->_data.window.draw(this->_backgroundTexture);
+	this->_data.window.draw(this->_loosingMessage);
 
 	for (auto menuPart : _menuParts)
 	{
 		menuPart->Draw();
 	}
 
-	this->_data->window.display();
+	this->_data.window.display();
 }

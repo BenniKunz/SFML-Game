@@ -208,30 +208,30 @@ void Engine::Player::Draw()
 {
 	this->_animationManager.Draw();
 	this->_healthBar.Draw();
-	this->_data->window.draw(_playerBody);
-	if (_shot) { this->_data->window.draw(_shootCounter); };
+	this->_data.window.draw(_playerBody);
+	if (_shot) { this->_data.window.draw(_shootCounter); };
 }
 
 void Engine::Player::SetPlayerTextures()
 {
 	if (_walkDirection == left)
 	{
-		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkLeft"));
+		this->_animationManager._animation._texture.setTexture(this->_data.assets.GetTexture("playerWalkLeft"));
 		this->_playerBody.setTexture(this->GetTexture());
 	}
 	else if (_walkDirection == right)
 	{
-		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkRight"));
+		this->_animationManager._animation._texture.setTexture(this->_data.assets.GetTexture("playerWalkRight"));
 		this->_playerBody.setTexture(this->GetTexture());
 	}
 	else if (_walkDirection == up)
 	{
-		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkUp"));
+		this->_animationManager._animation._texture.setTexture(this->_data.assets.GetTexture("playerWalkUp"));
 		this->_playerBody.setTexture(this->GetTexture());
 	}
 	else if (_walkDirection == down)
 	{
-		this->_animationManager._animation._texture.setTexture(this->_data->assets.GetTexture("playerWalkDown"));
+		this->_animationManager._animation._texture.setTexture(this->_data.assets.GetTexture("playerWalkDown"));
 		this->_playerBody.setTexture(this->GetTexture());
 	}
 }
@@ -260,12 +260,12 @@ sf::Texture& Engine::Player::GetTexture()
 		{
 		case gun:
 		{
-			return this->_data->assets.GetTexture("playerBodyLeft");
+			return this->_data.assets.GetTexture("playerBodyLeft");
 			break;
 		}
 		case rocket:
 		{
-			return this->_data->assets.GetTexture("playerRocketLeft");
+			return this->_data.assets.GetTexture("playerRocketLeft");
 			break;
 		}
 		default:
@@ -279,12 +279,12 @@ sf::Texture& Engine::Player::GetTexture()
 		{
 		case gun:
 		{
-			return this->_data->assets.GetTexture("playerBodyRight");
+			return this->_data.assets.GetTexture("playerBodyRight");
 			break;
 		}
 		case rocket:
 		{
-			return this->_data->assets.GetTexture("playerRocketRight");
+			return this->_data.assets.GetTexture("playerRocketRight");
 			break;
 		}
 		default:
@@ -297,12 +297,12 @@ sf::Texture& Engine::Player::GetTexture()
 		{
 		case gun:
 		{
-			return this->_data->assets.GetTexture("playerBodyUp");
+			return this->_data.assets.GetTexture("playerBodyUp");
 			break;
 		}
 		case rocket:
 		{
-			return this->_data->assets.GetTexture("playerRocketUp");
+			return this->_data.assets.GetTexture("playerRocketUp");
 			break;
 		}
 		default:
@@ -315,12 +315,12 @@ sf::Texture& Engine::Player::GetTexture()
 		{
 		case gun:
 		{
-			return this->_data->assets.GetTexture("playerBodyDown");
+			return this->_data.assets.GetTexture("playerBodyDown");
 			break;
 		}
 		case rocket:
 		{
-			return this->_data->assets.GetTexture("playerRocketDown");
+			return this->_data.assets.GetTexture("playerRocketDown");
 			break;
 		}
 		default:
@@ -416,8 +416,8 @@ void Engine::Player::PlayerReset()
 	_position = sf::Vector2f(PLAYER_START_POSX, PLAYER_START_POSY);
 	this->_animationManager._animation._texture.setPosition(_position);
 	this->_playerBody.setPosition(_position + sf::Vector2f(PLAYER_TEXTURE_OFFSET, PLAYER_TEXTURE_OFFSET));
-	_data->view.reset(sf::FloatRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT));
-	_data->window.setView(_data->view);
+	_data.view.reset(sf::FloatRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT));
+	_data.window.setView(_data.view);
 }
 
 int& Engine::Player::GetLives()

@@ -7,7 +7,7 @@ namespace Engine
 		public Button
 	{
 	public:
-		PauseButton(float x, float y, GameDataReference data, std::string textureName) : Button(x, y, data, textureName)
+		PauseButton(float x, float y, GameData& data, std::string textureName) : Button(x, y, data, textureName)
 		{
 
 		};

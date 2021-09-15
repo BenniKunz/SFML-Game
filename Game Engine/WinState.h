@@ -9,7 +9,7 @@ namespace Engine
 		public State
 	{
 	public:
-		WinState(GameDataReference data, int level);
+		WinState(GameData& data, int level);
 		virtual ~WinState();
 
 		// Inherited via State
@@ -19,7 +19,7 @@ namespace Engine
 		virtual void Draw() override;
 
 	private:
-		GameDataReference _data;
+		GameData& _data;
 		std::vector<std::shared_ptr<IMenuPart>> _menuParts;
 		sf::Sprite _backgroundTexture;
 		int _level;

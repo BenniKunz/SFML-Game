@@ -9,12 +9,12 @@ namespace Engine
 		:public IMenuPart
 	{
 	public:
-		Button(float x, float y, GameDataReference data, std::string textureName);
+		Button(float x, float y, GameData& data, std::string textureName);
 		~Button();
 
 	protected:
 
-		GameDataReference _data;
+		GameData& _data;
 		sf::Sprite _texture;
 		float _xPosition {};
 		float _yPosition {};

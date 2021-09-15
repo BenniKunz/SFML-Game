@@ -9,6 +9,11 @@ namespace Engine
 		
 	}
 
+	StateMachine::~StateMachine()
+	{
+		std::cout << "StateMachine Destructor" << std::endl;
+	}
+
 	void StateMachine::AddState(StateReference newState, bool isReplacing)
 	{
 		this->_isAdding = true;

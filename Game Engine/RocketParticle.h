@@ -8,7 +8,7 @@ namespace Engine
 		public Sprite
 	{
 	public:
-		RocketParticle(sf::Vector2f position, sf::Vector2f direction, std::string textureName, GameDataReference data, std::vector<std::shared_ptr<IGamePart>>& gameParts, IGamePart* player, float rotation)
+		RocketParticle(sf::Vector2f position, sf::Vector2f direction, std::string textureName, GameData& data, std::vector<std::shared_ptr<IGamePart>>& gameParts, IGamePart* player, float rotation)
 			:Sprite(position, textureName, data, gameParts), _direction{ direction }, _player {player}
 		{
 			this->_texture.setScale(sf::Vector2f(0.4, 0.4));

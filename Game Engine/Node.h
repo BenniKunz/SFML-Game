@@ -2,21 +2,22 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "TileType.h"
+#include <iostream>
 
 class Node
 {
 public:
 	Node(int x, int y, TileType type);
-
-	std::vector<std::shared_ptr<Node>> _neighbours;
+	~Node() { std::cout << "Graph Destructor"; };
+	std::vector<std::weak_ptr<Node>> _neighbours;
 	
 	sf::Vector2i GetPosition();
 
 	TileType& GetTileType();
 
-	void SetNeighbour(std::shared_ptr<Node> node);
+	void SetNeighbour(std::weak_ptr<Node> node);
 
-	std::vector<std::shared_ptr<Node>>& GetNeighbour();
+	std::vector<std::weak_ptr<Node>>& GetNeighbour();
 	
 
 private:

@@ -4,10 +4,10 @@
 
 namespace Engine
 {
-	Button::Button(float x, float y, GameDataReference data, std::string textureName)
+	Button::Button(float x, float y, GameData& data, std::string textureName)
 		:_xPosition {x}, _yPosition{y}, _data {data}, _previousClicked{false}, _currentClicked{false}
 	{
-		_texture.setTexture(this->_data->assets.GetTexture(textureName));
+		_texture.setTexture(this->_data.assets.GetTexture(textureName));
 		_texture.setPosition(x - _texture.getGlobalBounds().width / 2 ,y);
 
 	}
@@ -17,7 +17,7 @@ namespace Engine
 	}
 	bool Button::IsClicked(sf::Sprite& texture, bool previous, bool current)
 	{
-		if (this->_data->input.IsSpriteClicked(texture, sf::Mouse::Left, this->_data->window, previous, current))
+		if (this->_data.input.IsSpriteClicked(texture, sf::Mouse::Left, this->_data.window, previous, current))
 		{
 			return true;
 
@@ -27,7 +27,7 @@ namespace Engine
 	}
 	bool Button::IsHovered(sf::Sprite& texture)
 	{
-		if (this->_data->input.IsSpriteHovered(texture, this->_data->window))
+		if (this->_data.input.IsSpriteHovered(texture, this->_data.window))
 		{
 			texture.setColor(sf::Color(100, 100, 100));
 		}
@@ -58,7 +58,7 @@ namespace Engine
 	}
 	void Button::Draw()
 	{
-		this->_data->window.draw(this->_texture);
+		this->_data.window.draw(this->_texture);
 	}
 	
 }

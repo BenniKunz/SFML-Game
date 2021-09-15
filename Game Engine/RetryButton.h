@@ -7,7 +7,7 @@ namespace Engine
 		: public Button
 	{
 	public:
-		RetryButton(float x, float y, GameDataReference data, std::string textureName) : Button(x, y, data, textureName)
+		RetryButton(float x, float y, GameData& data, std::string textureName) : Button(x, y, data, textureName)
 		{
 
 		};

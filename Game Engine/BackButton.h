@@ -7,7 +7,7 @@ namespace Engine
 		public Button
 	{
 	public:
-		BackButton(float x, float y, GameDataReference data, std::string textureName) : Button(x, y, data, textureName)
+		BackButton(float x, float y, GameData& data, std::string textureName) : Button(x, y, data, textureName)
 		{
 
 		};
