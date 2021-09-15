@@ -8,7 +8,7 @@ class Node
 {
 public:
 	Node(int x, int y, TileType type);
-	~Node() { std::cout << "Graph Destructor"; };
+	~Node() { std::cout << "Node Destructor" << std::endl; };
 	std::vector<std::weak_ptr<Node>> _neighbours;
 	
 	sf::Vector2i GetPosition();

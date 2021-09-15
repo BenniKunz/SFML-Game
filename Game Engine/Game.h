@@ -9,18 +9,6 @@
 
 namespace Engine
 {
-	/*struct GameData
-	{
-		~GameData() { std::cout << "GameData Destructor" << std::endl; };
-		StateMachine stateMachine;
-		sf::RenderWindow window;
-		sf::View view;
-		AssetManager assets;
-		InputManager input;
-	};*/
-
-	//typedef std::shared_ptr<GameData> GameDataReference;
-
 	class Game
 	{
 	public:
