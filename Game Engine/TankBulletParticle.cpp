@@ -26,11 +26,21 @@ void Engine::TankBulletParticle::CollisionDetection(std::vector<std::shared_ptr<
 {
 	for (auto& gamePart : _gameParts)
 	{
-		if (gamePart.get() == this || gamePart.get() == _gamePart || gamePart->_layer == weapon || gamePart->_layer == enemy) { continue; }
-		else if (this->_texture.getGlobalBounds().intersects(gamePart->GetGlobalBounds()))
+		if (gamePart->_layer != player) { continue; }
+		else
 		{
-			gamePart->DealDamage(WeaponType::tankBullet);
-			this->_removed = true;
+			sf::FloatRect temp = sf::FloatRect(
+				gamePart->GetGlobalBounds().left + 20,
+				gamePart->GetGlobalBounds().top + 20,
+				gamePart->GetGlobalBounds().width - 50,
+				gamePart->GetGlobalBounds().height - 50);
+
+			if (this->_texture.getGlobalBounds().intersects(temp))
+			{
+				gamePart->DealDamage(WeaponType::tankBullet);
+				this->_removed = true;
+			}
+			
 		}
 	}
 }

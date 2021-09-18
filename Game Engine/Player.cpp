@@ -160,7 +160,6 @@ void Engine::Player::InputHandler()
 
 void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts)
 {
-
 	sf::Vector2f tempPos = _playerBody.getPosition();
 	SetMoveDirectionForMapBoundaries(tempPos);
 	SetMoveDirectionForGamePartBoundaries();

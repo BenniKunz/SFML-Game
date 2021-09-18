@@ -30,6 +30,7 @@ namespace Engine
 			this->_playerBody.setPosition(_position.x + PLAYER_TEXTURE_OFFSET, _position.y + PLAYER_TEXTURE_OFFSET);
 			_walkDirection = up;
 			_weaponType = gun;
+			_layer = player;
 
 			_shootCounter.setFont(this->_data.assets.GetFont("gameFont"));
 			_shootCounter.setFillColor(sf::Color::Red);
@@ -90,7 +91,7 @@ namespace Engine
 		bool _isIdle{ true };
 		int _lives = 4;
 		int _bullets = 5;
-		int _rockets = 2;
+		int _rockets = 30;
 		float _speed = 120.0;
 		float _hp = 100.0;
 

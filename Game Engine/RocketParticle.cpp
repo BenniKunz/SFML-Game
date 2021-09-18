@@ -43,10 +43,18 @@ void Engine::RocketParticle::CollisionDetection(std::vector<std::shared_ptr<Engi
 	for (auto& gamePart : _gameParts)
 	{
 		if (gamePart.get() == this || gamePart.get() == _player || gamePart->_layer == weapon) { continue; }
-		else if (this->_texture.getGlobalBounds().intersects(gamePart->GetGlobalBounds()))
+		else
 		{
-			gamePart->DealDamage(WeaponType::rocket);
-			this->_removed = true;
+			sf::FloatRect temp = sf::FloatRect(
+				gamePart->GetGlobalBounds().left + 20,
+				gamePart->GetGlobalBounds().top + 20,
+				gamePart->GetGlobalBounds().width - 50,
+				gamePart->GetGlobalBounds().height - 50);
+			if (this->_texture.getGlobalBounds().intersects(temp))
+			{
+				gamePart->DealDamage(WeaponType::rocket);
+					this->_removed = true;
+			}
 		}
 	}
 }

@@ -6,7 +6,8 @@ namespace Engine
 	{
 		standard,
 		weapon,
-		enemy
+		enemy,
+		player
 	};
 }
 
