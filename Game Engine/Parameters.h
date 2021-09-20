@@ -46,7 +46,7 @@ constexpr auto MAP_WIDTH = 60;
 constexpr auto MAP_HEIGHT = 34;
 constexpr auto TILE_WIDTH = 64;
 constexpr auto TILE_HEIGHT = 64;
-constexpr auto NUMBER_OF_ENEMIES_LEVEL_ONE = 2;
+constexpr auto NUMBER_OF_ENEMIES_LEVEL_ONE = 10;
 
 //GameOver
 constexpr auto RETRY_BUTTON = "Resources/Buttons/button_retry.png";
@@ -73,6 +73,7 @@ constexpr auto PLAYER_WALK_UP = "Resources/player_walk_up.png";
 constexpr auto PLAYER_WALK_RIGHT = "Resources/player_walk_right.png";
 constexpr auto PLAYER_WALK_LEFT = "Resources/player_walk_left.png";
 constexpr auto PLAYER_WALK_DOWN = "Resources/player_walk_down.png";
+constexpr auto PLAYER_HIT = "Resources/Sounds/player_hit.wav";
 constexpr auto PLAYER_START_POSX = 100;
 constexpr auto PLAYER_START_POSY = 300;
 constexpr auto PLAYER_MAX_HP = 100;

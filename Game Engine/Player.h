@@ -22,7 +22,7 @@ namespace Engine
 	public:
 		Player(sf::Vector2f position, std::string textureName, GameData& data, std::vector<std::shared_ptr<IGamePart>>& gameParts)
 			: Sprite(position, textureName, data, gameParts),
-			_animation(_textureName, 1, 7,_data, _position), _animationManager(_animation, _data),
+			_animation(_textureName, 1, 7, _data, _position), _animationManager(_animation, _data),
 			_healthBar(_position, "healthBarRed", _data, _gameParts)
 		{
 			this->_weapon = std::make_unique<Bullet>();
@@ -40,6 +40,7 @@ namespace Engine
 			_rocketFire.setBuffer(this->_data.assets.GetSound("rocketFire"));
 			_gunFire.setBuffer(this->_data.assets.GetSound("gunFire"));
 			_weaponSwitch.setBuffer(this->_data.assets.GetSound("weaponSwitch"));
+			_playerHit.setBuffer(this->_data.assets.GetSound("playerHit"));
 		}
 
 		virtual ~Player();
@@ -72,7 +73,7 @@ namespace Engine
 		virtual void Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _gameParts) override;
 		void SetPlayerTextures();
 		virtual void Draw() override;
-		
+
 
 		std::vector<IObserver*> _observerList;
 		Animation _animation;
@@ -86,12 +87,13 @@ namespace Engine
 		sf::Sound _weaponSwitch;
 		sf::Sound _gunFire;
 		sf::Sound _rocketFire;
+		sf::Sound _playerHit;
 
 		bool _shot{ false };
 		bool _isIdle{ true };
 		int _lives = 4;
 		int _bullets = 5;
-		int _rockets = 30;
+		int _rockets = 2;
 		float _speed = 120.0;
 		float _hp = 100.0;
 

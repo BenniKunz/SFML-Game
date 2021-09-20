@@ -36,7 +36,7 @@ namespace Engine
 	private:
 		sf::Sprite _tankTower;
 		std::shared_ptr<Player> _player;
-		float _shootingRangeMax{ 400.0 };
+		float _shootingRangeMax{ 500.0 };
 		float _shootingRangeMin{ 50.0 };
 		float _targetingRange{ 500.0 };
 		int _ammo{ 100 };

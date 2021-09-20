@@ -12,9 +12,9 @@ namespace Engine
 		House(std::shared_ptr<Player> player, sf::Vector2f position, std::string textureName, GameData& data, std::vector<std::shared_ptr<IGamePart>>& gameParts)
 			: Sprite(position, textureName, data, gameParts), _player{ player }
 		{
-			_bulletItem = std::make_shared<Item>(player, gunAmmo, sf::Vector2f{ _position.x, _position.y - 50 }, "ammoTexture", _data, _gameParts, 8);
-			_rocketItem = std::make_shared<Item>(player, rocketAmmo, sf::Vector2f{ _position.x + 200, _position.y - 50 }, "ammoTexture", _data, _gameParts, 4);
-			_healthItem = std::make_shared<Item>(player, health, sf::Vector2f{ _position.x + 100, _position.y - 50 }, "hpTexture", _data, _gameParts, 10);
+			_bulletItem = std::make_shared<Item>(player, gunAmmo, sf::Vector2f{ _position.x, _position.y - 50 }, "ammoTexture", _data, _gameParts, _numberOfBullets);
+			_rocketItem = std::make_shared<Item>(player, rocketAmmo, sf::Vector2f{ _position.x + 200, _position.y - 50 }, "ammoTexture", _data, _gameParts, _numberOfRockets);
+			_healthItem = std::make_shared<Item>(player, health, sf::Vector2f{ _position.x + 100, _position.y - 50 }, "hpTexture", _data, _gameParts, _numberOfHealthPoints);
 			_gameParts.push_back(_bulletItem);
 			_gameParts.push_back(_rocketItem);
 			_gameParts.push_back(_healthItem);		
@@ -49,6 +49,10 @@ namespace Engine
 		bool _bulletsCollected{ false };
 		bool _healthCollected{ false };
 		float _itemRespawnTime{ 30.0f };
+
+		int _numberOfRockets{ 1 };
+		int _numberOfBullets{ 5 };
+		int _numberOfHealthPoints{ 20 };
 
 		void ItemRespawn();
 	};

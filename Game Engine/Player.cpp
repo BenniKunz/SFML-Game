@@ -8,6 +8,7 @@ Engine::Player::~Player()
 
 void Engine::Player::DealDamage(WeaponType type)
 {
+	_playerHit.play();
 	if (type == tankBullet)
 	{
 		if (_hp - 10 <= 0)
@@ -180,14 +181,6 @@ void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 		this->_healthBar.Update(dt, _gameParts);
 	}
 
-	for (auto& gamePart : _gameParts)
-	{
-		if (gamePart.get() == this) { continue; }
-		else if (this->_playerBody.getGlobalBounds().intersects(gamePart->GetGlobalBounds()))
-		{
-			//std::cout << "Player collided" << std::endl;
-		}
-	}
 	_shootCounter.setPosition(_position.x + 90, _position.y);
 	if (_shot)
 	{
@@ -400,7 +393,7 @@ void Engine::Player::SetMoveDirectionForGamePartBoundaries()
 	tempBody.move(_moveDirection);
 	for (auto gamePart : _gameParts)
 	{
-		if (gamePart.get() == this) { continue; }
+		if (gamePart.get() == this || gamePart->_layer == weapon) { continue; }
 		if (tempBody.getGlobalBounds().intersects(gamePart->GetGlobalBounds()))
 		{
 			_moveDirection = sf::Vector2f(0, 0);

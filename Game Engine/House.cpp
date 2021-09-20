@@ -70,19 +70,19 @@ void Engine::House::ItemRespawn()
 {
 	if (_rocketsCollected && _rocketsClock.getElapsedTime().asSeconds() >= _itemRespawnTime)
 	{
-		_rocketItem = std::make_shared<Item>(_player, rocketAmmo, sf::Vector2f{ _position.x + 200, _position.y - 50 }, "ammoTexture", _data, _gameParts, 2);
+		_rocketItem = std::make_shared<Item>(_player, rocketAmmo, sf::Vector2f{ _position.x + 200, _position.y - 50 }, "ammoTexture", _data, _gameParts, _numberOfRockets);
 		_rocketsCollected = false;
 		_gameParts.push_back(_rocketItem);
 	}
 	if (_bulletsCollected && _bulletsClock.getElapsedTime().asSeconds() >= _itemRespawnTime)
 	{
-		_bulletItem = std::make_shared<Item>(_player, gunAmmo, sf::Vector2f{ _position.x, _position.y - 50 }, "ammoTexture", _data, _gameParts, 5);
+		_bulletItem = std::make_shared<Item>(_player, gunAmmo, sf::Vector2f{ _position.x, _position.y - 50 }, "ammoTexture", _data, _gameParts, _numberOfBullets);
 		_bulletsCollected = false;
 		_gameParts.push_back(_bulletItem);
 	}
 	if (_healthCollected && _healthClock.getElapsedTime().asSeconds() >= _itemRespawnTime)
 	{
-		_healthItem = std::make_shared<Item>(_player, health, sf::Vector2f{ _position.x + 100, _position.y - 50 }, "hpTexture", _data, _gameParts, 20);
+		_healthItem = std::make_shared<Item>(_player, health, sf::Vector2f{ _position.x + 100, _position.y - 50 }, "hpTexture", _data, _gameParts, _numberOfHealthPoints);
 		_healthCollected = false;
 		_gameParts.push_back(_healthItem);
 	}

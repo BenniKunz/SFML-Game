@@ -123,6 +123,7 @@ void Engine::GameState::LoadAssets()
 	_data.assets.LoadSound("tankDestruction", TANK_DESTRUCTION);
 	_data.assets.LoadSound("enemyHit", ENEMY_HIT);
 	_data.assets.LoadSound("enemyDestruction", ENEMY_DESTRUCTION);
+	_data.assets.LoadSound("playerHit", PLAYER_HIT);
 }
 
 void Engine::GameState::SpawnTanks()
