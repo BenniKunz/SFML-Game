@@ -15,7 +15,6 @@ void Engine::Player::DealDamage(WeaponType type)
 		{
 			_hp = 0;
 			_lives--;
-			PlayerReset();
 		}
 		else
 		{
@@ -167,18 +166,15 @@ void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 	_position += _moveDirection * _speed * dt;
 
 	_healthBar.SetPosition(sf::Vector2f(_position.x + 10, _position.y));
-
-	//_moveXY *= _speed;
+	this->_healthBar.Update(dt, _gameParts);
 
 	SetPlayerTextures();
 	if (!_isIdle)
 	{
 		this->_animationManager._animation._texture.setPosition(_position);
 		this->_playerBody.setPosition(_position + sf::Vector2f(PLAYER_TEXTURE_OFFSET, PLAYER_TEXTURE_OFFSET));
-		/*this->_animationManager._animation._texture.move(_moveXY);
-		this->_playerBody.move(_moveXY);*/
+	
 		this->_animationManager.Update(dt);
-		this->_healthBar.Update(dt, _gameParts);
 	}
 
 	_shootCounter.setPosition(_position.x + 90, _position.y);
@@ -187,12 +183,16 @@ void Engine::Player::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _
 
 		float y = _weapon->_shootingDelay - _clock.getElapsedTime().asSeconds();
 
-
 		_shootCounter.setString(std::to_string(y));
 	}
 	if (_clock.getElapsedTime().asSeconds() > _weapon->_shootingDelay)
 	{
 		_shot = false;
+	}
+
+	if (_hp <= 0)
+	{
+		PlayerReset();
 	}
 }
 
@@ -408,6 +408,7 @@ void Engine::Player::PlayerReset()
 	_position = sf::Vector2f(PLAYER_START_POSX, PLAYER_START_POSY);
 	this->_animationManager._animation._texture.setPosition(_position);
 	this->_playerBody.setPosition(_position + sf::Vector2f(PLAYER_TEXTURE_OFFSET, PLAYER_TEXTURE_OFFSET));
+	_healthBar.SetPosition(sf::Vector2f(_position.x + 10, _position.y));
 	_data.view.reset(sf::FloatRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT));
 	_data.window.setView(_data.view);
 }

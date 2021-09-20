@@ -15,7 +15,6 @@ void Engine::Enemy::Update(float dt, std::vector<std::shared_ptr<IGamePart>>& _g
 
 	if (abs(_animationManager._animation._texture.getPosition().x - _targetPosition.x) <= 1.0f && abs(_animationManager._animation._texture.getPosition().y - _targetPosition.y) <= 1.0f)
 	{
-		//_texture.setPosition(_targetPosition);
 
 		_pathIterator++;
 		if (_pathIterator != _path.end())
